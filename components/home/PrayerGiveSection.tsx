@@ -1,0 +1,197 @@
+'use client';
+
+import { useState } from 'react';
+import { HandHeart, CheckCircle2, HandCoins, Building2, ShieldCheck, MessageSquare } from 'lucide-react';
+
+export default function PrayerGiveSection() {
+  const [name, setName] = useState('');
+  const [request, setRequest] = useState('');
+  const [confidential, setConfidential] = useState(true);
+  const [submitted, setSubmitted] = useState(false);
+
+  const amounts = [25, 50, 100, 250];
+  const [amount, setAmount] = useState(50);
+  const [custom, setCustom] = useState('');
+  const [freq, setFreq] = useState<'one-time' | 'weekly' | 'monthly'>('one-time');
+
+  const handlePrayer = (e: React.FormEvent) => { e.preventDefault(); setSubmitted(true); };
+
+  return (
+    <section style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }} className="split-section" data-section="prayer-give">
+      {/* Prayer */}
+      <div style={{ padding: '96px 64px', background: '#F4F1EC' }} className="split-col">
+        <p className="eyebrow">Prayer Requests</p>
+        <h2 className="h2" style={{ marginTop: '14px', fontSize: '44px' }}>
+          However the week finds you, we&apos;ll lift you up.
+        </h2>
+        <p className="lead" style={{ marginTop: '20px' }}>
+          Our pastors and prayer team pray over every request submitted —
+          in confidence, with care, and in the name of Christ.
+        </p>
+
+        {!submitted ? (
+          <form onSubmit={handlePrayer} style={{ marginTop: '28px', maxWidth: '480px' }}>
+            <div className="form-field">
+              <label className="form-label-text">Your name</label>
+              <input
+                className="form-input"
+                value={name} onChange={e => setName(e.target.value)}
+                placeholder="Sarah Johnson"
+              />
+            </div>
+            <div className="form-field">
+              <label className="form-label-text">Prayer request</label>
+              <textarea
+                className="form-input" rows={4}
+                value={request} onChange={e => setRequest(e.target.value)}
+                placeholder="Share what's on your heart…"
+                style={{ resize: 'vertical' }}
+              />
+            </div>
+            <label style={{
+              display: 'flex', alignItems: 'flex-start', gap: '10px',
+              fontSize: '14px', color: '#3A3A3A', cursor: 'pointer', marginBottom: '20px',
+            }}>
+              <input
+                type="checkbox" checked={confidential}
+                onChange={e => setConfidential(e.target.checked)}
+                style={{ accentColor: '#A02319', width: '16px', height: '16px', marginTop: '2px', flexShrink: 0 }}
+              />
+              Keep my request confidential — share only with the prayer team.
+            </label>
+            <button type="submit" className="btn btn--red btn--lg" style={{ width: '100%', justifyContent: 'center' }}>
+              <HandHeart size={18} />Submit Prayer Request
+            </button>
+          </form>
+        ) : (
+          <div style={{
+            marginTop: '28px', maxWidth: '480px',
+            background: '#fff', borderRadius: '16px', padding: '32px',
+            textAlign: 'center', boxShadow: '0 2px 6px rgba(30,30,30,0.08)',
+          }}>
+            <CheckCircle2 size={40} color="#A02319" style={{ margin: '0 auto 16px' }} />
+            <h3 className="h3" style={{ marginBottom: '12px' }}>Thank you, {name || 'friend'}.</h3>
+            <p className="prose" style={{ marginBottom: '20px' }}>
+              Your request has been received. Our prayer team will lift it up this week.
+              May God&apos;s peace be with you.
+            </p>
+            <button
+              className="btn btn--ghost-dark"
+              onClick={() => { setSubmitted(false); setName(''); setRequest(''); }}
+            >
+              Submit another request
+            </button>
+          </div>
+        )}
+      </div>
+
+      {/* Give */}
+      <div style={{
+        padding: '96px 64px', background: '#A02319', color: '#fff', position: 'relative', overflow: 'hidden',
+      }} className="split-col">
+        <div style={{
+          position: 'absolute', top: '-80px', right: '-80px',
+          width: '380px', height: '380px', borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(244,241,236,0.12) 0%, transparent 70%)',
+          pointerEvents: 'none',
+        }} />
+
+        <p className="eyebrow eyebrow--cream">Give Online</p>
+        <h2 style={{
+          fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '44px',
+          lineHeight: 1.08, color: '#fff', marginTop: '14px', textWrap: 'balance',
+        }}>
+          Sow generously into the work God is doing.
+        </h2>
+        <p style={{ fontSize: '19px', lineHeight: 1.6, color: 'rgba(244,241,236,0.85)', maxWidth: '460px', marginTop: '20px' }}>
+          Your tithes and offerings keep the lights on, the doors open, and the
+          Gospel going out — to Baton Rouge and beyond. Every gift matters.
+        </p>
+
+        {/* Frequency */}
+        <div style={{
+          display: 'flex', gap: '8px', marginTop: '24px', maxWidth: '460px',
+          background: 'rgba(244,241,236,0.18)', borderRadius: '999px', padding: '4px',
+        }}>
+          {(['one-time', 'weekly', 'monthly'] as const).map(f => (
+            <button key={f} onClick={() => setFreq(f)} style={{
+              flex: 1, padding: '10px', borderRadius: '999px', border: 0, cursor: 'pointer',
+              background: freq === f ? '#fff' : 'transparent',
+              color: freq === f ? '#A02319' : 'rgba(244,241,236,0.78)',
+              fontWeight: 600, fontSize: '14px', transition: 'all 180ms',
+              textTransform: 'capitalize',
+            }}>
+              {f === 'one-time' ? 'One-Time' : f.charAt(0).toUpperCase() + f.slice(1)}
+            </button>
+          ))}
+        </div>
+
+        {/* Amount buttons */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '12px', marginTop: '20px', maxWidth: '460px' }}>
+          {amounts.map(a => (
+            <button key={a} onClick={() => { setAmount(a); setCustom(''); }} style={{
+              background: amount === a && !custom ? '#fff' : 'rgba(244,241,236,0.10)',
+              color: amount === a && !custom ? '#A02319' : '#fff',
+              border: '1px solid',
+              borderColor: amount === a && !custom ? '#fff' : 'rgba(244,241,236,0.30)',
+              borderRadius: '12px', padding: '14px 0',
+              fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '22px',
+              cursor: 'pointer', transition: 'all 180ms',
+            }}>
+              ${a}
+            </button>
+          ))}
+        </div>
+
+        {/* Custom amount */}
+        <div style={{ position: 'relative', marginTop: '14px', maxWidth: '460px' }}>
+          <span style={{
+            position: 'absolute', left: '18px', top: '50%', transform: 'translateY(-50%)',
+            color: 'rgba(244,241,236,0.78)', fontSize: '16px', fontWeight: 600,
+          }}>$</span>
+          <input
+            type="text"
+            placeholder="Other amount"
+            value={custom}
+            onChange={e => { setCustom(e.target.value.replace(/[^0-9]/g, '')); setAmount(0); }}
+            style={{
+              width: '100%', padding: '16px 20px 16px 42px',
+              background: 'rgba(244,241,236,0.12)',
+              border: '1px solid rgba(244,241,236,0.30)',
+              borderRadius: '12px', color: '#fff', fontSize: '16px',
+              outline: 'none', fontFamily: 'var(--font-body)',
+            }}
+          />
+        </div>
+
+        {/* CTA buttons */}
+        <div style={{ display: 'flex', gap: '12px', marginTop: '24px', flexWrap: 'wrap' }}>
+          <button className="btn btn--white btn--lg">
+            <HandCoins size={18} />
+            Give ${custom || amount}{freq !== 'one-time' ? ` · ${freq}` : ''}
+          </button>
+          <button className="btn btn--ghost-light btn--lg">
+            <Building2 size={18} />Other Ways To Give
+          </button>
+        </div>
+
+        {/* Methods */}
+        <div style={{ display: 'flex', gap: '20px', marginTop: '20px', flexWrap: 'wrap' }}>
+          <span style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: 'rgba(244,241,236,0.78)' }}>
+            <ShieldCheck size={14} />Secure · Stripe
+          </span>
+          <span style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: 'rgba(244,241,236,0.78)' }}>
+            <MessageSquare size={14} />Text &ldquo;GIVE&rdquo; to 84321
+          </span>
+        </div>
+      </div>
+
+      <style jsx>{`
+        @media (max-width: 1024px) {
+          [data-section="prayer-give"] { grid-template-columns: 1fr !important; }
+          .split-col { padding: 64px 32px !important; }
+        }
+      `}</style>
+    </section>
+  );
+}
