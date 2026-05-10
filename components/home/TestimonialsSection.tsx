@@ -1,7 +1,7 @@
 'use client';
 const stories = [
   {
-    quote: "True Light has been our home for 22 years. Pastor Williams baptized our children — and now they're being baptized by him too. This is family.",
+    quote: "True Light has been our home for 22 years. Pastor Hebert baptized our children — and now they're being baptized by him too. This is family.",
     name: 'The Hayes Family', role: 'Members since 2003', initials: 'TH',
   },
   {
@@ -10,7 +10,7 @@ const stories = [
   },
   {
     quote: "The youth ministry gave my son a place to belong, to ask hard questions, and to know Jesus for himself. Worth every Sunday morning.",
-    name: 'Pastor Denise W.', role: 'Mom of two · Volunteer', initials: 'DW',
+    name: 'Denise W.', role: 'Mom of two · Volunteer', initials: 'DW',
   },
 ];
 

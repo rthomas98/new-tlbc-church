@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { Globe, Phone, Hand, Mail, FileText, ArrowRight } from 'lucide-react';
+import ChurchPhoto from '@/components/shared/ChurchPhoto';
 
 const funds = [
   { title: 'General Fund',    desc: 'Sunday worship, staff, building, programs — the day-to-day life of the church.', color: '#A02319', pct: 64 },
@@ -12,7 +13,7 @@ const ways = [
   { icon: <Globe size={20} />,    title: 'Online',        desc: 'One-time or recurring · debit, credit, ACH' },
   { icon: <Phone size={20} />,    title: 'Text',          desc: 'Text GIVE to (225) 555-4483' },
   { icon: <Hand size={20} />,     title: 'In Person',     desc: 'Offering plate · Sunday at 10 a.m.' },
-  { icon: <Mail size={20} />,     title: 'By Mail',       desc: 'TLBC · 4928 Government St · Baton Rouge, LA 70806' },
+  { icon: <Mail size={20} />,     title: 'By Mail',       desc: 'TLBC · 3836 North Street · Baton Rouge, LA 70806' },
   { icon: <FileText size={20} />, title: 'Planned Giving', desc: 'Bequests, stock, IRA distributions — talk to our finance team' },
 ];
 
@@ -53,12 +54,23 @@ export default function PageGive() {
             Sunday-by-Sunday, here at home, and across the world.
           </p>
           <div style={{ display: 'flex', gap: '40px', flexWrap: 'wrap', marginTop: '40px' }}>
-            {[['84','years of giving'],['3','funds open'],['4','countries served'],['$1.2M','in 2024']].map(([n,l]) => (
+            {[['85','years of giving'],['3','funds open'],['4','countries served'],['$1.2M','in 2025']].map(([n,l]) => (
               <div key={l}>
                 <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '28px', color: '#fff', display: 'block' }}>{n}</span>
                 <span style={{ fontSize: '13px', color: 'rgba(244,241,236,0.65)' }}>{l}</span>
               </div>
             ))}
+          </div>
+          <div style={{
+            position: 'relative',
+            aspectRatio: '16/7',
+            maxWidth: '820px',
+            marginTop: '48px',
+            borderRadius: '22px',
+            overflow: 'hidden',
+            boxShadow: '0 24px 60px rgba(0,0,0,0.28)',
+          }}>
+            <ChurchPhoto photo="giving" sizes="(max-width: 1024px) 100vw, 70vw" />
           </div>
         </div>
       </section>
@@ -88,7 +100,7 @@ export default function PageGive() {
                 </div>
                 <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '24px', margin: 0 }}>{f.title}</h3>
                 <p style={{ fontSize: '14px', color: '#6B6B6B', lineHeight: 1.6, margin: 0, flex: 1 }}>{f.desc}</p>
-                <Link href="#" className="btn btn--ghost-dark btn--sm" style={{ alignSelf: 'flex-start' }}>
+                <Link href="/give" className="btn btn--ghost-dark btn--sm" style={{ alignSelf: 'flex-start' }}>
                   Give to {f.title.split(' ')[0]} <ArrowRight size={13} />
                 </Link>
               </article>

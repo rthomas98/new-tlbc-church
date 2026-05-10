@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { User, Clock, BookMarked, PlayCircle, Headphones } from 'lucide-react';
-import { PhotoSermon } from '@/components/photos/PhotoPlaceholders';
+import ChurchPhoto from '@/components/shared/ChurchPhoto';
 
 export default function SermonSection() {
   return (
@@ -13,7 +13,7 @@ export default function SermonSection() {
 
           {/* Copy */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            <p className="eyebrow">Latest Sermon · Sunday, May 3</p>
+            <p className="eyebrow">Latest Sermon · Sunday, May 10</p>
             <h2 style={{
               fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '56px',
               lineHeight: 1.04, letterSpacing: '-0.022em', margin: 0, textWrap: 'balance',
@@ -21,12 +21,12 @@ export default function SermonSection() {
               When the Lord bows down to hear.
             </h2>
             <p className="prose" style={{ maxWidth: '480px' }}>
-              Pastor Williams continues our walk through Psalm 86 — on prayer
+              Pastor Dennis R. Hebert Sr. continues our walk through Psalm 86 — on prayer
               as the language of dependence, and what it means in our hurried
               lives to be heard by the God who inclines His ear.
             </p>
             <div style={{ display: 'flex', gap: '28px', fontSize: '13px', color: '#6B6B6B', flexWrap: 'wrap' }}>
-              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}><User size={14} />Pastor M. Williams</span>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}><User size={14} />Pastor Dennis R. Hebert Sr.</span>
               <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}><Clock size={14} />38 min</span>
               <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}><BookMarked size={14} />Psalm 86</span>
             </div>
@@ -59,7 +59,7 @@ export default function SermonSection() {
             background: 'linear-gradient(to bottom, #7A1A16, #18130F)',
             boxShadow: '0 28px 70px rgba(30,30,30,0.40)',
           }}>
-            <PhotoSermon />
+            <ChurchPhoto photo="worship" sizes="(max-width: 1024px) 100vw, 50vw" />
             <div style={{
               position: 'absolute', inset: 0,
               background: 'linear-gradient(to bottom, rgba(30,15,12,0) 30%, rgba(30,15,12,0.88) 100%)',

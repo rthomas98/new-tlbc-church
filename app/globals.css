@@ -52,21 +52,23 @@
 }
 
 /* ── Base reset ── */
-*, *::before, *::after { box-sizing: border-box; }
-html, body { margin: 0; padding: 0; }
-body {
-  background-color: #F4F1EC;
-  color: #1E1E1E;
-  font-family: var(--font-body);
-  font-size: 17px;
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background-color: #F4F1EC;
+    color: #1E1E1E;
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  img { display: block; max-width: 100%; }
+  a   { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; border: 0; background: none; }
+  ul { margin: 0; padding: 0; list-style: none; }
 }
-img { display: block; max-width: 100%; }
-a   { color: inherit; text-decoration: none; }
-button { font-family: inherit; cursor: pointer; border: 0; background: none; }
-ul { margin: 0; padding: 0; list-style: none; }
 
 @layer components {
 
@@ -198,6 +200,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   .section--cream    { background: #F4F1EC; }
   .section--white    { background: #fff; }
   .section--maroon   { background: #7A1A16; color: #F4F1EC; }
+  .section--blue     { background: #4FA1C6; color: #F4F1EC; }
   .section--charcoal { background: #18130F; color: #F4F1EC; }
 
   /* ── Section header ── */
@@ -238,6 +241,15 @@ ul { margin: 0; padding: 0; list-style: none; }
   }
   .form-input::placeholder { color: #6B6B6B; }
 }
+
+/* ── Button text colors (unlayered — beats Tailwind's preflight `a { color: inherit }`) ── */
+.btn--red          { color: #fff; }
+.btn--white        { color: #1E1E1E; }
+.btn--cream        { color: #1E1E1E; }
+.btn--ghost-light  { color: #F4F1EC; }
+.btn--ghost-dark                              { color: #1E1E1E; }
+a.btn--ghost-dark:hover, button.btn--ghost-dark:hover { color: #fff; }
+.btn--play         { color: #A02319; }
 
 /* ── Responsive section padding ── */
 @media (max-width: 640px) {

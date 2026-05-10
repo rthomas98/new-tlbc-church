@@ -1,15 +1,17 @@
 'use client';
 import Link from 'next/link';
-import { Calendar, Utensils, ClipboardList, Egg, Music, Star, ArrowUpRight, CalendarPlus, Hand } from 'lucide-react';
-import { Photo } from '@/components/photos/PhotoPlaceholders';
+import { Calendar, Utensils, ClipboardList, Egg, Music, Star, ArrowUpRight, CalendarPlus, Hand, type LucideIcon } from 'lucide-react';
+import ChurchPhoto from '@/components/shared/ChurchPhoto';
 
-const upcomingEvents = [
-  ['Nov', '12', 'Wed', 'Family Thanksgiving Dinner',  '6:30 p.m. · Fellowship Hall', 'Free · No RSVP needed', <Utensils size={20} />],
-  ['Nov', '17', 'Mon', 'Membership Class',             '7 p.m. · Room 204',           'Required for new members', <ClipboardList size={20} />],
-  ['Nov', '22', 'Sat', "Men's Breakfast",              '7 a.m. · Fellowship Hall',    '$5 · All men welcome', <Egg size={20} />],
-  ['Dec', '06', 'Sat', 'Christmas Choir Rehearsal',   '9 a.m. · Sanctuary',          'Open rehearsal', <Music size={20} />],
-  ['Dec', '14', 'Sun', "Children's Christmas Pageant", '5 p.m. · Sanctuary',          'Reception to follow', <Star size={20} />],
-  ['Dec', '24', 'Wed', 'Christmas Eve Candlelight',   '5 & 7 p.m. · Sanctuary',      'Childcare for under 4', <Star size={20} />],
+type UpcomingEvent = [month: string, day: string, dow: string, title: string, when: string, note: string, Icon: LucideIcon];
+
+const upcomingEvents: UpcomingEvent[] = [
+  ['May', '17', 'Sun', 'Spring Revival · Night One',       '7 p.m. · Sanctuary',       'Guest preaching and prayer', Music],
+  ['May', '24', 'Sun', 'Community Food Drive',             '9 a.m. · Fellowship Hall', 'Serve neighbors in North Baton Rouge', Utensils],
+  ['Jun', '07', 'Sun', 'Youth Summer Kickoff',             '6:30 p.m. · Youth Wing',   'Grades 6-12 · Bring a friend', Star],
+  ['Jun', '14', 'Sun', 'Membership Class',                 '9 a.m. · Room 204',        'Required for new members', ClipboardList],
+  ['Jun', '20', 'Sat', "Men's Fellowship Breakfast",       '7 a.m. · Fellowship Hall', '$5 · All men welcome', Egg],
+  ['Jun', '28', 'Sun', "Children's Ministry Family Picnic", '12 p.m. · Church Lawn',    'Families and volunteers welcome', Star],
 ];
 
 const weeklyRhythm = [
@@ -21,7 +23,7 @@ const weeklyRhythm = [
   ['Friday',    '11:00 a.m.', 'Senior Saints Lunch','Fellowship Hall'],
 ];
 
-const dates = ['Nov 12 · Thanksgiving Dinner','Nov 17 · Membership Class','Nov 22 · Men\'s Breakfast','Dec 06 · Choir Rehearsal','Dec 14 · Children\'s Pageant','Dec 24 · Christmas Eve Candlelight'];
+const dates = ['May 17 · Spring Revival','May 24 · Community Food Drive','Jun 07 · Youth Summer Kickoff','Jun 14 · Membership Class','Jun 20 · Men\'s Breakfast','Jun 28 · Family Picnic'];
 
 export default function PageEvents() {
   return (
@@ -34,7 +36,7 @@ export default function PageEvents() {
           fontSize: 'clamp(120px, 22vw, 280px)',
           color: '#1E1E1E', opacity: 0.06, lineHeight: 1,
           userSelect: 'none', pointerEvents: 'none',
-        }}>NOV<br/>2025</div>
+        }}>MAY<br/>2026</div>
         <div className="tl-container" style={{ position: 'relative', zIndex: 2, paddingTop: '72px', paddingBottom: '72px' }}>
           <p className="crumb" style={{ color: '#6B6B6B' }}><Link href="/" style={{ color: '#6B6B6B' }}>Home</Link><span>›</span>Events</p>
           <p className="eyebrow" style={{ marginBottom: '16px' }}>Events &amp; Calendar</p>
@@ -71,17 +73,19 @@ export default function PageEvents() {
         <div className="tl-container">
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '64px', alignItems: 'center' }} className="featured-grid">
             <div style={{ borderRadius: '18px', overflow: 'hidden', aspectRatio: '17/14', boxShadow: '0 18px 40px rgba(30,30,30,0.14)' }}>
-              <Photo theme="warm" w={680} h={560} />
+              <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+                <ChurchPhoto photo="outreach" sizes="(max-width: 1024px) 100vw, 50vw" />
+              </div>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               <p className="eyebrow">Featured this month</p>
-              <h2 className="display" style={{ fontSize: '56px' }}>Family Thanksgiving Dinner</h2>
+              <h2 className="display" style={{ fontSize: '56px' }}>Community Food Drive</h2>
               <p className="prose">
-                A free, all-church meal the Wednesday before Thanksgiving. Bring a friend, bring a neighbor,
-                bring an empty seat to your table — we&apos;ll fill it. Our deacons are cooking.
+                Partner with our outreach team to serve neighbors in North Baton Rouge.
+                Bring shelf-stable groceries, bottled water, or willing hands.
               </p>
               <dl style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '14px' }}>
-                {[['WHEN','Wednesday, Nov 12 · 6:30 p.m.'],['WHERE','Fellowship Hall'],['COST','Free — no RSVP needed']].map(([k,v]) => (
+                {[['WHEN','Sunday, May 24 · 9:00 a.m.'],['WHERE','Fellowship Hall'],['COST','Free — volunteers welcome']].map(([k,v]) => (
                   <div key={k} style={{ display: 'flex', gap: '16px' }}>
                     <dt style={{ fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#6B6B6B', minWidth: '60px', fontSize: '11px', paddingTop: '2px' }}>{k}</dt>
                     <dd style={{ margin: 0, color: '#1E1E1E' }}>{v}</dd>
@@ -89,7 +93,7 @@ export default function PageEvents() {
                 ))}
               </dl>
               <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-                <Link href="#" className="btn btn--red">Add to calendar <CalendarPlus size={16} /></Link>
+                <Link href="/events" className="btn btn--red">Add to calendar <CalendarPlus size={16} /></Link>
                 <Link href="/connect" className="btn btn--ghost-dark">I want to help <Hand size={16} /></Link>
               </div>
             </div>
@@ -105,10 +109,10 @@ export default function PageEvents() {
               <p className="eyebrow eyebrow--blue">Upcoming</p>
               <h2 className="display" style={{ fontSize: '42px' }}>The next sixty days.</h2>
             </div>
-            <Link href="#" className="btn btn--ghost-dark btn--sm">View full calendar</Link>
+            <Link href="/events" className="btn btn--ghost-dark btn--sm">View full calendar</Link>
           </div>
           <ul style={{ listStyle: 'none', padding: 0, borderTop: '1px solid rgba(30,30,30,0.10)' }}>
-            {upcomingEvents.map(([m, d, dow, title, when, note, icon]) => (
+            {upcomingEvents.map(([m, d, dow, title, when, note, Icon]) => (
               <li key={String(title)} style={{
                 display: 'grid',
                 gridTemplateColumns: '88px 56px 1.6fr 1fr 40px',
@@ -125,13 +129,13 @@ export default function PageEvents() {
                   width: '48px', height: '48px', borderRadius: '12px',
                   background: '#F4F1EC', color: '#1E1E1E',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                }}>{icon}</div>
+                }}><Icon size={20} /></div>
                 <div>
                   <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '20px', margin: '0 0 4px' }}>{title}</h3>
                   <p style={{ fontSize: '13px', color: '#6B6B6B', margin: 0 }}>{when}</p>
                 </div>
                 <div style={{ fontSize: '13px', color: '#6B6B6B' }} className="cal-note">{note}</div>
-                <Link href="#" style={{
+                <Link href="/connect" style={{
                   width: '40px', height: '40px', borderRadius: '50%',
                   background: '#F4F1EC', color: '#A02319',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',

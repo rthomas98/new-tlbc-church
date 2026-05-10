@@ -1,10 +1,10 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { MapPin, PlayCircle, Sun, BookOpen, HandHeart, ArrowRight } from 'lucide-react';
-import { PhotoCongregation } from '@/components/photos/PhotoPlaceholders';
 
 export default function Hero() {
   return (
-    <section style={{ padding: '28px 32px 0', background: '#F4F1EC' }}>
+    <section style={{ padding: '28px 32px 28px', background: '#F4F1EC' }}>
       <div style={{
         position: 'relative', borderRadius: '28px', overflow: 'hidden',
         minHeight: '720px', display: 'flex', flexDirection: 'column',
@@ -14,7 +14,7 @@ export default function Hero() {
       }}>
         {/* Background photo */}
         <div style={{ position: 'absolute', inset: 0, zIndex: 1 }}>
-          <PhotoCongregation />
+          <Image src="/uploads/generated/worship-hero.png" alt="True Light Baptist Church worship service" fill style={{ objectFit: 'cover', objectPosition: 'center top' }} priority sizes="100vw" />
         </div>
 
         {/* Gradient overlay */}
@@ -22,21 +22,6 @@ export default function Hero() {
           position: 'absolute', inset: 0, zIndex: 2,
           background: 'linear-gradient(to bottom, rgba(30,15,12,0.10) 0%, rgba(30,15,12,0.85) 85%), linear-gradient(135deg, #A02319 0%, #7A1A16 20%, transparent 60%)',
         }} />
-
-        {/* Decorative chevron */}
-        <svg
-          viewBox="0 0 600 600"
-          aria-hidden="true"
-          style={{
-            position: 'absolute', right: '-120px', top: '-80px',
-            width: '460px', height: '460px', zIndex: 3, opacity: 0.55,
-          }}
-        >
-          <polyline points="-20,300 250,30 270,55 0,325"   fill="none" stroke="#4FA1C6" strokeWidth="38" strokeLinejoin="miter"/>
-          <polyline points="-20,300 250,570 270,545 0,275"  fill="none" stroke="#4FA1C6" strokeWidth="38" strokeLinejoin="miter"/>
-          <polyline points="-60,300 230,10 250,32 -40,322"  fill="none" stroke="#F4F1EC" strokeWidth="34" strokeLinejoin="miter" opacity="0.30"/>
-          <polyline points="-60,300 230,590 250,568 -40,278" fill="none" stroke="#F4F1EC" strokeWidth="34" strokeLinejoin="miter" opacity="0.30"/>
-        </svg>
 
         {/* Content */}
         <div style={{

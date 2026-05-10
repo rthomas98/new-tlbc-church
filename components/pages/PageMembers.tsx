@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { LogIn, Users, Calendar, FileText, BookOpen, MessageCircle, Bell } from 'lucide-react';
+import ChurchPhoto from '@/components/shared/ChurchPhoto';
 
 const perks = [
   { icon: <Users size={18} />,        text: 'Member directory · 620 families' },
@@ -109,7 +110,7 @@ export default function PageMembers() {
                       <input type="checkbox" style={{ accentColor: '#A02319', width: '16px', height: '16px' }} />
                       Remember me
                     </label>
-                    <Link href="#" style={{ fontSize: '13px', color: '#A02319', fontWeight: 600 }}>Forgot password?</Link>
+                    <a href="mailto:members@truelightbr.org?subject=Member%20portal%20password%20help" style={{ fontSize: '13px', color: '#A02319', fontWeight: 600 }}>Forgot password?</a>
                   </div>
                   <button type="submit" className="btn btn--red btn--lg" style={{ justifyContent: 'center', marginTop: '8px' }}>
                     Sign in <LogIn size={18} />
@@ -130,6 +131,16 @@ export default function PageMembers() {
 
             {/* Perks */}
             <aside>
+              <div style={{
+                position: 'relative',
+                aspectRatio: '16/10',
+                borderRadius: '18px',
+                overflow: 'hidden',
+                marginBottom: '24px',
+                boxShadow: '0 16px 36px rgba(30,30,30,0.12)',
+              }}>
+                <ChurchPhoto photo="members" sizes="(max-width: 1024px) 100vw, 36vw" />
+              </div>
               <p className="eyebrow eyebrow--blue" style={{ marginBottom: '20px' }}>Once you&apos;re in</p>
               <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 {perks.map(p => (

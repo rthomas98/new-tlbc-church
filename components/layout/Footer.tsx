@@ -88,7 +88,7 @@ export default function Footer() {
             {/* Social */}
             <div style={{ display: 'flex', gap: '10px', marginTop: '4px' }}>
               {/* Facebook */}
-              <a href="#" aria-label="Facebook" style={{
+              <a href="/connect" aria-label="Facebook" style={{
                 width: '38px', height: '38px', borderRadius: '50%',
                 background: 'rgba(244,241,236,0.10)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -99,7 +99,7 @@ export default function Footer() {
                 </svg>
               </a>
               {/* Instagram */}
-              <a href="#" aria-label="Instagram" style={{
+              <a href="/connect" aria-label="Instagram" style={{
                 width: '38px', height: '38px', borderRadius: '50%',
                 background: 'rgba(244,241,236,0.10)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -112,7 +112,7 @@ export default function Footer() {
                 </svg>
               </a>
               {/* YouTube */}
-              <a href="#" aria-label="YouTube" style={{
+              <a href="/watch" aria-label="YouTube" style={{
                 width: '38px', height: '38px', borderRadius: '50%',
                 background: 'rgba(244,241,236,0.10)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -213,7 +213,7 @@ export default function Footer() {
           }}>
             <span>© 2026 True Light Baptist Church</span>
             <span>·</span>
-            <Link href="#" style={{ color: 'rgba(244,241,236,0.65)' }}>Privacy</Link>
+            <Link href="/privacy" style={{ color: 'rgba(244,241,236,0.65)' }}>Privacy</Link>
             <span>·</span>
             <Link href="/members" style={{ color: 'rgba(244,241,236,0.65)' }}>Member Login</Link>
           </div>

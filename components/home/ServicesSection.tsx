@@ -1,22 +1,22 @@
 'use client';
 import { MapPin } from 'lucide-react';
-import { PhotoWorship, PhotoBible, PhotoPrayer } from '@/components/photos/PhotoPlaceholders';
+import ChurchPhoto, { type ChurchPhotoKey } from '@/components/shared/ChurchPhoto';
 
 const services = [
   {
     tag: 'Sunday', time: '10:00 a.m.', name: 'Morning Worship',
     desc: "Spirit-led praise, scripture-rooted teaching, and the Lord's table together.",
-    cover: <PhotoWorship />,
+    photo: 'worship' as ChurchPhotoKey,
   },
   {
     tag: 'Sunday', time: '9:00 a.m.', name: 'Bible Study',
     desc: "Verse-by-verse study for all ages — adult, youth, and children's classes.",
-    cover: <PhotoBible />,
+    photo: 'women' as ChurchPhotoKey,
   },
   {
     tag: 'Wednesday', time: '6:30 p.m.', name: 'Prayer & Teaching',
     desc: 'Mid-week gathering for prayer, intercession, and a short word from the pastor.',
-    cover: <PhotoPrayer />,
+    photo: 'men' as ChurchPhotoKey,
   },
 ];
 
@@ -63,7 +63,7 @@ export default function ServicesSection() {
               <div style={{
                 height: '200px', background: '#7A1A16', position: 'relative', overflow: 'hidden',
               }}>
-                {s.cover}
+                <ChurchPhoto photo={s.photo} sizes="(max-width: 1024px) 50vw, 33vw" />
                 <span style={{
                   position: 'absolute', top: '16px', left: '16px',
                   background: '#fff', borderRadius: '999px', padding: '5px 14px',

@@ -1,26 +1,26 @@
 'use client';
 import Link from 'next/link';
 import { CalendarDays, MapPin, Clock, ArrowRight } from 'lucide-react';
-import { PhotoEvent } from '@/components/photos/PhotoPlaceholders';
+import ChurchPhoto, { type ChurchPhotoKey } from '@/components/shared/ChurchPhoto';
 
 const events = [
   {
     day: '17', month: 'May', cat: 'Revival',
     title: 'Spring Revival · Three Nights of Worship',
-    desc: 'A three-night revival with guest preaching from Rev. James Carter, special music, and prayer ministry each evening.',
-    where: 'Sanctuary', time: '7:00 p.m.', tone: 'maroon' as const, feature: true,
+    desc: 'A three-night revival with guest preaching, special music, and prayer ministry each evening.',
+    where: 'Sanctuary', time: '7:00 p.m.', photo: 'worship' as ChurchPhotoKey, feature: true,
   },
   {
     day: '24', month: 'May', cat: 'Community',
     title: 'Community Food Drive',
     desc: 'Partner with our outreach team to serve neighbors in North Baton Rouge.',
-    where: 'Fellowship Hall', time: '9:00 a.m.', tone: 'amber' as const,
+    where: 'Fellowship Hall', time: '9:00 a.m.', photo: 'outreach' as ChurchPhotoKey,
   },
   {
     day: '07', month: 'Jun', cat: 'Youth',
     title: 'Youth Summer Kickoff',
     desc: 'Pizza, Bible games, and worship for grades 6–12. Bring a friend.',
-    where: 'Youth Wing', time: '6:30 p.m.', tone: 'blue' as const,
+    where: 'Youth Wing', time: '6:30 p.m.', photo: 'youth' as ChurchPhotoKey,
   },
 ];
 
@@ -57,7 +57,7 @@ export default function EventsSection() {
                 aspectRatio: e.feature ? '16/11' : '16/9',
                 overflow: 'hidden',
               }}>
-                <PhotoEvent tone={e.tone} />
+                <ChurchPhoto photo={e.photo} sizes="(max-width: 1024px) 100vw, 33vw" />
                 {/* Date badge */}
                 <div style={{
                   position: 'absolute', top: '18px', left: '18px',

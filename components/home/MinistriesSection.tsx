@@ -2,25 +2,22 @@
 
 import { useState } from 'react';
 import { ArrowUpRight, Calendar } from 'lucide-react';
-import {
-  PhotoChildren, PhotoYouth, PhotoWomen, PhotoMen,
-  PhotoMusic, PhotoPrayer, PhotoSenior, PhotoOutreach,
-} from '@/components/photos/PhotoPlaceholders';
+import ChurchPhoto, { type ChurchPhotoKey } from '@/components/shared/ChurchPhoto';
 
 type Ministry = {
   name: string; group: string; size: string; day: string;
-  cover: React.ReactNode; tag: string; tagBlue?: boolean;
+  photo: ChurchPhotoKey; tag: string; tagBlue?: boolean;
 };
 
 const all: Ministry[] = [
-  { name: "Children's", group: 'Youth & Kids', size: 'Ages 4–10',       day: 'Sundays',    cover: <PhotoChildren />, tag: 'Sunday School' },
-  { name: 'Youth',       group: 'Youth & Kids', size: 'Grades 6–12',     day: 'Sundays',    cover: <PhotoYouth />,    tag: 'Bible Study',   tagBlue: true },
-  { name: "Women's",     group: 'Adults',       size: 'All ages',         day: 'Monthly',    cover: <PhotoWomen />,    tag: 'Fellowship' },
-  { name: "Men's",       group: 'Adults',       size: 'All ages',         day: 'Saturdays',  cover: <PhotoMen />,      tag: 'Breakfast',     tagBlue: true },
-  { name: 'Music & Worship', group: 'Worship',  size: 'Choir & Praise',   day: 'Wednesdays', cover: <PhotoMusic />,    tag: 'Choir' },
-  { name: 'Prayer Team', group: 'Adults',       size: 'Daily prayer',     day: 'Daily',      cover: <PhotoPrayer />,   tag: 'Intercession',  tagBlue: true },
-  { name: 'Community Care', group: 'Outreach',  size: 'Visitation',       day: 'Weekly',     cover: <PhotoSenior />,   tag: 'Outreach' },
-  { name: 'Outreach',    group: 'Outreach',     size: 'Baton Rouge',      day: 'Monthly',    cover: <PhotoOutreach />, tag: 'Service',       tagBlue: true },
+  { name: "Children's", group: 'Youth & Kids', size: 'Ages 4–10',       day: 'Sundays',    photo: 'familyCommunity', tag: 'Sunday School' },
+  { name: 'Youth',       group: 'Youth & Kids', size: 'Grades 6–12',     day: 'Sundays',    photo: 'youth',    tag: 'Bible Study',   tagBlue: true },
+  { name: "Women's",     group: 'Adults',       size: 'All ages',         day: 'Monthly',    photo: 'women',    tag: 'Fellowship' },
+  { name: "Men's",       group: 'Adults',       size: 'All ages',         day: 'Saturdays',  photo: 'men',      tag: 'Breakfast',     tagBlue: true },
+  { name: 'Music & Worship', group: 'Worship',  size: 'Choir & Praise',   day: 'Wednesdays', photo: 'worship',  tag: 'Choir' },
+  { name: 'Prayer Team', group: 'Adults',       size: 'Daily prayer',     day: 'Daily',      photo: 'women',    tag: 'Intercession',  tagBlue: true },
+  { name: 'Community Care', group: 'Outreach',  size: 'Visitation',       day: 'Weekly',     photo: 'outreach', tag: 'Outreach' },
+  { name: 'Outreach',    group: 'Outreach',     size: 'Baton Rouge',      day: 'Monthly',    photo: 'communityYouth', tag: 'Service', tagBlue: true },
 ];
 
 const filters = ['All', 'Adults', 'Youth & Kids', 'Outreach', 'Worship'];
@@ -79,7 +76,9 @@ export default function MinistriesSection() {
             }}
               className="min-card"
             >
-              <div style={{ position: 'absolute', inset: 0 }}>{m.cover}</div>
+              <div style={{ position: 'absolute', inset: 0 }}>
+                <ChurchPhoto photo={m.photo} sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw" />
+              </div>
               <div style={{
                 position: 'absolute', inset: 0,
                 background: 'linear-gradient(to top, rgba(20,12,10,0.90) 0%, rgba(20,12,10,0.10) 60%)',

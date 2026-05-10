@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { BookOpen } from 'lucide-react';
-import { PhotoPastor } from '@/components/photos/PhotoPlaceholders';
+import ChurchPhoto from '@/components/shared/ChurchPhoto';
 
 export default function PastorSection() {
   return (
@@ -19,8 +19,9 @@ export default function PastorSection() {
             <div style={{
               aspectRatio: '4/5', borderRadius: '22px', overflow: 'hidden',
               boxShadow: '0 18px 40px rgba(30,30,30,0.14)',
+              position: 'relative',
             }}>
-              <PhotoPastor />
+              <ChurchPhoto photo="pastor" sizes="(max-width: 1024px) 100vw, 45vw" />
             </div>
             {/* Badge */}
             <div style={{
@@ -32,7 +33,7 @@ export default function PastorSection() {
             }}>
               <div>
                 <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '18px' }}>
-                  Pastor M. Williams
+                  Pastor Dennis R. Hebert Sr.
                 </div>
                 <div style={{
                   fontSize: '11px', fontWeight: 600, letterSpacing: '0.18em',

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Send, HandHelping, MapPin, Phone, UserPlus, Droplet, Users, Heart, ArrowRight } from 'lucide-react';
 import dynamic from 'next/dynamic';
+import ChurchPhoto from '@/components/shared/ChurchPhoto';
 
 const MapboxMap = dynamic(() => import('@/components/shared/MapboxMap'), { ssr: false });
 
@@ -11,8 +12,8 @@ export default function PageConnect() {
   const [submitted, setSubmitted] = useState(false);
 
   const paths = [
-    { icon: <UserPlus size={24} />, title: 'Membership',  desc: 'A 4-week class on what it means to belong here. Next cohort: Nov 17.' },
-    { icon: <Droplet size={24} />,  title: 'Baptism',     desc: 'Public confession of saving faith. Quarterly services. Next: Dec 7.' },
+    { icon: <UserPlus size={24} />, title: 'Membership',  desc: 'A 4-week class on what it means to belong here. Next cohort: Jun 14.' },
+    { icon: <Droplet size={24} />,  title: 'Baptism',     desc: 'Public confession of saving faith. Quarterly services. Next: Jun 28.' },
     { icon: <Users size={24} />,    title: 'Small Groups', desc: '12 groups across the city — meet weekly in homes. Find one near you.' },
     { icon: <Heart size={24} />,    title: 'Volunteer',   desc: "Children, hospitality, tech, missions. There's a place for your gifts." },
   ];
@@ -37,7 +38,7 @@ export default function PageConnect() {
               A pastor will reply within 48 hours.
             </p>
             <dl style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              {[['Sunday','10 a.m. · Coffee from 9:30'],['Address','4928 Government St · Baton Rouge, LA 70806'],['Phone','(225) 555-0140 · Mon–Thu, 9–4']].map(([k,v]) => (
+              {[['Sunday','10 a.m. · Coffee from 9:30'],['Address','3836 North Street · Baton Rouge, LA 70806'],['Phone','(225) 555-0149 · Mon–Thu, 9–4']].map(([k,v]) => (
                 <div key={k} style={{ display: 'grid', gridTemplateColumns: '80px 1fr', gap: '12px', fontSize: '14px' }}>
                   <dt style={{ fontWeight: 700, color: '#6B6B6B', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.12em', paddingTop: '2px' }}>{k}</dt>
                   <dd style={{ margin: 0, color: '#1E1E1E' }}>{v}</dd>
@@ -106,9 +107,18 @@ export default function PageConnect() {
 
             {/* Sidebar */}
             <aside style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <div style={{
+                position: 'relative',
+                aspectRatio: '16/11',
+                borderRadius: '18px',
+                overflow: 'hidden',
+                boxShadow: '0 16px 36px rgba(30,30,30,0.12)',
+              }}>
+                <ChurchPhoto photo="visitor" sizes="(max-width: 1024px) 100vw, 36vw" />
+              </div>
               {[
-                { icon: <HandHelping size={28} />, title: 'Need prayer?', body: 'Submit a request — confidential, read only by our pastoral care team. Prayed over within the day.', cta: 'Submit a request', href: '#', blue: false },
-                { icon: <MapPin size={28} />,      title: 'Visit Sunday',  body: '4928 Government St · Baton Rouge.\nService at 10 a.m. · Coffee from 9:30. Reserved parking for guests.', cta: 'Get directions', href: '#', blue: true },
+                { icon: <HandHelping size={28} />, title: 'Need prayer?', body: 'Submit a request — confidential, read only by our pastoral care team. Prayed over within the day.', cta: 'Submit a request', href: '/connect', blue: false },
+                { icon: <MapPin size={28} />,      title: 'Visit Sunday',  body: '3836 North Street · Baton Rouge.\nService at 10 a.m. · Coffee from 9:30. Reserved parking for guests.', cta: 'Get directions', href: 'https://maps.google.com/?q=3836+North+Street+Baton+Rouge+LA+70806', blue: true },
                 { icon: <Phone size={28} />,       title: 'Talk to a pastor', body: '(225) 555-0140 · Mon–Thu, 9 a.m.–4 p.m.\nAfter hours, leave a message and we\'ll call back.', cta: '', href: '', blue: false },
               ].map(c => (
                 <div key={c.title} style={{
@@ -154,7 +164,7 @@ export default function PageConnect() {
                 <div style={{ color: '#A02319' }}>{p.icon}</div>
                 <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '22px', margin: 0 }}>{p.title}</h3>
                 <p style={{ fontSize: '14px', color: '#6B6B6B', lineHeight: 1.6, margin: 0, flex: 1 }}>{p.desc}</p>
-                <Link href="#" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '13px', fontWeight: 600, color: '#A02319' }}>
+                <Link href="/connect" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '13px', fontWeight: 600, color: '#A02319' }}>
                   Learn more <ArrowRight size={13} />
                 </Link>
               </article>

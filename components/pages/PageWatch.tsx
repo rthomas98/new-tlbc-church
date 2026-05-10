@@ -1,15 +1,15 @@
 'use client';
 import Link from 'next/link';
 import { Play, Clock, MapPin, Bell, FileText, Podcast, Music, Rss } from 'lucide-react';
-import { Photo } from '@/components/photos/PhotoPlaceholders';
+import ChurchPhoto, { type ChurchPhotoKey } from '@/components/shared/ChurchPhoto';
 
 const sermons = [
-  ['Anchored: Hope That Holds',   'Pastor James Whitaker', 'Hebrews 6:13–20', 'Nov 3',  '42 min'],
-  ['The Cost of Following',       'Pastor James Whitaker', 'Luke 14:25–33',   'Oct 27', '38 min'],
-  ["Prayer When You're Tired",    'Marcus Trent',          'Psalm 42',         'Oct 20', '34 min'],
-  ['A Living Hope',               'Pastor James Whitaker', '1 Peter 1:3–9',   'Oct 13', '41 min'],
-  ['Built Together',              'Marcus Trent',          'Ephesians 2:19–22','Oct 6',  '36 min'],
-  ['Be Still',                    'Pastor James Whitaker', 'Psalm 46',         'Sep 29', '39 min'],
+  ['Anchored: Hope That Holds',   'Pastor Dennis R. Hebert Sr.', 'Hebrews 6:13-20',  'May 10', '42 min', 'worship'],
+  ['The Cost of Following',       'Pastor Dennis R. Hebert Sr.', 'Luke 14:25-33',    'May 3',  '38 min', 'men'],
+  ["Prayer When You're Tired",    'Pastor Dennis R. Hebert Sr.', 'Psalm 42',         'Apr 26', '34 min', 'women'],
+  ['A Living Hope',               'Pastor Dennis R. Hebert Sr.', '1 Peter 1:3-9',    'Apr 19', '41 min', 'outreach'],
+  ['Built Together',              'Pastor Dennis R. Hebert Sr.', 'Ephesians 2:19-22','Apr 12', '36 min', 'youth'],
+  ['Be Still',                    'Pastor Dennis R. Hebert Sr.', 'Psalm 46',         'Apr 5',  '39 min', 'kids'],
 ];
 
 export default function PageWatch() {
@@ -18,7 +18,7 @@ export default function PageWatch() {
       {/* Hero */}
       <section style={{ background: '#1E1E1E', position: 'relative', minHeight: '480px', display: 'flex', alignItems: 'flex-end', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0 }}>
-          <Photo theme="dark" w={1920} h={900} />
+          <ChurchPhoto photo="worship" priority sizes="100vw" />
         </div>
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 100%)' }} />
         <div className="tl-container" style={{ position: 'relative', zIndex: 2, paddingBottom: '72px', paddingTop: '72px' }}>
@@ -40,7 +40,7 @@ export default function PageWatch() {
             <em style={{ fontStyle: 'italic', color: '#B6D8E6' }}>Live every Sunday.</em>
           </h1>
           <p style={{ fontSize: '17px', maxWidth: '580px', color: 'rgba(244,241,236,0.86)', lineHeight: 1.6, margin: '0 0 40px' }}>
-            Worship streamed from the brick sanctuary on Government Street — and a five-year
+            Worship streamed from the brick sanctuary on North Street — and a five-year
             archive that travels with you.
           </p>
           <div style={{ display: 'flex', gap: '32px', flexWrap: 'wrap', fontSize: '14px', color: 'rgba(244,241,236,0.75)' }}>
@@ -58,7 +58,7 @@ export default function PageWatch() {
         <div className="tl-container">
           <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: '56px', alignItems: 'center' }} className="watch-live-grid">
             <div style={{ position: 'relative', borderRadius: '22px', aspectRatio: '16/9', overflow: 'hidden', boxShadow: '0 18px 40px rgba(30,30,30,0.14)' }}>
-              <Photo theme="warm" w={960} h={540} />
+              <ChurchPhoto photo="worship" sizes="(max-width: 1024px) 100vw, 60vw" />
               <div style={{
                 position: 'absolute', inset: 0,
                 background: 'linear-gradient(to bottom, rgba(0,0,0,0.10) 0%, rgba(0,0,0,0.55) 100%)',
@@ -81,16 +81,16 @@ export default function PageWatch() {
               <p className="eyebrow">This Sunday</p>
               <h2 className="display" style={{ fontSize: '40px' }}>Anchored: A Hope That Holds</h2>
               <p className="prose">
-                Pastor James continues our series in Hebrews with a word for the weary and the wavering.
+                Pastor Dennis R. Hebert Sr. continues our series in Hebrews with a word for the weary and the wavering.
                 Service includes communion.
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '14px', color: '#6B6B6B' }}>
                 <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><Clock size={15} />Doors 9:30 · Service 10:00</span>
-                <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><MapPin size={15} />4928 Government St</span>
+                <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><MapPin size={15} />3836 North Street</span>
               </div>
               <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-                <Link href="#" className="btn btn--red">Set a reminder <Bell size={16} /></Link>
-                <Link href="#" className="btn btn--ghost-dark">Order of service <FileText size={16} /></Link>
+                <Link href="/events" className="btn btn--red">Set a reminder <Bell size={16} /></Link>
+                <Link href="/watch" className="btn btn--ghost-dark">Order of service <FileText size={16} /></Link>
               </div>
             </div>
           </div>
@@ -105,16 +105,16 @@ export default function PageWatch() {
               <p className="eyebrow eyebrow--blue">Sermon Archive</p>
               <h2 className="display" style={{ fontSize: '42px' }}>Recent messages.</h2>
             </div>
-            <Link href="#" className="btn btn--ghost-dark btn--sm">Browse all 247 sermons <ArrowRight size={14} /></Link>
+            <Link href="/watch" className="btn btn--ghost-dark btn--sm">Browse all 247 sermons <ArrowRight size={14} /></Link>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '28px' }} className="archive-grid">
-            {sermons.map(([title, pastor, ref, date, len]) => (
+            {sermons.map(([title, pastor, ref, date, len, photo]) => (
               <article key={String(title)} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                 <div style={{
                   borderRadius: '14px', aspectRatio: '5/3', overflow: 'hidden', position: 'relative',
                   boxShadow: '0 6px 18px rgba(30,30,30,0.10)',
                 }}>
-                  <Photo theme="dark" w={400} h={240} />
+                  <ChurchPhoto photo={photo as ChurchPhotoKey} sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" />
                   <span style={{
                     position: 'absolute', bottom: '12px', right: '12px',
                     background: 'rgba(0,0,0,0.70)', color: '#fff', borderRadius: '6px',
@@ -156,9 +156,9 @@ export default function PageWatch() {
               </p>
             </div>
             <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-              <Link href="#" className="btn btn--white"><Podcast size={16} />Apple Podcasts</Link>
-              <Link href="#" className="btn btn--white"><Music size={16} />Spotify</Link>
-              <Link href="#" className="btn btn--ghost-light"><Rss size={16} />RSS</Link>
+              <Link href="/watch" className="btn btn--white"><Podcast size={16} />Apple Podcasts</Link>
+              <Link href="/watch" className="btn btn--white"><Music size={16} />Spotify</Link>
+              <Link href="/watch" className="btn btn--ghost-light"><Rss size={16} />RSS</Link>
             </div>
           </div>
         </div>
