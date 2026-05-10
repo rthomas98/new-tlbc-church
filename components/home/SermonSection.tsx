@@ -1,7 +1,8 @@
 'use client';
 import Link from 'next/link';
-import { User, Clock, BookMarked, PlayCircle, Headphones } from 'lucide-react';
+import { BookOpen, CalendarDays, Clock, PlayCircle, Radio } from 'lucide-react';
 import ChurchPhoto from '@/components/shared/ChurchPhoto';
+import { FACEBOOK_PAGE_URL } from '@/components/shared/churchLinks';
 
 export default function SermonSection() {
   return (
@@ -13,22 +14,22 @@ export default function SermonSection() {
 
           {/* Copy */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            <p className="eyebrow">Latest Sermon · Sunday, May 10</p>
+            <p className="eyebrow">Facebook Live · Sundays & Wednesdays</p>
             <h2 style={{
               fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '56px',
               lineHeight: 1.04, letterSpacing: '-0.022em', margin: 0, textWrap: 'balance',
             }}>
-              When the Lord bows down to hear.
+              Worship and Bible Study live each week.
             </h2>
             <p className="prose" style={{ maxWidth: '480px' }}>
-              Pastor Dennis R. Hebert Sr. continues our walk through Psalm 86 — on prayer
-              as the language of dependence, and what it means in our hurried
-              lives to be heard by the God who inclines His ear.
+              True Light does not currently offer recorded sermons on the site. Join
+              Pastor Dennis R. Hebert Sr. and the church family live on Facebook for
+              Sunday worship and Wednesday Bible Study.
             </p>
             <div style={{ display: 'flex', gap: '28px', fontSize: '13px', color: '#6B6B6B', flexWrap: 'wrap' }}>
-              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}><User size={14} />Pastor Dennis R. Hebert Sr.</span>
-              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}><Clock size={14} />38 min</span>
-              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}><BookMarked size={14} />Psalm 86</span>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}><CalendarDays size={14} />Sundays · 10:00 a.m.</span>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}><BookOpen size={14} />Wednesday Bible Study</span>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}><Radio size={14} />Facebook Live</span>
             </div>
             <blockquote style={{
               padding: '22px 24px', background: '#FAF7F1',
@@ -44,12 +45,12 @@ export default function SermonSection() {
             </blockquote>
             <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
               <Link href="/watch" className="btn btn--red btn--lg">
-                <PlayCircle size={18} />Watch the Sermon
+                <PlayCircle size={18} />Watch Live
               </Link>
-              <Link href="/watch" className="btn btn--ghost-dark btn--lg">
-                <Headphones size={18} />Listen
+              <Link href="/events" className="btn btn--ghost-dark btn--lg">
+                <Clock size={18} />View Schedule
               </Link>
-              <Link href="/watch" className="btn btn--ghost-dark btn--lg">Browse Archive</Link>
+              <a href={FACEBOOK_PAGE_URL} target="_blank" rel="noopener noreferrer" className="btn btn--ghost-dark btn--lg">Open Facebook Live</a>
             </div>
           </div>
 
@@ -74,27 +75,22 @@ export default function SermonSection() {
                   textTransform: 'uppercase', color: '#fff', padding: '6px 14px',
                 }}>
                   <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#fff', animation: 'pulseDot 1.6s ease-in-out infinite' }} />
-                  New This Week
+                  Facebook Live
                 </span>
               </div>
               <div>
-                <button className="btn btn--play" style={{ margin: '0 auto 32px' }} aria-label="Play sermon">
+                <a href={FACEBOOK_PAGE_URL} target="_blank" rel="noopener noreferrer" className="btn btn--play" style={{ margin: '0 auto 32px' }} aria-label="Open True Light Baptist Church on Facebook">
                   <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5 L20 12 L8 19 Z"/></svg>
-                </button>
+                </a>
                 <p style={{ fontSize: '11px', fontWeight: 600, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#B6D8E6', margin: '0 0 6px' }}>
-                  Series · A Church Built On Prayer
+                  Sunday Worship · Wednesday Bible Study
                 </p>
                 <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '28px', lineHeight: 1.15, color: '#fff', margin: '0 0 16px' }}>
-                  When the Lord<br/>bows down to hear.
+                  Join us live<br/>on Facebook.
                 </h3>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                  <div style={{ height: '3px', borderRadius: '999px', background: 'rgba(244,241,236,0.25)', overflow: 'hidden' }}>
-                    <div style={{ width: '38%', height: '100%', background: '#4FA1C6' }} />
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', fontFamily: 'ui-monospace, monospace', color: 'rgba(244,241,236,0.65)' }}>
-                    <span>14:32</span><span>38:00</span>
-                  </div>
-                </div>
+                <p style={{ fontSize: '13px', color: 'rgba(244,241,236,0.78)', lineHeight: 1.5, margin: 0 }}>
+                  No recorded sermon archive is available right now.
+                </p>
               </div>
             </div>
           </div>

@@ -2,12 +2,13 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Mail } from 'lucide-react';
+import { FACEBOOK_PAGE_URL } from '@/components/shared/churchLinks';
 
 const footerLinks = {
   connect: [
     { label: 'Plan Your Visit',       href: '/connect' },
     { label: 'Submit Prayer Request', href: '/connect' },
-    { label: 'Watch Sermons',         href: '/watch' },
+    { label: 'Watch Live',            href: '/watch' },
     { label: 'Give Online',           href: '/give' },
     { label: 'Volunteer',             href: '/connect' },
     { label: 'Contact Us',            href: '/connect' },
@@ -88,7 +89,7 @@ export default function Footer() {
             {/* Social */}
             <div style={{ display: 'flex', gap: '10px', marginTop: '4px' }}>
               {/* Facebook */}
-              <a href="/connect" aria-label="Facebook" style={{
+              <a href={FACEBOOK_PAGE_URL} target="_blank" rel="noopener noreferrer" aria-label="Facebook" style={{
                 width: '38px', height: '38px', borderRadius: '50%',
                 background: 'rgba(244,241,236,0.10)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -112,7 +113,7 @@ export default function Footer() {
                 </svg>
               </a>
               {/* YouTube */}
-              <a href="/watch" aria-label="YouTube" style={{
+              <a href="/watch" aria-label="Watch live" style={{
                 width: '38px', height: '38px', borderRadius: '50%',
                 background: 'rgba(244,241,236,0.10)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',

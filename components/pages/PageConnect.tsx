@@ -2,9 +2,10 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Send, HandHelping, MapPin, Phone, UserPlus, Droplet, Users, Heart, ArrowRight } from 'lucide-react';
+import { Send, HandHelping, MapPin, Phone, UserPlus, Droplet, Users, Heart, ArrowRight, Radio } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import ChurchPhoto from '@/components/shared/ChurchPhoto';
+import { FACEBOOK_PAGE_URL } from '@/components/shared/churchLinks';
 
 const MapboxMap = dynamic(() => import('@/components/shared/MapboxMap'), { ssr: false });
 
@@ -119,26 +120,36 @@ export default function PageConnect() {
               {[
                 { icon: <HandHelping size={28} />, title: 'Need prayer?', body: 'Submit a request — confidential, read only by our pastoral care team. Prayed over within the day.', cta: 'Submit a request', href: '/connect', blue: false },
                 { icon: <MapPin size={28} />,      title: 'Visit Sunday',  body: '3836 North Street · Baton Rouge.\nService at 10 a.m. · Coffee from 9:30. Reserved parking for guests.', cta: 'Get directions', href: 'https://maps.google.com/?q=3836+North+Street+Baton+Rouge+LA+70806', blue: true },
+                { icon: <Radio size={28} />,       title: 'Watch live', body: 'Sunday worship and Wednesday Bible Study stream live on the church Facebook page.', cta: 'Open Facebook Live', href: FACEBOOK_PAGE_URL, blue: false },
                 { icon: <Phone size={28} />,       title: 'Talk to a pastor', body: '(225) 555-0140 · Mon–Thu, 9 a.m.–4 p.m.\nAfter hours, leave a message and we\'ll call back.', cta: '', href: '', blue: false },
-              ].map(c => (
-                <div key={c.title} style={{
-                  background: c.blue ? '#4FA1C6' : '#fff',
-                  color: c.blue ? '#fff' : '#1E1E1E',
-                  borderRadius: '18px', padding: '28px',
-                  border: c.blue ? 'none' : '1px solid rgba(30,30,30,0.08)',
-                }}>
-                  <div style={{ color: c.blue ? '#fff' : '#A02319', marginBottom: '16px' }}>{c.icon}</div>
-                  <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '22px', margin: '0 0 10px' }}>{c.title}</h3>
-                  <p style={{ fontSize: '14px', lineHeight: 1.6, margin: '0 0 16px', opacity: c.blue ? 0.9 : 1, color: c.blue ? '#fff' : '#3A3A3A' }}>
-                    {c.body}
-                  </p>
-                  {c.cta && (
-                    <Link href={c.href} className={`btn btn--sm ${c.blue ? 'btn--white' : 'btn--ghost-dark'}`}>
-                      {c.cta} <ArrowRight size={14} />
-                    </Link>
-                  )}
-                </div>
-              ))}
+              ].map(c => {
+                const isExternal = c.href.startsWith('http');
+
+                return (
+                  <div key={c.title} style={{
+                    background: c.blue ? '#4FA1C6' : '#fff',
+                    color: c.blue ? '#fff' : '#1E1E1E',
+                    borderRadius: '18px', padding: '28px',
+                    border: c.blue ? 'none' : '1px solid rgba(30,30,30,0.08)',
+                  }}>
+                    <div style={{ color: c.blue ? '#fff' : '#A02319', marginBottom: '16px' }}>{c.icon}</div>
+                    <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '22px', margin: '0 0 10px' }}>{c.title}</h3>
+                    <p style={{ fontSize: '14px', lineHeight: 1.6, margin: '0 0 16px', opacity: c.blue ? 0.9 : 1, color: c.blue ? '#fff' : '#3A3A3A' }}>
+                      {c.body}
+                    </p>
+                    {c.cta && isExternal && (
+                      <a href={c.href} target="_blank" rel="noopener noreferrer" className={`btn btn--sm ${c.blue ? 'btn--white' : 'btn--ghost-dark'}`}>
+                        {c.cta} <ArrowRight size={14} />
+                      </a>
+                    )}
+                    {c.cta && !isExternal && (
+                      <Link href={c.href} className={`btn btn--sm ${c.blue ? 'btn--white' : 'btn--ghost-dark'}`}>
+                        {c.cta} <ArrowRight size={14} />
+                      </Link>
+                    )}
+                  </div>
+                );
+              })}
             </aside>
           </div>
         </div>

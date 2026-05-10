@@ -2,7 +2,7 @@ import PageWatch from '@/components/pages/PageWatch';
 
 export const metadata = {
   title: 'Watch · True Light Baptist Church',
-  description: 'Stream Sunday worship live or browse our sermon archive. Live every Sunday at 10 a.m. CT.',
+  description: 'Watch True Light Baptist Church live on Facebook for Sunday worship and Wednesday Bible Study.',
 };
 
 export default function WatchPage() {

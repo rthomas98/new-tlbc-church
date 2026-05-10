@@ -10,7 +10,7 @@ const perks = [
   { icon: <Users size={18} />,        text: 'Member directory · 620 families' },
   { icon: <Calendar size={18} />,     text: 'Personal calendar & RSVPs' },
   { icon: <FileText size={18} />,     text: 'Giving history & statements' },
-  { icon: <BookOpen size={18} />,     text: 'Sermon notes & study resources' },
+  { icon: <BookOpen size={18} />,     text: 'Bible study notes & ministry resources' },
   { icon: <MessageCircle size={18} />, text: 'Small-group messaging' },
   { icon: <Bell size={18} />,         text: 'Prayer-chain notifications' },
 ];
@@ -42,7 +42,7 @@ export default function PageMembers() {
                 Welcome back,<br/><em style={{ color: '#B6D8E6' }}>family.</em>
               </h1>
               <p style={{ fontSize: '17px', color: 'rgba(244,241,236,0.86)', lineHeight: 1.6, maxWidth: '480px', margin: 0 }}>
-                Sign in for the directory, RSVPs, giving history, sermon notes, and small-group
+                Sign in for the directory, RSVPs, giving history, Bible study notes, and small-group
                 threads — everything in one place.
               </p>
             </div>
