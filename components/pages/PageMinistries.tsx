@@ -3,16 +3,10 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, ChevronDown, Users, Heart, Flame, HandHeart, CheckCircle2 } from 'lucide-react';
+import { MINISTRIES } from '@/lib/ministries';
 
-/* ── Ministry photo cards ── */
-const cards = [
-  { name: 'Outreach',    sub: 'Community & Service', src: '/uploads/generated/community-youth-outreach.png' },
-  { name: 'Worship',     sub: 'Choir & Praise Team', src: '/uploads/generated/worship-hero.png'             },
-  { name: 'Leadership',  sub: 'Men of True Light',   src: '/uploads/generated/leadership-fellowship.png'    },
-  { name: 'Life Groups', sub: 'Women in the Word',   src: '/uploads/generated/women-bible-study.png'        },
-  { name: 'Youth',       sub: 'Grades 6 – 12',       src: '/uploads/generated/youth-bible-study.png'        },
-  { name: 'Kids',        sub: 'Birth – 5th grade',   src: '/uploads/generated/children-family-community.png' },
-];
+/* ── Ministry photo cards (from shared data) ── */
+const cards = MINISTRIES.map(m => ({ slug: m.slug, name: m.name, sub: m.sub, src: m.hero }));
 
 /* ── 3-Step pathway ── */
 const steps = [
@@ -136,9 +130,9 @@ export default function PageMinistries() {
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px' }} className="min-photo-grid">
             {cards.map(c => (
-              <article key={c.name} style={{
+              <Link key={c.slug} href={`/ministries/${c.slug}`} style={{
                 position: 'relative', aspectRatio: '4/5',
-                borderRadius: '20px', overflow: 'hidden', cursor: 'pointer',
+                borderRadius: '20px', overflow: 'hidden', display: 'block',
               }} className="min-photo-card">
                 <Image src={c.src} alt={c.name} fill style={{ objectFit: 'cover' }} sizes="(max-width:640px) 100vw,(max-width:1024px) 50vw,33vw" />
                 <div style={{
@@ -153,14 +147,16 @@ export default function PageMinistries() {
                     <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(22px,2.4vw,28px)', lineHeight: 1.1, margin: 0, textShadow: '0 1px 4px rgba(0,0,0,0.35)' }}>{c.name}</h2>
                     <p style={{ fontSize: '12px', fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.72)', margin: '6px 0 0' }}>{c.sub}</p>
                   </div>
-                  <Link href="/connect" style={{
+                  <span style={{
                     fontSize: '14px', fontWeight: 600, color: '#fff',
                     display: 'inline-flex', alignItems: 'center', gap: '6px',
                     borderBottom: '1px solid rgba(255,255,255,0.55)', paddingBottom: '2px',
                     alignSelf: 'flex-start', transition: 'border-color 200ms',
-                  }}>Learn More</Link>
+                  }}>
+                    Learn More <ArrowRight size={14} />
+                  </span>
                 </div>
-              </article>
+              </Link>
             ))}
           </div>
         </div>
