@@ -1,23 +1,11 @@
 'use client';
 import Link from 'next/link';
-import { Globe, Phone, Hand, Mail, FileText, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import ChurchPhoto from '@/components/shared/ChurchPhoto';
+import Icon from '@/components/shared/Icon';
+import type { GivingFund, GivingMethod } from '@/lib/db/schema';
 
-const funds = [
-  { title: 'General Fund',    desc: 'Sunday worship, staff, building, programs — the day-to-day life of the church.', color: '#A02319', pct: 64 },
-  { title: 'Missions',        desc: 'Local outreach in Baton Rouge plus partner work in Haiti, Kenya, and Honduras.',   color: '#4FA1C6', pct: 22 },
-  { title: 'Building & Repair', desc: "The brick sanctuary turns 70 next year. We're saving for the roof and HVAC.",   color: '#1E1E1E', pct: 14 },
-];
-
-const ways = [
-  { icon: <Globe size={20} />,    title: 'Online',        desc: 'One-time or recurring · debit, credit, ACH' },
-  { icon: <Phone size={20} />,    title: 'Text',          desc: 'Text GIVE to (225) 555-4483' },
-  { icon: <Hand size={20} />,     title: 'In Person',     desc: 'Offering plate · Sunday at 10 a.m.' },
-  { icon: <Mail size={20} />,     title: 'By Mail',       desc: 'TLBC · 3836 North Street · Baton Rouge, LA 70806' },
-  { icon: <FileText size={20} />, title: 'Planned Giving', desc: 'Bequests, stock, IRA distributions — talk to our finance team' },
-];
-
-export default function PageGive() {
+export default function PageGive({ funds, ways }: { funds: GivingFund[]; ways: GivingMethod[] }) {
   return (
     <>
       {/* Hero */}
@@ -80,7 +68,7 @@ export default function PageGive() {
         <div className="tl-container">
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '24px' }} className="funds-grid">
             {funds.map(f => (
-              <article key={f.title} style={{
+              <article key={f.id} style={{
                 background: '#fff', borderRadius: '18px', padding: '32px',
                 border: '1px solid rgba(30,30,30,0.08)',
                 display: 'flex', flexDirection: 'column', gap: '16px',
@@ -99,7 +87,7 @@ export default function PageGive() {
                   }}>{f.pct}%</span>
                 </div>
                 <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '24px', margin: 0 }}>{f.title}</h3>
-                <p style={{ fontSize: '14px', color: '#6B6B6B', lineHeight: 1.6, margin: 0, flex: 1 }}>{f.desc}</p>
+                <p style={{ fontSize: '14px', color: '#6B6B6B', lineHeight: 1.6, margin: 0, flex: 1 }}>{f.description}</p>
                 <Link href="/give" className="btn btn--ghost-dark btn--sm" style={{ alignSelf: 'flex-start' }}>
                   Give to {f.title.split(' ')[0]} <ArrowRight size={13} />
                 </Link>
@@ -125,7 +113,7 @@ export default function PageGive() {
             </div>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, borderTop: '1px solid rgba(30,30,30,0.10)' }}>
               {ways.map(w => (
-                <li key={w.title} style={{
+                <li key={w.id} style={{
                   display: 'grid', gridTemplateColumns: '56px 1fr', gap: '18px',
                   alignItems: 'start', padding: '20px 0',
                   borderBottom: '1px solid rgba(30,30,30,0.08)',
@@ -134,10 +122,10 @@ export default function PageGive() {
                     width: '48px', height: '48px', borderRadius: '12px',
                     background: '#F4F1EC', color: '#A02319',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  }}>{w.icon}</div>
+                  }}><Icon name={w.icon} size={20} /></div>
                   <div>
                     <h4 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '18px', margin: '0 0 4px' }}>{w.title}</h4>
-                    <p style={{ fontSize: '14px', color: '#6B6B6B', margin: 0 }}>{w.desc}</p>
+                    <p style={{ fontSize: '14px', color: '#6B6B6B', margin: 0 }}>{w.description}</p>
                   </div>
                 </li>
               ))}

@@ -2,10 +2,15 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowLeft, ArrowRight, Clock, MapPin, Users, CheckCircle2, HandHeart } from 'lucide-react';
-import { MINISTRIES, type Ministry } from '@/lib/ministries';
+import type { MinistryPage } from '@/lib/db/schema';
 
-export default function PageMinistryDetail({ ministry }: { ministry: Ministry }) {
-  const others = MINISTRIES.filter(m => m.slug !== ministry.slug).slice(0, 3);
+export default function PageMinistryDetail({
+  ministry,
+  others,
+}: {
+  ministry: MinistryPage;
+  others: MinistryPage[];
+}) {
 
   return (
     <>

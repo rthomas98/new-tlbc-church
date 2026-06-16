@@ -1,28 +1,12 @@
 'use client';
 import Link from 'next/link';
 import { useEffect, useRef } from 'react';
-import ChurchPhoto, { type ChurchPhotoKey } from '@/components/shared/ChurchPhoto';
-import { BookOpen, Cross, Heart, Users, Droplet, Flame } from 'lucide-react';
+import ChurchPhoto from '@/components/shared/ChurchPhoto';
+import Icon from '@/components/shared/Icon';
+import Prose from '@/components/shared/Prose';
+import type { Belief, Leader } from '@/lib/db/schema';
 
-const beliefs = [
-  { icon: <BookOpen size={24} />, title: 'Scripture',   desc: 'The Bible is the inspired, inerrant Word of God — our final authority for faith and practice.' },
-  { icon: <Cross size={24} />,    title: 'Jesus Christ', desc: 'Fully God and fully man, crucified for our sins, raised on the third day, returning in glory.' },
-  { icon: <Heart size={24} />,    title: 'Salvation',   desc: 'By grace alone, through faith alone, in Christ alone — a free gift, never earned.' },
-  { icon: <Users size={24} />,    title: 'The Church',  desc: 'A covenant family of believers committed to worship, witness, and one another.' },
-  { icon: <Droplet size={24} />,  title: 'Baptism',     desc: "Believer's baptism by immersion as a public confession of saving faith in Christ." },
-  { icon: <Flame size={24} />,    title: 'The Spirit',  desc: 'God indwells every believer, empowering us for holiness, witness, and gospel work.' },
-];
-
-const leaders = [
-  ['Pastor Dennis R. Hebert Sr.', 'Senior Pastor',    'True Light Baptist Church', 'pastor'],
-  ['Associate Ministry Team', 'Discipleship & Care',  'Pastoral support', 'leadership'],
-  ['Worship Ministry Team',   'Worship & Music',      'Choir and praise', 'worship'],
-  ['Youth Ministry Team',     'Youth Ministry',       'Students 6-12', 'youth'],
-  ["Children's Ministry Team", "Children's Ministry", 'Birth-5th grade', 'kids'],
-  ['Deacon Ministry',         'Service & Care',       'Member care', 'leadership'],
-];
-
-export default function PageAbout() {
+export default function PageAbout({ beliefs, leaders }: { beliefs: Belief[]; leaders: Leader[] }) {
   const beliefsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -164,10 +148,10 @@ export default function PageAbout() {
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '28px' }} className="beliefs-grid" ref={beliefsRef}>
             {beliefs.map((b, i) => (
-              <div key={b.title} className="belief-card" style={{ '--delay': `${i * 90}ms` } as React.CSSProperties}>
-                <div style={{ color: '#A02319', marginBottom: '16px' }}>{b.icon}</div>
+              <div key={b.id} className="belief-card" style={{ '--delay': `${i * 90}ms` } as React.CSSProperties}>
+                <div style={{ color: '#A02319', marginBottom: '16px' }}><Icon name={b.icon} size={24} /></div>
                 <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '22px', margin: '0 0 10px' }}>{b.title}</h3>
-                <p style={{ fontSize: '14px', color: '#6B6B6B', lineHeight: 1.6, margin: 0 }}>{b.desc}</p>
+                <Prose html={b.description} style={{ fontSize: '14px', color: '#6B6B6B', lineHeight: 1.6 }} />
               </div>
             ))}
           </div>
@@ -195,16 +179,16 @@ export default function PageAbout() {
             </p>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '32px' }} className="leaders-grid">
-            {leaders.map(([name, role, meta, photo]) => (
-              <div key={name}>
+            {leaders.map((l) => (
+              <div key={l.id}>
                 <div style={{ borderRadius: '14px', overflow: 'hidden', aspectRatio: '5/6' }}>
                   <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-                    <ChurchPhoto photo={photo as ChurchPhotoKey} sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" />
+                    <ChurchPhoto photo={l.photo} sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" />
                   </div>
                 </div>
-                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '22px', color: '#fff', marginTop: '16px' }}>{name}</div>
-                <div style={{ fontSize: '14px', color: '#4FA1C6', marginTop: '2px' }}>{role}</div>
-                <div style={{ fontSize: '12px', color: 'rgba(244,241,236,0.55)', marginTop: '4px' }}>{meta}</div>
+                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '22px', color: '#fff', marginTop: '16px' }}>{l.name}</div>
+                <div style={{ fontSize: '14px', color: '#4FA1C6', marginTop: '2px' }}>{l.role}</div>
+                <div style={{ fontSize: '12px', color: 'rgba(244,241,236,0.55)', marginTop: '4px' }}>{l.org}</div>
               </div>
             ))}
           </div>

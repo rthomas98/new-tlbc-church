@@ -2,29 +2,14 @@
 
 import { useState } from 'react';
 import { ArrowUpRight, Calendar } from 'lucide-react';
-import ChurchPhoto, { type ChurchPhotoKey } from '@/components/shared/ChurchPhoto';
-
-type Ministry = {
-  name: string; group: string; size: string; day: string;
-  photo: ChurchPhotoKey; tag: string; tagBlue?: boolean;
-};
-
-const all: Ministry[] = [
-  { name: "Children's", group: 'Youth & Kids', size: 'Ages 4–10',       day: 'Sundays',    photo: 'familyCommunity', tag: 'Sunday School' },
-  { name: 'Youth',       group: 'Youth & Kids', size: 'Grades 6–12',     day: 'Sundays',    photo: 'youth',    tag: 'Bible Study',   tagBlue: true },
-  { name: "Women's",     group: 'Adults',       size: 'All ages',         day: 'Monthly',    photo: 'women',    tag: 'Fellowship' },
-  { name: "Men's",       group: 'Adults',       size: 'All ages',         day: 'Saturdays',  photo: 'men',      tag: 'Breakfast',     tagBlue: true },
-  { name: 'Music & Worship', group: 'Worship',  size: 'Choir & Praise',   day: 'Wednesdays', photo: 'worship',  tag: 'Choir' },
-  { name: 'Prayer Team', group: 'Adults',       size: 'Daily prayer',     day: 'Daily',      photo: 'women',    tag: 'Intercession',  tagBlue: true },
-  { name: 'Community Care', group: 'Outreach',  size: 'Visitation',       day: 'Weekly',     photo: 'outreach', tag: 'Outreach' },
-  { name: 'Outreach',    group: 'Outreach',     size: 'Baton Rouge',      day: 'Monthly',    photo: 'communityYouth', tag: 'Service', tagBlue: true },
-];
+import ChurchPhoto from '@/components/shared/ChurchPhoto';
+import type { Ministry } from '@/lib/db/schema';
 
 const filters = ['All', 'Adults', 'Youth & Kids', 'Outreach', 'Worship'];
 
-export default function MinistriesSection() {
+export default function MinistriesSection({ ministries }: { ministries: Ministry[] }) {
   const [active, setActive] = useState('All');
-  const filtered = active === 'All' ? all : all.filter(m => m.group === active);
+  const filtered = active === 'All' ? ministries : ministries.filter(m => m.groupName === active);
 
   return (
     <section className="section section--white">

@@ -1,30 +1,11 @@
 'use client';
 import Link from 'next/link';
 import { CalendarDays, MapPin, Clock, ArrowRight } from 'lucide-react';
-import ChurchPhoto, { type ChurchPhotoKey } from '@/components/shared/ChurchPhoto';
+import ChurchPhoto from '@/components/shared/ChurchPhoto';
+import Prose from '@/components/shared/Prose';
+import type { Event } from '@/lib/db/schema';
 
-const events = [
-  {
-    day: '17', month: 'May', cat: 'Revival',
-    title: 'Spring Revival · Three Nights of Worship',
-    desc: 'A three-night revival with guest preaching, special music, and prayer ministry each evening.',
-    where: 'Sanctuary', time: '7:00 p.m.', photo: 'worship' as ChurchPhotoKey, feature: true,
-  },
-  {
-    day: '24', month: 'May', cat: 'Community',
-    title: 'Community Food Drive',
-    desc: 'Partner with our outreach team to serve neighbors in North Baton Rouge.',
-    where: 'Fellowship Hall', time: '9:00 a.m.', photo: 'outreach' as ChurchPhotoKey,
-  },
-  {
-    day: '07', month: 'Jun', cat: 'Youth',
-    title: 'Youth Summer Kickoff',
-    desc: 'Pizza, Bible games, and worship for grades 6–12. Bring a friend.',
-    where: 'Youth Wing', time: '6:30 p.m.', photo: 'youth' as ChurchPhotoKey,
-  },
-];
-
-export default function EventsSection() {
+export default function EventsSection({ events }: { events: Event[] }) {
   return (
     <section className="section section--cream">
       <div className="tl-container">
@@ -54,7 +35,7 @@ export default function EventsSection() {
               {/* Cover */}
               <div style={{
                 position: 'relative',
-                aspectRatio: e.feature ? '16/11' : '16/9',
+                aspectRatio: e.featured ? '16/11' : '16/9',
                 overflow: 'hidden',
               }}>
                 <ChurchPhoto photo={e.photo} sizes="(max-width: 1024px) 100vw, 33vw" />
@@ -71,14 +52,14 @@ export default function EventsSection() {
               </div>
               {/* Body */}
               <div style={{ padding: '24px 26px 28px', display: 'flex', flexDirection: 'column', gap: '10px', flex: 1 }}>
-                <span style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.20em', textTransform: 'uppercase', color: '#4FA1C6' }}>{e.cat}</span>
+                <span style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.20em', textTransform: 'uppercase', color: '#4FA1C6' }}>{e.category}</span>
                 <h3 style={{
                   fontFamily: 'var(--font-display)', fontWeight: 700,
-                  fontSize: e.feature ? '30px' : '22px', margin: 0, lineHeight: 1.15,
+                  fontSize: e.featured ? '30px' : '22px', margin: 0, lineHeight: 1.15,
                 }}>{e.title}</h3>
-                <p style={{ fontSize: '15px', lineHeight: 1.55, color: '#3A3A3A', margin: 0, flex: 1 }}>{e.desc}</p>
+                <Prose html={e.description} style={{ fontSize: '15px', lineHeight: 1.55, color: '#3A3A3A', flex: 1 }} />
                 <div style={{ display: 'flex', gap: '16px', fontSize: '13px', color: '#6B6B6B', marginTop: '8px' }}>
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><MapPin size={13} />{e.where}</span>
+                  <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><MapPin size={13} />{e.location}</span>
                   <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><Clock size={13} />{e.time}</span>
                 </div>
                 <Link href="/events" className="btn btn--red btn--sm" style={{ alignSelf: 'flex-start', marginTop: '8px' }}>

@@ -1,26 +1,9 @@
 'use client';
 import { MapPin } from 'lucide-react';
-import ChurchPhoto, { type ChurchPhotoKey } from '@/components/shared/ChurchPhoto';
+import ChurchPhoto from '@/components/shared/ChurchPhoto';
+import type { Service } from '@/lib/db/schema';
 
-const services = [
-  {
-    tag: 'Sunday', time: '10:00 a.m.', name: 'Morning Worship',
-    desc: "Spirit-led praise, scripture-rooted teaching, and the Lord's table together.",
-    photo: 'worship' as ChurchPhotoKey,
-  },
-  {
-    tag: 'Sunday', time: '9:00 a.m.', name: 'Bible Study',
-    desc: "Verse-by-verse study for all ages — adult, youth, and children's classes.",
-    photo: 'women' as ChurchPhotoKey,
-  },
-  {
-    tag: 'Wednesday', time: '6:30 p.m.', name: 'Prayer & Teaching',
-    desc: 'Mid-week gathering for prayer, intercession, and a short word from the pastor.',
-    photo: 'men' as ChurchPhotoKey,
-  },
-];
-
-export default function ServicesSection() {
+export default function ServicesSection({ services }: { services: Service[] }) {
   return (
     <section className="section section--white">
       <div className="tl-container">
@@ -75,7 +58,7 @@ export default function ServicesSection() {
               <div style={{ padding: '28px', display: 'flex', flexDirection: 'column', gap: '10px', flex: 1 }}>
                 <p style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '32px', color: '#A02319', margin: 0, lineHeight: 1 }}>{s.time}</p>
                 <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '22px', margin: 0 }}>{s.name}</h3>
-                <p style={{ fontSize: '15px', lineHeight: 1.55, color: '#3A3A3A', margin: 0, flex: 1 }}>{s.desc}</p>
+                <p style={{ fontSize: '15px', lineHeight: 1.55, color: '#3A3A3A', margin: 0, flex: 1 }}>{s.description}</p>
                 <div style={{
                   display: 'flex', alignItems: 'center', gap: '8px',
                   fontSize: '13px', color: '#6B6B6B', paddingTop: '14px',

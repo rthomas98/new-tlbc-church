@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { HandHeart, CheckCircle2, HandCoins, Building2, ShieldCheck, MessageSquare } from 'lucide-react';
+import ChurchPhoto from '@/components/shared/ChurchPhoto';
 
 export default function PrayerGiveSection() {
   const [name, setName] = useState('');
@@ -28,6 +29,17 @@ export default function PrayerGiveSection() {
           Our pastors and prayer team pray over every request submitted —
           in confidence, with care, and in the name of Christ.
         </p>
+        <div style={{
+          position: 'relative',
+          aspectRatio: '16/9',
+          borderRadius: '18px',
+          overflow: 'hidden',
+          marginTop: '28px',
+          maxWidth: '520px',
+          boxShadow: '0 14px 34px rgba(30,30,30,0.12)',
+        }}>
+          <ChurchPhoto photo="homePrayerCare" sizes="(max-width: 1024px) 100vw, 50vw" />
+        </div>
 
         {!submitted ? (
           <form onSubmit={handlePrayer} style={{ marginTop: '28px', maxWidth: '480px' }}>
@@ -107,6 +119,22 @@ export default function PrayerGiveSection() {
           Your tithes and offerings keep the lights on, the doors open, and the
           Gospel going out — to Baton Rouge and beyond. Every gift matters.
         </p>
+        <div style={{
+          position: 'relative',
+          aspectRatio: '16/9',
+          borderRadius: '18px',
+          overflow: 'hidden',
+          marginTop: '28px',
+          maxWidth: '520px',
+          boxShadow: '0 18px 40px rgba(30,15,12,0.24)',
+        }}>
+          <ChurchPhoto photo="homeGiving" sizes="(max-width: 1024px) 100vw, 50vw" />
+          <div style={{
+            position: 'absolute',
+            inset: 0,
+            background: 'linear-gradient(to bottom, rgba(0,0,0,0.02), rgba(30,15,12,0.28))',
+          }} />
+        </div>
 
         {/* Frequency */}
         <div style={{

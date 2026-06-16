@@ -2,24 +2,11 @@
 import Link from 'next/link';
 import { Bell, BookOpen, CalendarDays, Clock, MapPin, Play, Radio, Users } from 'lucide-react';
 import ChurchPhoto from '@/components/shared/ChurchPhoto';
+import Icon from '@/components/shared/Icon';
 import { FACEBOOK_PAGE_URL } from '@/components/shared/churchLinks';
+import type { Sermon } from '@/lib/db/schema';
 
-const liveServices = [
-  {
-    title: 'Sunday Worship',
-    time: 'Sundays · 10:00 a.m. CT',
-    body: 'Join the sanctuary gathering live on Facebook for worship, prayer, preaching, and fellowship.',
-    icon: CalendarDays,
-  },
-  {
-    title: 'Wednesday Bible Study',
-    time: 'Wednesdays · Bible Study',
-    body: 'Follow along live on Facebook as the church gathers midweek for Bible teaching and prayer.',
-    icon: BookOpen,
-  },
-];
-
-export default function PageWatch() {
+export default function PageWatch({ sermons }: { sermons: Sermon[] }) {
   return (
     <>
       {/* Hero */}
@@ -116,8 +103,8 @@ export default function PageWatch() {
             <a href={FACEBOOK_PAGE_URL} target="_blank" rel="noopener noreferrer" className="btn btn--ghost-dark btn--sm">Open Facebook Live</a>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: '28px' }} className="live-grid">
-            {liveServices.map(({ title, time, body, icon: Icon }) => (
-              <article key={title} style={{
+            {sermons.map((s) => (
+              <article key={s.id} style={{
                 border: '1px solid rgba(30,30,30,0.08)', borderRadius: '16px', padding: '28px',
                 background: '#FAF7F1', display: 'flex', flexDirection: 'column', gap: '18px',
               }}>
@@ -125,14 +112,14 @@ export default function PageWatch() {
                   width: '52px', height: '52px', borderRadius: '50%', background: '#A02319',
                   display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff',
                 }}>
-                  <Icon size={22} />
+                  <Icon name={s.icon} size={22} />
                 </span>
                 <div>
-                  <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '26px', margin: '0 0 6px', lineHeight: 1.15 }}>{title}</h3>
-                  <p style={{ fontSize: '13px', color: '#4FA1C6', fontWeight: 700, margin: 0, textTransform: 'uppercase', letterSpacing: '0.08em' }}>{time}</p>
+                  <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '26px', margin: '0 0 6px', lineHeight: 1.15 }}>{s.title}</h3>
+                  <p style={{ fontSize: '13px', color: '#4FA1C6', fontWeight: 700, margin: 0, textTransform: 'uppercase', letterSpacing: '0.08em' }}>{s.schedule}</p>
                 </div>
-                <p className="prose">{body}</p>
-                <a href={FACEBOOK_PAGE_URL} target="_blank" rel="noopener noreferrer" className="btn btn--ghost-dark btn--sm" style={{ alignSelf: 'flex-start' }}>
+                <p className="prose">{s.description}</p>
+                <a href={s.url || FACEBOOK_PAGE_URL} target="_blank" rel="noopener noreferrer" className="btn btn--ghost-dark btn--sm" style={{ alignSelf: 'flex-start' }}>
                   Watch on Facebook
                 </a>
               </article>

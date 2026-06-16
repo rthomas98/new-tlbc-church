@@ -1,18 +1,5 @@
 'use client';
-const stories = [
-  {
-    quote: "True Light has been our home for 22 years. Pastor Hebert baptized our children — and now they're being baptized by him too. This is family.",
-    name: 'The Hayes Family', role: 'Members since 2003', initials: 'TH',
-  },
-  {
-    quote: "I came in broken and was met with prayer, scripture, and grace. The Lord did the rest. I haven't missed a Sunday since.",
-    name: 'Marcus J.', role: 'Saved at True Light, 2022', initials: 'MJ',
-  },
-  {
-    quote: "The youth ministry gave my son a place to belong, to ask hard questions, and to know Jesus for himself. Worth every Sunday morning.",
-    name: 'Denise W.', role: 'Mom of two · Volunteer', initials: 'DW',
-  },
-];
+import type { Testimonial } from '@/lib/db/schema';
 
 const Star = () => (
   <svg viewBox="0 0 24 24" width="18" height="18" fill="#A02319" aria-hidden="true">
@@ -20,7 +7,7 @@ const Star = () => (
   </svg>
 );
 
-export default function TestimonialsSection() {
+export default function TestimonialsSection({ testimonials }: { testimonials: Testimonial[] }) {
   return (
     <section className="section section--cream">
       <div className="tl-container">
@@ -33,7 +20,7 @@ export default function TestimonialsSection() {
         <div style={{
           display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '24px',
         }} className="testi-grid">
-          {stories.map((t, i) => (
+          {testimonials.map((t, i) => (
             <article key={i} style={{
               background: '#fff', borderRadius: '20px', padding: '32px',
               border: '1px solid rgba(30,30,30,0.08)',
