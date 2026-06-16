@@ -264,3 +264,22 @@ a.btn--ghost-dark:hover, button.btn--ghost-dark:hover { color: #fff; }
   .section-head--row { flex-direction: column; gap: 24px; }
   .h1 { font-size: 44px; }
 }
+
+/* Prevent stray horizontal scroll from decorative/marquee elements.
+   `clip` (not `hidden`) avoids breaking position: sticky. */
+html, body { overflow-x: clip; }
+
+/* ── Hero stats bar (server component — responsive rules live here) ── */
+@media (max-width: 900px) {
+  .hero-bar {
+    grid-template-columns: 1fr 1fr !important;
+    padding: 22px 22px !important;
+    gap: 18px 14px !important;
+    border-radius: 22px 22px 0 0 !important;
+  }
+  .hero-bar > div { border-right: none !important; padding: 0 !important; }
+  .hero-bar .btn { grid-column: 1 / -1; margin-left: 0 !important; justify-content: center; }
+}
+@media (max-width: 480px) {
+  .hero-bar { grid-template-columns: 1fr !important; }
+}
