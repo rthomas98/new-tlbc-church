@@ -3,10 +3,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, ChevronDown, Users, Heart, Flame, HandHeart, CheckCircle2 } from 'lucide-react';
-import { MINISTRIES } from '@/lib/ministries';
-
-/* ── Ministry photo cards (from shared data) ── */
-const cards = MINISTRIES.map(m => ({ slug: m.slug, name: m.name, sub: m.sub, src: m.hero }));
+import type { MinistryPage } from '@/lib/db/schema';
 
 /* ── 3-Step pathway ── */
 const steps = [
@@ -89,7 +86,8 @@ function FaqItem({ q, a }: { q: string; a: string }) {
   );
 }
 
-export default function PageMinistries() {
+export default function PageMinistries({ ministries }: { ministries: MinistryPage[] }) {
+  const cards = ministries.map((m) => ({ slug: m.slug, name: m.name, sub: m.sub, src: m.hero }));
   return (
     <>
       {/* ── Hero ── */}

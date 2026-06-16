@@ -60,7 +60,7 @@ export default function SermonSection() {
             background: 'linear-gradient(to bottom, #7A1A16, #18130F)',
             boxShadow: '0 28px 70px rgba(30,30,30,0.40)',
           }}>
-            <ChurchPhoto photo="worship" sizes="(max-width: 1024px) 100vw, 50vw" />
+            <ChurchPhoto photo="facebookLive" sizes="(max-width: 1024px) 100vw, 50vw" />
             <div style={{
               position: 'absolute', inset: 0,
               background: 'linear-gradient(to bottom, rgba(30,15,12,0) 30%, rgba(30,15,12,0.88) 100%)',

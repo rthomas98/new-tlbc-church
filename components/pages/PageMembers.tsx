@@ -30,7 +30,7 @@ export default function PageMembers() {
           gap: '64px', minHeight: '400px', flexWrap: 'wrap',
           padding: '72px 0',
         }}>
-          <div className="tl-container" style={{
+          <div className="tl-container members-hero" style={{
             display: 'grid', gridTemplateColumns: '1fr auto', gap: '64px', alignItems: 'center', width: '100%',
           }} >
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
@@ -179,8 +179,11 @@ export default function PageMembers() {
 
       <style jsx>{`
         .member-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+        .members-hero { grid-template-columns: 1fr !important; gap: 40px !important; justify-items: start; }
+        .members-hero :global(.member-card-preview) { width: 100%; max-width: 360px; }
         @media (min-width: 1024px) {
           .member-grid { grid-template-columns: 1.2fr 1fr !important; gap: 56px !important; }
+          .members-hero { grid-template-columns: 1fr auto !important; gap: 64px !important; justify-items: stretch; }
         }
       `}</style>
     </>
