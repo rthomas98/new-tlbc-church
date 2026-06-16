@@ -2,7 +2,7 @@ import { asc, eq } from 'drizzle-orm';
 import { db } from './index';
 import {
   events, services, ministries, testimonials, siteSettings,
-  sermons, leaders, beliefs, givingFunds, givingMethods, users, ministryPages,
+  sermons, leaders, beliefs, givingFunds, givingMethods, users, ministryPages, announcements,
 } from './schema';
 
 export async function getEvents() {
@@ -51,6 +51,14 @@ export async function getPublishedTestimonials() {
     .from(testimonials)
     .where(eq(testimonials.published, true))
     .orderBy(asc(testimonials.sort), asc(testimonials.id));
+}
+
+export async function getActiveAnnouncements() {
+  return db
+    .select()
+    .from(announcements)
+    .where(eq(announcements.published, true))
+    .orderBy(asc(announcements.sort), asc(announcements.id));
 }
 
 export async function getSiteSettings() {

@@ -87,6 +87,21 @@ export const testimonials = pgTable('testimonials', {
   sort: integer('sort').notNull().default(0),
 });
 
+// --- Site-wide announcement bar ---
+export const announcements = pgTable('announcements', {
+  id: serial('id').primaryKey(),
+  message: text('message').notNull(),
+  linkLabel: text('link_label').notNull().default(''),
+  linkUrl: text('link_url').notNull().default(''),
+  variant: text('variant').notNull().default('info'), // info | alert | success
+  dismissible: boolean('dismissible').notNull().default(true),
+  published: boolean('published').notNull().default(false), // the on/off switch
+  sort: integer('sort').notNull().default(0),
+  updatedAt: timestamp('updated_at').notNull().defaultNow(),
+});
+
+export type Announcement = typeof announcements.$inferSelect;
+
 // --- Sermons / live services (Watch page) ---
 export const sermons = pgTable('sermons', {
   id: serial('id').primaryKey(),

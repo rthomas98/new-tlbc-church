@@ -16,6 +16,7 @@ import {
   PiggyBank,
   Gift,
   Sparkles,
+  Megaphone,
   Image as ImageIcon,
   UsersRound,
   UserCircle,
@@ -34,6 +35,7 @@ const ICONS: Record<string, LucideIcon> = {
   givingFunds: PiggyBank,
   givingMethods: Gift,
   ministryPages: Sparkles,
+  announcements: Megaphone,
 };
 
 type NavItem = { href: string; label: string; key?: ResourceKey };

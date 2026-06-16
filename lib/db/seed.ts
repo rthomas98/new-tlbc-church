@@ -20,7 +20,7 @@ async function seed() {
   const { db } = await import('./index');
   const {
     users, siteSettings, events, services, ministries, testimonials,
-    sermons, leaders, beliefs, givingFunds, givingMethods, ministryPages,
+    sermons, leaders, beliefs, givingFunds, givingMethods, ministryPages, announcements,
   } = await import('./schema');
   const { MINISTRIES } = await import('../ministries');
 
@@ -194,6 +194,18 @@ async function seed() {
       sort: i,
     })),
   );
+
+  // --- Announcement bar (example, switched OFF by default) ---
+  await db.delete(announcements);
+  await db.insert(announcements).values({
+    message: 'Join us this Sunday at 10:00 a.m. for worship — all are welcome!',
+    linkLabel: 'Plan your visit',
+    linkUrl: '/connect',
+    variant: 'info',
+    dismissible: true,
+    published: false,
+    sort: 0,
+  });
 
   console.log('✅ Seed complete.');
   process.exit(0);

@@ -10,14 +10,14 @@ import { db } from '@/lib/db';
 import bcrypt from 'bcryptjs';
 import {
   events, services, ministries, testimonials, siteSettings,
-  sermons, leaders, beliefs, givingFunds, givingMethods, users, ministryPages,
+  sermons, leaders, beliefs, givingFunds, givingMethods, users, ministryPages, announcements,
 } from '@/lib/db/schema';
 import { RESOURCES, isResourceKey, JSON_FIELD_TYPES, type ResourceKey } from '@/lib/admin/fields';
 import { signIn, signOut, auth } from '@/auth';
 
 const TABLES = {
   events, services, ministries, testimonials,
-  sermons, leaders, beliefs, givingFunds, givingMethods, ministryPages,
+  sermons, leaders, beliefs, givingFunds, givingMethods, ministryPages, announcements,
 } as const;
 
 async function requireAuth() {
