@@ -4,7 +4,7 @@ import { useState, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { CalendarDays, ChevronDown } from 'lucide-react';
+import { CalendarDays, ChevronDown, Menu, X } from 'lucide-react';
 import type { MinistryPage } from '@/lib/db/schema';
 
 type NavLink = { id: string; label: string; href: string; dropdown?: MinistryPage[] };
@@ -23,6 +23,7 @@ export default function Header({ ministries = [] }: { ministries?: MinistryPage[
     { id: 'members',    label: 'Members',    href: '/members' },
   ];
   const [openId, setOpenId] = useState<string | null>(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   function isActive(href: string) {
@@ -46,7 +47,7 @@ export default function Header({ ministries = [] }: { ministries?: MinistryPage[
       backdropFilter: 'blur(12px) saturate(1.4)',
       borderBottom: '1px solid rgba(30,30,30,0.08)',
     }}>
-      <div style={{
+      <div className="header-bar" style={{
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         padding: '16px 32px', gap: '32px',
       }}>
@@ -78,7 +79,7 @@ export default function Header({ ministries = [] }: { ministries?: MinistryPage[
         </Link>
 
         {/* Nav */}
-        <nav style={{ display: 'flex', gap: '28px', flexWrap: 'wrap', alignItems: 'center' }}>
+        <nav className="desktop-nav" style={{ display: 'flex', gap: '28px', flexWrap: 'wrap', alignItems: 'center' }}>
           {NAV_ITEMS.map(item => {
             const active = isActive(item.href);
             const hasDropdown = !!item.dropdown;
@@ -201,14 +202,112 @@ export default function Header({ ministries = [] }: { ministries?: MinistryPage[
           })}
         </nav>
 
-        {/* CTA */}
-        <Link href="/connect" className="btn btn--red" style={{ fontSize: '14px', flexShrink: 0 }}>
+        {/* CTA (desktop) */}
+        <Link href="/connect" className="btn btn--red header-cta" style={{ fontSize: '14px', flexShrink: 0 }}>
           <CalendarDays size={16} />Plan Your Visit
         </Link>
+
+        {/* Hamburger (mobile) */}
+        <button
+          type="button"
+          className="hamburger"
+          aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={mobileOpen}
+          onClick={() => setMobileOpen(o => !o)}
+        >
+          {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
       </div>
 
-      <style jsx>{`
-        :global(.nav-dd-link:hover) { background: rgba(30,30,30,0.04) !important; }
+      {/* Mobile drawer */}
+      <div className={`mobile-drawer${mobileOpen ? ' open' : ''}`}>
+        <nav className="mobile-nav">
+          {NAV_ITEMS.map(item => (
+            <Link
+              key={item.id}
+              href={item.href}
+              className={`mobile-nav__link${isActive(item.href) ? ' active' : ''}`}
+              onClick={() => setMobileOpen(false)}
+            >
+              {item.label}
+            </Link>
+          ))}
+          {ministries.length > 0 && (
+            <div className="mobile-nav__group">
+              <span className="mobile-nav__group-label">Ministries</span>
+              {ministries.map(m => (
+                <Link
+                  key={m.id}
+                  href={`/ministries/${m.slug}`}
+                  className="mobile-nav__sublink"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {m.name}
+                </Link>
+              ))}
+            </div>
+          )}
+          <Link href="/connect" className="btn btn--red" style={{ marginTop: '8px', justifyContent: 'center' }} onClick={() => setMobileOpen(false)}>
+            <CalendarDays size={16} />Plan Your Visit
+          </Link>
+        </nav>
+      </div>
+
+      <style jsx global>{`
+        .nav-dd-link:hover { background: rgba(30,30,30,0.04) !important; }
+
+        .hamburger {
+          display: none;
+          align-items: center; justify-content: center;
+          width: 44px; height: 44px; flex-shrink: 0;
+          background: transparent; border: none; cursor: pointer;
+          color: #1E1E1E; border-radius: 10px; transition: background 150ms;
+        }
+        .hamburger:hover { background: rgba(30,30,30,0.06); }
+        .mobile-drawer { display: none; }
+
+        @media (max-width: 960px) {
+          .desktop-nav { display: none !important; }
+          .header-cta { display: none !important; }
+          .hamburger { display: inline-flex; }
+        }
+        @media (max-width: 640px) {
+          .header-bar { padding: 14px 18px !important; gap: 12px !important; }
+          .mobile-drawer {
+            display: block;
+            overflow: hidden;
+            max-height: 0;
+            border-top: 1px solid rgba(30,30,30,0);
+            transition: max-height 280ms cubic-bezier(0.22,0.61,0.36,1), border-color 280ms;
+          }
+          .mobile-drawer.open {
+            max-height: calc(100vh - 78px);
+            overflow-y: auto;
+            border-top-color: rgba(30,30,30,0.08);
+          }
+          .mobile-nav {
+            display: flex; flex-direction: column; gap: 2px;
+            padding: 14px 24px 24px;
+          }
+          .mobile-nav__link {
+            font-size: 17px; font-weight: 600; color: #1E1E1E;
+            padding: 13px 8px; border-radius: 10px;
+            border-bottom: 1px solid rgba(30,30,30,0.06);
+            transition: color 150ms;
+          }
+          .mobile-nav__link.active { color: #A02319; }
+          .mobile-nav__group { padding: 10px 8px 4px; }
+          .mobile-nav__group-label {
+            display: block; font-size: 11px; font-weight: 700;
+            letter-spacing: 0.18em; text-transform: uppercase; color: #A02319;
+            margin-bottom: 6px;
+          }
+          .mobile-nav__sublink {
+            display: block; font-size: 15px; color: #4A4A4A;
+            padding: 9px 12px; border-radius: 8px;
+          }
+          .mobile-nav__sublink:active { background: rgba(30,30,30,0.05); }
+        }
       `}</style>
     </header>
   );
