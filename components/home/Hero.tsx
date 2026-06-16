@@ -79,14 +79,13 @@ export default function Hero() {
         {/* Info bar */}
         <div style={{
           position: 'relative', zIndex: 4,
-          margin: '0 -0px',
           background: '#F4F1EC',
           borderRadius: '28px 28px 0 0',
-          display: 'grid',
-          gridTemplateColumns: 'repeat(4,1fr) auto',
-          gap: '0',
-          padding: '24px 64px',
+          display: 'flex',
+          flexWrap: 'wrap',
           alignItems: 'center',
+          gap: '18px 0',
+          padding: '24px 64px',
         }} className="hero-bar">
           {[
             { label: 'Sunday Worship',      icon: <Sun size={16} />,       value: '10:00 a.m.' },
@@ -94,8 +93,9 @@ export default function Hero() {
             { label: 'Prayer & Teaching',   icon: <HandHeart size={16} />, value: 'Wed · 6:30 p.m.' },
             { label: 'Address',             icon: <MapPin size={16} />,    value: '3836 North St.' },
           ].map((item, i) => (
-            <div key={i} style={{
+            <div key={i} className="hero-bar__stat" style={{
               display: 'flex', flexDirection: 'column', gap: '4px',
+              flex: '1 1 150px', minWidth: 0,
               padding: '0 16px',
               borderRight: i < 3 ? '1px solid rgba(30,30,30,0.12)' : 'none',
             }}>
@@ -106,12 +106,13 @@ export default function Hero() {
               <span style={{
                 fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '18px',
                 display: 'flex', alignItems: 'center', gap: '8px', color: '#1E1E1E',
+                whiteSpace: 'nowrap',
               }}>
                 {item.icon}{item.value}
               </span>
             </div>
           ))}
-          <Link href="/connect" className="btn btn--red" style={{ marginLeft: '20px', whiteSpace: 'nowrap' }}>
+          <Link href="/connect" className="btn btn--red hero-bar__cta" style={{ marginLeft: '20px', whiteSpace: 'nowrap', flex: '0 0 auto' }}>
             Get Directions <ArrowRight size={16} />
           </Link>
         </div>
