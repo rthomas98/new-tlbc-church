@@ -3,8 +3,17 @@ config({ path: '.env.local' });
 
 import bcrypt from 'bcryptjs';
 
-const ADMIN_EMAIL = 'admin@truelightbr.org';
-const ADMIN_PASSWORD = 'TrueLight2025!';
+// Bootstrap admin credentials. Prefer environment variables; fall back to dev
+// defaults for local seeding only (with a warning). In any shared/production
+// seed, set SEED_ADMIN_EMAIL / SEED_ADMIN_PASSWORD and rotate after first login.
+const ADMIN_EMAIL = process.env.SEED_ADMIN_EMAIL || 'admin@truelightbr.org';
+const ADMIN_PASSWORD = process.env.SEED_ADMIN_PASSWORD || 'TrueLight2025!';
+
+if (!process.env.SEED_ADMIN_PASSWORD) {
+  console.warn(
+    '⚠️  Seeding with the default DEV admin password. Set SEED_ADMIN_PASSWORD in the environment before seeding any shared/production database, and rotate it after first login.',
+  );
+}
 
 async function seed() {
   // Imported after env is loaded so the pool sees DATABASE_URL.
