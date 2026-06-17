@@ -269,6 +269,121 @@ a.btn--ghost-dark:hover, button.btn--ghost-dark:hover { color: #fff; }
    `clip` (not `hidden`) avoids breaking position: sticky. */
 html, body { overflow-x: clip; }
 
+/* ============================================================
+   ✦ DEEP POLISH LAYER — refined editorial atmosphere & detail
+   ============================================================ */
+
+/* — Typography craft: kerning, ligatures, optical sizing — */
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  font-optical-sizing: auto;
+}
+.display, .h1, .h2, .h3, h1, h2, h3 {
+  font-feature-settings: "kern" 1, "liga" 1, "dlig" 1;
+}
+/* Tabular, characterful numerals for stats/dates */
+.tnum, .display { font-variant-numeric: lining-nums; }
+
+/* — Branded selection + accessible focus — */
+::selection { background: #A02319; color: #F4F1EC; }
+::-moz-selection { background: #A02319; color: #F4F1EC; }
+:focus-visible {
+  outline: 2px solid #A02319;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+.section--maroon :focus-visible,
+.section--charcoal :focus-visible,
+.section--blue :focus-visible { outline-color: #F4F1EC; }
+
+/* Anchored sections clear the sticky header */
+:target { scroll-margin-top: 110px; }
+
+/* — Film-grain atmosphere: subtle tactile tooth over the whole site — */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.04;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 140px 140px;
+}
+
+/* — Depth for flat color sections (premium, not AI-flat) — */
+.section--maroon {
+  background: radial-gradient(135% 120% at 12% -10%, #8E211B 0%, #7A1A16 42%, #5C120F 100%);
+}
+.section--charcoal {
+  background: radial-gradient(130% 120% at 82% -10%, #241B15 0%, #18130F 58%, #120E0B 100%);
+}
+.section--blue {
+  background: radial-gradient(135% 120% at 16% -10%, #5BAACF 0%, #4FA1C6 44%, #3F8FB3 100%);
+}
+
+/* — Buttons: subtle dimensional gradient + layered shadow — */
+.btn--red {
+  background: linear-gradient(176deg, #B0291F 0%, #A02319 52%, #921E15 100%);
+  box-shadow: 0 1px 1px rgba(92,18,15,0.3), 0 8px 18px -6px rgba(160,35,25,0.45);
+}
+.btn--red:hover {
+  background: linear-gradient(176deg, #A02319 0%, #921E15 52%, #821911 100%);
+  box-shadow: 0 1px 1px rgba(92,18,15,0.3), 0 12px 26px -8px rgba(160,35,25,0.55);
+}
+.btn--white {
+  box-shadow: 0 1px 1px rgba(30,30,30,0.06), 0 8px 20px -8px rgba(30,30,30,0.22);
+}
+.btn--play {
+  box-shadow: 0 1px 2px rgba(30,30,30,0.18), 0 18px 44px -12px rgba(30,30,30,0.5);
+}
+.btn--play:hover { transform: translateY(-1px) scale(1.04); }
+
+/* — Eyebrow rule: animated draw on the leading mark — */
+.eyebrow::before { transition: width 420ms cubic-bezier(0.22,0.61,0.36,1); }
+
+/* — Tactile image zoom on photo cards (containers already clip overflow) — */
+.event-card img,
+.min-card img,
+.svc-grid article img,
+.leaders-grid img,
+.funds-grid img,
+.other-grid img,
+.media-tile img {
+  transition: transform 700ms cubic-bezier(0.22,0.61,0.36,1);
+  will-change: transform;
+}
+.event-card:hover img,
+.min-card:hover img,
+.svc-grid article:hover img,
+.leaders-grid > div:hover img {
+  transform: scale(1.045);
+}
+
+/* — Refined link underline for inline editorial links in prose — */
+.prose a:not(.btn) {
+  color: #A02319;
+  background-image: linear-gradient(#A02319, #A02319);
+  background-size: 0% 1.5px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  transition: background-size 280ms cubic-bezier(0.22,0.61,0.36,1);
+  padding-bottom: 1px;
+}
+.prose a:not(.btn):hover { background-size: 100% 1.5px; }
+
+/* — Reduced-motion respect — */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
 /* ── Hero stats bar (server component — responsive rules live here) ──
    Flexbox + wrap reflows gracefully at every width / browser. */
 @media (max-width: 1100px) {

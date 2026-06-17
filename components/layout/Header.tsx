@@ -256,6 +256,22 @@ export default function Header({ ministries = [] }: { ministries?: MinistryPage[
       <style jsx global>{`
         .nav-dd-link:hover { background: rgba(30,30,30,0.04) !important; }
 
+        /* Draw-on-hover underline for top-level nav links */
+        .desktop-nav > div > a { position: relative; }
+        .desktop-nav > div > a::after {
+          content: "";
+          position: absolute;
+          left: 0;
+          bottom: -3px;
+          height: 1.5px;
+          width: 100%;
+          background: #A02319;
+          transform: scaleX(0);
+          transform-origin: left center;
+          transition: transform 320ms cubic-bezier(0.22, 0.61, 0.36, 1);
+        }
+        .desktop-nav > div > a:hover::after { transform: scaleX(1); }
+
         .hamburger {
           display: none;
           align-items: center; justify-content: center;
