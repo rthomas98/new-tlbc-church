@@ -22,6 +22,7 @@ export default function PageWatch({ sermons }: { sermons: Sermon[] }) {
             display: 'inline-flex', alignItems: 'center', gap: '8px', marginBottom: '24px',
             background: '#A02319', borderRadius: '999px', padding: '8px 18px',
             fontSize: '11px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#fff',
+            boxShadow: '0 2px 8px rgba(160,35,25,0.45), 0 1px 0 rgba(255,255,255,0.12) inset',
           }}>
             <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#fff', animation: 'pulseDot 1.6s ease-in-out infinite' }} />
             LIVE ON YOUTUBE &amp; FACEBOOK
@@ -61,10 +62,10 @@ export default function PageWatch({ sermons }: { sermons: Sermon[] }) {
                 Bible Study — streaming live on YouTube above, and on Facebook. When we&apos;re live, the
                 stream plays right here; otherwise it shows our latest broadcast.
               </p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '14px', color: '#6B6B6B' }}>
-                <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><Clock size={15} />Sunday worship · 10:00 a.m. CT</span>
-                <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><BookOpen size={15} />Wednesday Bible Study · live online</span>
-                <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><MapPin size={15} />3836 North Street</span>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '14px', color: '#6B6B6B', paddingTop: '6px', borderTop: '1px solid rgba(30,30,30,0.10)', marginTop: '2px' }}>
+                <span style={{ display: 'flex', alignItems: 'center', gap: '10px' }}><Clock size={15} color="#A02319" />Sunday worship · 10:00 a.m. CT</span>
+                <span style={{ display: 'flex', alignItems: 'center', gap: '10px' }}><BookOpen size={15} color="#A02319" />Wednesday Bible Study · live online</span>
+                <span style={{ display: 'flex', alignItems: 'center', gap: '10px' }}><MapPin size={15} color="#A02319" />3836 North Street</span>
               </div>
               <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
                 <a href={YOUTUBE_CHANNEL_URL} target="_blank" rel="noopener noreferrer" className="btn btn--red">Watch on YouTube <Play size={16} fill="currentColor" /></a>
@@ -88,13 +89,14 @@ export default function PageWatch({ sermons }: { sermons: Sermon[] }) {
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: '28px' }} className="live-grid">
             {sermons.map((s) => (
-              <article key={s.id} style={{
+              <article key={s.id} className="live-card" style={{
                 border: '1px solid rgba(30,30,30,0.08)', borderRadius: '16px', padding: '28px',
                 background: '#FAF7F1', display: 'flex', flexDirection: 'column', gap: '18px',
               }}>
                 <span style={{
                   width: '52px', height: '52px', borderRadius: '50%', background: '#A02319',
                   display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff',
+                  boxShadow: '0 6px 16px rgba(160,35,25,0.28), 0 1px 0 rgba(255,255,255,0.15) inset',
                 }}>
                   <Icon name={s.icon} size={22} />
                 </span>
@@ -138,6 +140,17 @@ export default function PageWatch({ sermons }: { sermons: Sermon[] }) {
         @media (min-width: 1024px) {
           .watch-live-grid { grid-template-columns: 1.4fr 1fr !important; }
           .live-grid        { grid-template-columns: repeat(2,1fr) !important; }
+        }
+        .live-card {
+          box-shadow: 0 1px 2px rgba(30,30,30,0.04), 0 8px 24px rgba(30,30,30,0.05);
+          transition: transform 0.4s cubic-bezier(0.22,0.61,0.36,1),
+                      box-shadow 0.4s cubic-bezier(0.22,0.61,0.36,1),
+                      border-color 0.4s cubic-bezier(0.22,0.61,0.36,1);
+        }
+        .live-card:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 2px 4px rgba(30,30,30,0.05), 0 18px 40px rgba(30,30,30,0.10);
+          border-color: rgba(160,35,25,0.22);
         }
       `}</style>
     </>

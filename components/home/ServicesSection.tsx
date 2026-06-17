@@ -29,17 +29,17 @@ export default function ServicesSection({ services }: { services: Service[] }) {
             <article key={s.name} style={{
               background: '#fff', borderRadius: '22px', overflow: 'hidden',
               display: 'flex', flexDirection: 'column',
-              boxShadow: '0 2px 6px rgba(30,30,30,0.08)',
-              transition: 'transform 220ms cubic-bezier(0.22,0.61,0.36,1), box-shadow 220ms cubic-bezier(0.22,0.61,0.36,1)',
+              boxShadow: '0 1px 2px rgba(30,30,30,0.05), 0 8px 24px -12px rgba(30,30,30,0.14)',
+              transition: 'transform 320ms cubic-bezier(0.22,0.61,0.36,1), box-shadow 320ms cubic-bezier(0.22,0.61,0.36,1)',
               border: '1px solid rgba(30,30,30,0.06)',
             }}
               onMouseEnter={e => {
-                (e.currentTarget as HTMLElement).style.transform = 'translateY(-3px)';
-                (e.currentTarget as HTMLElement).style.boxShadow = '0 6px 18px rgba(30,30,30,0.10)';
+                (e.currentTarget as HTMLElement).style.transform = 'translateY(-5px)';
+                (e.currentTarget as HTMLElement).style.boxShadow = '0 2px 4px rgba(30,30,30,0.06), 0 22px 44px -20px rgba(122,26,22,0.30)';
               }}
               onMouseLeave={e => {
                 (e.currentTarget as HTMLElement).style.transform = 'translateY(0)';
-                (e.currentTarget as HTMLElement).style.boxShadow = '0 2px 6px rgba(30,30,30,0.08)';
+                (e.currentTarget as HTMLElement).style.boxShadow = '0 1px 2px rgba(30,30,30,0.05), 0 8px 24px -12px rgba(30,30,30,0.14)';
               }}
             >
               {/* Cover */}
@@ -47,24 +47,37 @@ export default function ServicesSection({ services }: { services: Service[] }) {
                 height: '200px', background: '#7A1A16', position: 'relative', overflow: 'hidden',
               }}>
                 <ChurchPhoto photo={s.photo} sizes="(max-width: 1024px) 50vw, 33vw" />
+                <div aria-hidden style={{
+                  position: 'absolute', inset: 0,
+                  background: 'linear-gradient(to top, rgba(30,30,30,0.22), rgba(30,30,30,0) 45%)',
+                  pointerEvents: 'none',
+                }} />
                 <span style={{
                   position: 'absolute', top: '16px', left: '16px',
                   background: '#fff', borderRadius: '999px', padding: '5px 14px',
                   fontSize: '11px', fontWeight: 600, letterSpacing: '0.12em',
                   textTransform: 'uppercase', color: '#A02319',
+                  boxShadow: '0 2px 8px rgba(30,30,30,0.18)',
                 }}>{s.tag}</span>
               </div>
               {/* Body */}
               <div style={{ padding: '28px', display: 'flex', flexDirection: 'column', gap: '10px', flex: 1 }}>
-                <p style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '32px', color: '#A02319', margin: 0, lineHeight: 1 }}>{s.time}</p>
-                <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '22px', margin: 0 }}>{s.name}</h3>
-                <p style={{ fontSize: '15px', lineHeight: 1.55, color: '#3A3A3A', margin: 0, flex: 1 }}>{s.description}</p>
+                <p style={{
+                  fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '34px',
+                  color: '#A02319', margin: 0, lineHeight: 1, letterSpacing: '-0.01em',
+                }}>{s.time}</p>
+                <h3 style={{
+                  fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '22px',
+                  margin: '2px 0 0', lineHeight: 1.15,
+                }}>{s.name}</h3>
+                <p style={{ fontSize: '15px', lineHeight: 1.6, color: '#3A3A3A', margin: '4px 0 0', flex: 1 }}>{s.description}</p>
                 <div style={{
                   display: 'flex', alignItems: 'center', gap: '8px',
-                  fontSize: '13px', color: '#6B6B6B', paddingTop: '14px',
+                  fontSize: '12px', color: '#6B6B6B', paddingTop: '16px', marginTop: '4px',
                   borderTop: '1px solid rgba(30,30,30,0.08)',
+                  letterSpacing: '0.02em',
                 }}>
-                  <MapPin size={14} /> 3836 North Street, Baton Rouge
+                  <MapPin size={14} color="#A02319" style={{ flexShrink: 0 }} /> 3836 North Street, Baton Rouge
                 </div>
               </div>
             </article>
@@ -73,7 +86,16 @@ export default function ServicesSection({ services }: { services: Service[] }) {
       </div>
 
       <style jsx>{`
-        @media (max-width: 1024px) { .svc-grid { grid-template-columns: 1fr 1fr !important; } }
+        @media (max-width: 1024px) and (min-width: 641px) {
+          .svc-grid { grid-template-columns: 1fr 1fr !important; }
+          /* center a lone last card instead of leaving an empty cell */
+          .svc-grid > article:last-child:nth-child(odd) {
+            grid-column: 1 / -1;
+            max-width: calc(50% - 12px);
+            margin-inline: auto;
+            width: 100%;
+          }
+        }
         @media (max-width: 640px)  { .svc-grid { grid-template-columns: 1fr !important; } }
       `}</style>
     </section>

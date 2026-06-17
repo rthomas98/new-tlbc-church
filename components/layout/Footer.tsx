@@ -41,7 +41,7 @@ export default function Footer() {
             fontSize: 'clamp(40px, 5vw, 72px)', lineHeight: 0.98,
             color: '#fff', margin: 0, textWrap: 'balance',
           }}>
-            We can&apos;t wait<br/>to meet you this Sunday.
+            We can&apos;t wait<br/>to meet you <span style={{ fontStyle: 'italic', fontWeight: 700, color: '#4FA1C6' }}>this Sunday.</span>
           </h2>
           <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
             <Link href="/connect" className="btn btn--cream btn--lg">
@@ -89,22 +89,22 @@ export default function Footer() {
             {/* Social */}
             <div style={{ display: 'flex', gap: '10px', marginTop: '4px' }}>
               {/* Facebook */}
-              <a href={FACEBOOK_PAGE_URL} target="_blank" rel="noopener noreferrer" aria-label="Facebook" style={{
+              <a href={FACEBOOK_PAGE_URL} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="ftr-social" style={{
                 width: '38px', height: '38px', borderRadius: '50%',
                 background: 'rgba(244,241,236,0.10)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                color: '#F4F1EC', transition: 'background 220ms',
+                color: '#F4F1EC',
               }}>
                 <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
                   <path d="M13.5 22v-8h2.7l.4-3.2h-3.1V8.7c0-.9.3-1.6 1.6-1.6h1.7V4.2c-.3 0-1.3-.1-2.4-.1-2.4 0-4 1.4-4 4.1v2.6H7.7V14h2.7v8h3.1z"/>
                 </svg>
               </a>
               {/* Instagram */}
-              <a href="/connect" aria-label="Instagram" style={{
+              <a href="/connect" aria-label="Instagram" className="ftr-social" style={{
                 width: '38px', height: '38px', borderRadius: '50%',
                 background: 'rgba(244,241,236,0.10)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                color: '#F4F1EC', transition: 'background 220ms',
+                color: '#F4F1EC',
               }}>
                 <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="3" y="3" width="18" height="18" rx="5"/>
@@ -113,22 +113,22 @@ export default function Footer() {
                 </svg>
               </a>
               {/* YouTube */}
-              <a href="/watch" aria-label="Watch live" style={{
+              <a href="/watch" aria-label="Watch live" className="ftr-social" style={{
                 width: '38px', height: '38px', borderRadius: '50%',
                 background: 'rgba(244,241,236,0.10)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                color: '#F4F1EC', transition: 'background 220ms',
+                color: '#F4F1EC',
               }}>
                 <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
                   <path d="M21.6 7.2c-.2-1-1-1.7-2-2C17.7 4.8 12 4.8 12 4.8s-5.7 0-7.6.4c-1 .3-1.8 1-2 2C2 9.1 2 12 2 12s0 2.9.4 4.8c.2 1 1 1.7 2 2 1.9.4 7.6.4 7.6.4s5.7 0 7.6-.4c1-.3 1.8-1 2-2 .4-1.9.4-4.8.4-4.8s0-2.9-.4-4.8zM10 15.2V8.8l5.2 3.2-5.2 3.2z"/>
                 </svg>
               </a>
               {/* Email */}
-              <a href="mailto:info@truelightbaptist.org" aria-label="Email" style={{
+              <a href="mailto:info@truelightbaptist.org" aria-label="Email" className="ftr-social" style={{
                 width: '38px', height: '38px', borderRadius: '50%',
                 background: 'rgba(244,241,236,0.10)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                color: '#F4F1EC', transition: 'background 220ms',
+                color: '#F4F1EC',
               }}>
                 <Mail size={16} />
               </a>
@@ -137,11 +137,7 @@ export default function Footer() {
 
           {/* Visit */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
-            <p style={{
-              fontSize: '11px', fontWeight: 600, letterSpacing: '0.22em',
-              textTransform: 'uppercase', color: '#4FA1C6',
-              margin: '0 0 18px',
-            }}>Visit</p>
+            <p className="ftr-label">Visit</p>
             <p style={{ fontSize: '14px', color: 'rgba(244,241,236,0.86)', lineHeight: 1.65, margin: '0 0 18px' }}>
               3836 North Street<br/>
               Baton Rouge, LA 70806
@@ -158,16 +154,12 @@ export default function Footer() {
 
           {/* Connect */}
           <div>
-            <p style={{
-              fontSize: '11px', fontWeight: 600, letterSpacing: '0.22em',
-              textTransform: 'uppercase', color: '#4FA1C6', margin: '0 0 18px',
-            }}>Connect</p>
-            <ul style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            <p className="ftr-label">Connect</p>
+            <ul style={{ display: 'flex', flexDirection: 'column', gap: '11px' }}>
               {footerLinks.connect.map(l => (
                 <li key={l.label}>
-                  <Link href={l.href} style={{
+                  <Link href={l.href} className="ftr-link" style={{
                     fontSize: '14px', color: 'rgba(244,241,236,0.86)',
-                    transition: 'color 180ms',
                   }}>
                     {l.label}
                   </Link>
@@ -178,16 +170,12 @@ export default function Footer() {
 
           {/* Ministries */}
           <div>
-            <p style={{
-              fontSize: '11px', fontWeight: 600, letterSpacing: '0.22em',
-              textTransform: 'uppercase', color: '#4FA1C6', margin: '0 0 18px',
-            }}>Ministries</p>
-            <ul style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            <p className="ftr-label">Ministries</p>
+            <ul style={{ display: 'flex', flexDirection: 'column', gap: '11px' }}>
               {footerLinks.ministries.map(l => (
                 <li key={l.label}>
-                  <Link href={l.href} style={{
+                  <Link href={l.href} className="ftr-link" style={{
                     fontSize: '14px', color: 'rgba(244,241,236,0.86)',
-                    transition: 'color 180ms',
                   }}>
                     {l.label}
                   </Link>
@@ -213,15 +201,62 @@ export default function Footer() {
             fontSize: '12px', color: 'rgba(244,241,236,0.65)',
           }}>
             <span>© 2026 True Light Baptist Church</span>
-            <span>·</span>
-            <Link href="/privacy" style={{ color: 'rgba(244,241,236,0.65)' }}>Privacy</Link>
-            <span>·</span>
-            <Link href="/members" style={{ color: 'rgba(244,241,236,0.65)' }}>Member Login</Link>
+            <span aria-hidden="true">·</span>
+            <Link href="/privacy" className="ftr-meta-link" style={{ color: 'rgba(244,241,236,0.65)' }}>Privacy</Link>
+            <span aria-hidden="true">·</span>
+            <Link href="/members" className="ftr-meta-link" style={{ color: 'rgba(244,241,236,0.65)' }}>Member Login</Link>
           </div>
         </div>
       </div>
 
       <style jsx>{`
+        .ftr-label {
+          position: relative;
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          font-size: 11px;
+          font-weight: 600;
+          letter-spacing: 0.22em;
+          text-transform: uppercase;
+          color: #4FA1C6;
+          margin: 0 0 18px;
+        }
+        .ftr-label::before {
+          content: '';
+          width: 18px;
+          height: 1px;
+          background: rgba(79,161,198,0.55);
+        }
+        .ftr-link {
+          position: relative;
+          display: inline-block;
+          transition: color 320ms cubic-bezier(0.22,0.61,0.36,1),
+                      transform 320ms cubic-bezier(0.22,0.61,0.36,1);
+        }
+        .ftr-link:hover,
+        .ftr-link:focus-visible {
+          color: #fff !important;
+          transform: translateX(3px);
+        }
+        .ftr-social {
+          transition: background 320ms cubic-bezier(0.22,0.61,0.36,1),
+                      color 320ms cubic-bezier(0.22,0.61,0.36,1),
+                      transform 320ms cubic-bezier(0.22,0.61,0.36,1);
+        }
+        .ftr-social:hover,
+        .ftr-social:focus-visible {
+          background: #4FA1C6 !important;
+          color: #fff !important;
+          transform: translateY(-2px);
+        }
+        .ftr-meta-link {
+          transition: color 320ms cubic-bezier(0.22,0.61,0.36,1);
+        }
+        .ftr-meta-link:hover,
+        .ftr-meta-link:focus-visible {
+          color: rgba(244,241,236,0.95) !important;
+        }
         @media (max-width: 1024px) {
           .ftr-main-grid { grid-template-columns: 1fr 1fr !important; gap: 40px !important; }
           .ftr-cta-grid  { grid-template-columns: 1fr !important; }

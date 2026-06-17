@@ -9,7 +9,7 @@ export default function Hero() {
         position: 'relative', borderRadius: '28px', overflow: 'hidden',
         minHeight: '720px', display: 'flex', flexDirection: 'column',
         justifyContent: 'flex-end',
-        boxShadow: '0 24px 60px rgba(30,30,30,0.18)',
+        boxShadow: '0 2px 4px rgba(30,30,30,0.04), 0 18px 40px rgba(30,30,30,0.12), 0 36px 80px rgba(122,26,22,0.14)',
         maxWidth: '1440px', margin: '0 auto',
       }}>
         {/* Background photo */}
@@ -20,7 +20,13 @@ export default function Hero() {
         {/* Gradient overlay */}
         <div style={{
           position: 'absolute', inset: 0, zIndex: 2,
-          background: 'linear-gradient(to bottom, rgba(30,15,12,0.10) 0%, rgba(30,15,12,0.85) 85%), linear-gradient(135deg, #A02319 0%, #7A1A16 20%, transparent 60%)',
+          background: 'linear-gradient(to bottom, rgba(30,15,12,0.08) 0%, rgba(30,15,12,0.32) 48%, rgba(30,15,12,0.86) 88%), linear-gradient(135deg, #A02319 0%, #7A1A16 20%, transparent 58%)',
+        }} />
+
+        {/* Edge vignette for editorial depth */}
+        <div style={{
+          position: 'absolute', inset: 0, zIndex: 3, pointerEvents: 'none',
+          boxShadow: 'inset 0 0 140px rgba(30,15,12,0.30)',
         }} />
 
         {/* Content */}
@@ -31,11 +37,11 @@ export default function Hero() {
           maxWidth: '1100px',
         }}>
           <p style={{
-            fontSize: '12px', fontWeight: 600, letterSpacing: '0.22em',
-            textTransform: 'uppercase', color: 'rgba(244,241,236,0.55)',
-            display: 'flex', alignItems: 'center', gap: '10px', margin: '0 0 28px',
+            fontSize: '12px', fontWeight: 600, letterSpacing: '0.24em',
+            textTransform: 'uppercase', color: 'rgba(244,241,236,0.68)',
+            display: 'flex', alignItems: 'center', gap: '14px', margin: '0 0 30px',
           }}>
-            <span style={{ display: 'inline-block', width: '24px', height: '2px', background: 'rgba(244,241,236,0.55)' }} />
+            <span style={{ display: 'inline-block', width: '32px', height: '2px', background: 'linear-gradient(to right, #4FA1C6, rgba(182,216,230,0.4))', borderRadius: '2px' }} />
             Sunday Worship · 10:00 a.m.
           </p>
 
@@ -44,6 +50,7 @@ export default function Hero() {
             fontSize: 'clamp(56px, 7.8vw, 110px)',
             lineHeight: 0.95, letterSpacing: '-0.028em',
             margin: '0 0 28px', color: '#fff', textWrap: 'balance',
+            textShadow: '0 2px 30px rgba(30,15,12,0.28)',
           }}>
             Worship in His <em style={{ fontStyle: 'italic', fontWeight: 600, color: '#B6D8E6' }}>light,</em><br/>
             every Sunday.
@@ -65,11 +72,12 @@ export default function Hero() {
             <Link href="/watch" className="btn btn--ghost-light btn--lg">
               <PlayCircle size={18} />Watch Live
             </Link>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginLeft: '8px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginLeft: '16px', paddingLeft: '24px', borderLeft: '1px solid rgba(244,241,236,0.22)' }}>
               <div style={{
                 fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '36px', color: '#fff',
+                lineHeight: 1, letterSpacing: '-0.01em',
               }}>1941</div>
-              <div style={{ fontSize: '12px', lineHeight: 1.4, maxWidth: '130px', color: 'rgba(244,241,236,0.78)' }}>
+              <div style={{ fontSize: '12px', lineHeight: 1.45, maxWidth: '130px', color: 'rgba(244,241,236,0.78)' }}>
                 Rooted in Baton Rouge for over 80 years
               </div>
             </div>
@@ -86,6 +94,7 @@ export default function Hero() {
           alignItems: 'center',
           gap: '18px 0',
           padding: '24px 64px',
+          boxShadow: '0 -8px 30px rgba(30,15,12,0.18)',
         }} className="hero-bar">
           {[
             { label: 'Sunday Worship',      icon: <Sun size={16} />,       value: '10:00 a.m.' },

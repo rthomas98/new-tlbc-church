@@ -81,10 +81,10 @@ export default function PageMinistryDetail({
 
             {/* Leader card + scripture */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-              <div style={{
+              <div className="leader-card" style={{
                 background: '#fff', borderRadius: '20px', padding: '32px',
                 border: '1px solid rgba(30,30,30,0.08)',
-                boxShadow: '0 6px 18px rgba(30,30,30,0.08)',
+                boxShadow: '0 1px 1px rgba(30,30,30,0.04), 0 8px 24px rgba(30,30,30,0.08)',
               }}>
                 <p style={{ fontSize: '11px', fontWeight: 600, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#A02319', margin: '0 0 16px' }}>
                   Ministry Leader
@@ -108,6 +108,7 @@ export default function PageMinistryDetail({
               <blockquote style={{
                 background: '#7A1A16', color: '#F4F1EC', borderRadius: '20px',
                 padding: '36px 32px', margin: 0, position: 'relative', overflow: 'hidden',
+                boxShadow: '0 1px 1px rgba(122,26,22,0.12), 0 14px 36px rgba(122,26,22,0.22)',
               }}>
                 <div style={{
                   position: 'absolute', top: '-10px', left: '20px',
@@ -142,9 +143,10 @@ export default function PageMinistryDetail({
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: '24px' }} className="expect-grid">
             {ministry.expectations.map((e, i) => (
-              <div key={i} style={{
+              <div key={i} className="expect-card" style={{
                 display: 'flex', gap: '20px', padding: '28px',
                 background: '#F4F1EC', borderRadius: '18px',
+                border: '1px solid rgba(30,30,30,0.06)',
               }}>
                 <div style={{
                   width: '40px', height: '40px', borderRadius: '50%',
@@ -227,13 +229,13 @@ export default function PageMinistryDetail({
                     </h3>
                     <p style={{ fontSize: '11px', fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.78)', margin: '6px 0 0' }}>{m.sub}</p>
                   </div>
-                  <span style={{
+                  <span className="other-card__more" style={{
                     fontSize: '14px', fontWeight: 600,
                     display: 'inline-flex', alignItems: 'center', gap: '6px',
                     borderBottom: '1px solid rgba(255,255,255,0.55)', paddingBottom: '2px',
                     alignSelf: 'flex-start',
                   }}>
-                    Learn more <ArrowRight size={14} />
+                    Learn more <ArrowRight size={14} className="other-card__arrow" />
                   </span>
                 </div>
               </Link>
@@ -256,8 +258,18 @@ export default function PageMinistryDetail({
           .about-grid  { grid-template-columns: 1.4fr 1fr !important; gap: 64px !important; }
           .other-grid  { grid-template-columns: repeat(3,1fr) !important; }
         }
-        .other-card { transition: transform 280ms cubic-bezier(0.22,0.61,0.36,1), box-shadow 280ms; }
+        .other-card { transition: transform 280ms cubic-bezier(0.22,0.61,0.36,1), box-shadow 280ms cubic-bezier(0.22,0.61,0.36,1); }
         .other-card:hover { transform: translateY(-4px); box-shadow: 0 20px 48px rgba(30,30,30,0.22); }
+        .other-card__more { transition: border-color 280ms cubic-bezier(0.22,0.61,0.36,1); }
+        .other-card:hover .other-card__more { border-bottom-color: rgba(255,255,255,0.95); }
+        .other-card__arrow { transition: transform 280ms cubic-bezier(0.22,0.61,0.36,1); }
+        .other-card:hover .other-card__arrow { transform: translateX(4px); }
+
+        .leader-card { transition: transform 280ms cubic-bezier(0.22,0.61,0.36,1), box-shadow 280ms cubic-bezier(0.22,0.61,0.36,1); }
+        .leader-card:hover { transform: translateY(-3px); box-shadow: 0 2px 4px rgba(30,30,30,0.05), 0 18px 40px rgba(30,30,30,0.12); }
+
+        .expect-card { transition: transform 280ms cubic-bezier(0.22,0.61,0.36,1), box-shadow 280ms cubic-bezier(0.22,0.61,0.36,1), border-color 280ms cubic-bezier(0.22,0.61,0.36,1); }
+        .expect-card:hover { transform: translateY(-3px); border-color: rgba(160,35,25,0.16); box-shadow: 0 1px 2px rgba(30,30,30,0.04), 0 14px 32px rgba(30,30,30,0.10); }
       `}</style>
     </>
   );
