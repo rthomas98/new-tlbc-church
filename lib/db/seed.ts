@@ -167,11 +167,9 @@ async function seed() {
   // --- Giving methods ---
   await db.delete(givingMethods);
   await db.insert(givingMethods).values([
-    { title: 'Online', description: 'One-time or recurring · debit, credit, ACH', icon: 'Globe', sort: 0 },
-    { title: 'Text', description: 'Text GIVE to (225) 555-4483', icon: 'Phone', sort: 1 },
-    { title: 'In Person', description: 'Offering plate · Sunday at 10 a.m.', icon: 'Hand', sort: 2 },
-    { title: 'By Mail', description: 'TLBC · 3836 North Street · Baton Rouge, LA 70806', icon: 'Mail', sort: 3 },
-    { title: 'Planned Giving', description: 'Bequests, stock, IRA distributions — talk to our finance team', icon: 'FileText', sort: 4 },
+    { title: 'In Person', description: 'Offering plate · Sunday at 10 a.m.', icon: 'Hand', sort: 0 },
+    { title: 'By Mail', description: 'TLBC · 3836 North Street · Baton Rouge, LA 70806', icon: 'Mail', sort: 1 },
+    { title: 'Planned Giving', description: 'Bequests, stock, IRA distributions — talk to our finance team', icon: 'FileText', sort: 2 },
   ]);
 
   // --- Ministry detail pages ---
