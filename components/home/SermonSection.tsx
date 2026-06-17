@@ -27,14 +27,15 @@ export default function SermonSection() {
               Sunday worship and Wednesday Bible Study.
             </p>
             <div style={{ display: 'flex', gap: '28px', fontSize: '13px', color: '#6B6B6B', flexWrap: 'wrap' }}>
-              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}><CalendarDays size={14} />Sundays · 10:00 a.m.</span>
-              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}><BookOpen size={14} />Wednesday Bible Study</span>
-              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}><Radio size={14} />Facebook Live</span>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}><CalendarDays size={14} color="#A02319" />Sundays · 10:00 a.m.</span>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}><BookOpen size={14} color="#A02319" />Wednesday Bible Study</span>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}><Radio size={14} color="#A02319" />Facebook Live</span>
             </div>
             <blockquote style={{
-              padding: '22px 24px', background: '#FAF7F1',
+              padding: '22px 26px', background: '#FAF7F1',
               borderLeft: '3px solid #A02319', borderRadius: '0 10px 10px 0',
               fontFamily: 'var(--font-display)', fontStyle: 'italic', fontSize: '17px', lineHeight: 1.5, margin: 0,
+              boxShadow: '0 1px 1px rgba(30,30,30,0.03), 0 8px 24px rgba(122,26,22,0.06)',
             }}>
               &ldquo;Bow down thine ear, O Lord, hear me: for I am poor and needy.&rdquo;
               <span style={{
@@ -55,10 +56,11 @@ export default function SermonSection() {
           </div>
 
           {/* Player */}
-          <div style={{
+          <div className="sermon-player" style={{
             aspectRatio: '4/5', borderRadius: '22px', overflow: 'hidden', position: 'relative',
             background: 'linear-gradient(to bottom, #7A1A16, #18130F)',
-            boxShadow: '0 28px 70px rgba(30,30,30,0.40)',
+            boxShadow: '0 2px 6px rgba(30,30,30,0.10), 0 18px 40px rgba(30,30,30,0.22), 0 36px 80px rgba(122,26,22,0.20)',
+            transition: 'transform 0.45s cubic-bezier(0.22,0.61,0.36,1), box-shadow 0.45s cubic-bezier(0.22,0.61,0.36,1)',
           }}>
             <ChurchPhoto photo="facebookLive" sizes="(max-width: 1024px) 100vw, 50vw" />
             <div style={{
@@ -98,6 +100,10 @@ export default function SermonSection() {
       </div>
 
       <style jsx>{`
+        .sermon-player:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 4px 10px rgba(30,30,30,0.12), 0 26px 54px rgba(30,30,30,0.26), 0 48px 96px rgba(122,26,22,0.24);
+        }
         @media (max-width: 1024px) { .sermon-grid { grid-template-columns: 1fr !important; gap: 48px !important; } }
       `}</style>
     </section>

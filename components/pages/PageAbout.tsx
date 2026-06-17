@@ -84,7 +84,8 @@ export default function PageAbout({ beliefs, leaders }: { beliefs: Belief[]; lea
                 <div style={{
                   aspectRatio: '5/6', borderRadius: '18px 18px 0 0', overflow: 'hidden',
                   transform: 'rotate(-1.2deg)',
-                  boxShadow: '0 24px 60px rgba(0,0,0,0.35)',
+                  boxShadow: '0 2px 6px rgba(0,0,0,0.18), 0 24px 60px rgba(0,0,0,0.38)',
+                  outline: '1px solid rgba(244,241,236,0.10)', outlineOffset: '-1px',
                   position: 'relative',
                 }}>
                   <ChurchPhoto photo="worship" priority sizes="(max-width: 1024px) 100vw, 45vw" />
@@ -100,7 +101,7 @@ export default function PageAbout({ beliefs, leaders }: { beliefs: Belief[]; lea
         <div className="tl-container">
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.1fr', gap: '64px', alignItems: 'start' }} className="about-story-grid">
             <div style={{ position: 'relative' }}>
-              <div style={{ borderRadius: '18px', overflow: 'hidden', boxShadow: '0 18px 40px rgba(30,30,30,0.14)', position: 'relative', aspectRatio: '5/4' }}>
+              <div style={{ borderRadius: '18px', overflow: 'hidden', boxShadow: '0 1px 3px rgba(30,30,30,0.08), 0 18px 44px rgba(30,30,30,0.15)', position: 'relative', aspectRatio: '5/4', outline: '1px solid rgba(30,30,30,0.06)', outlineOffset: '-1px' }}>
                 <ChurchPhoto photo="outreach" sizes="(max-width: 1024px) 100vw, 45vw" />
               </div>
               <p className="caption" style={{ textAlign: 'center', fontStyle: 'italic', marginTop: '12px' }}>
@@ -109,7 +110,7 @@ export default function PageAbout({ beliefs, leaders }: { beliefs: Belief[]; lea
             </div>
             <div>
               <p className="eyebrow">Our Story</p>
-              <h2 className="display" style={{ fontSize: '42px', marginTop: '10px' }}>Eighty-five years of faithful witness.</h2>
+              <h2 className="display" style={{ fontSize: '42px', marginTop: '10px' }}>Eighty-five years of <em style={{ fontStyle: 'italic' }}>faithful witness.</em></h2>
               <p className="prose" style={{ marginTop: '24px' }}>
                 In 1941, fourteen families gathered in a borrowed schoolroom on North Boulevard with a folding
                 table for an altar and a single hymnal. They asked God for a church that would preach His Word
@@ -180,15 +181,15 @@ export default function PageAbout({ beliefs, leaders }: { beliefs: Belief[]; lea
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '32px' }} className="leaders-grid">
             {leaders.map((l) => (
-              <div key={l.id}>
-                <div style={{ borderRadius: '14px', overflow: 'hidden', aspectRatio: '5/6' }}>
+              <div key={l.id} className="leader-card">
+                <div style={{ borderRadius: '14px', overflow: 'hidden', aspectRatio: '5/6', boxShadow: '0 1px 3px rgba(0,0,0,0.16), 0 14px 32px rgba(0,0,0,0.20)', outline: '1px solid rgba(244,241,236,0.12)', outlineOffset: '-1px' }}>
                   <div style={{ position: 'relative', width: '100%', height: '100%' }}>
                     <ChurchPhoto photo={l.photo} sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" />
                   </div>
                 </div>
-                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '22px', color: '#fff', marginTop: '16px' }}>{l.name}</div>
-                <div style={{ fontSize: '14px', color: '#4FA1C6', marginTop: '2px' }}>{l.role}</div>
-                <div style={{ fontSize: '12px', color: 'rgba(244,241,236,0.55)', marginTop: '4px' }}>{l.org}</div>
+                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '22px', color: '#fff', marginTop: '18px' }}>{l.name}</div>
+                <div style={{ fontSize: '13px', fontWeight: 600, color: '#B6D8E6', marginTop: '3px' }}>{l.role}</div>
+                <div style={{ fontSize: '11px', fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(244,241,236,0.50)', marginTop: '6px' }}>{l.org}</div>
               </div>
             ))}
           </div>
@@ -212,12 +213,16 @@ export default function PageAbout({ beliefs, leaders }: { beliefs: Belief[]; lea
 
         /* Belief cards — scroll entrance + hover */
         .belief-card {
-          padding: 28px;
+          padding: 30px 28px;
           background: #F4F1EC;
+          border: 1px solid rgba(30,30,30,0.06);
           border-radius: 18px;
           opacity: 0;
           transform: translateY(28px);
-          transition: opacity 480ms ease, transform 480ms ease, box-shadow 220ms ease;
+          transition: opacity 520ms cubic-bezier(0.22,0.61,0.36,1),
+                      transform 520ms cubic-bezier(0.22,0.61,0.36,1),
+                      box-shadow 260ms cubic-bezier(0.22,0.61,0.36,1),
+                      border-color 260ms ease;
           transition-delay: var(--delay, 0ms);
           cursor: default;
         }
@@ -226,9 +231,18 @@ export default function PageAbout({ beliefs, leaders }: { beliefs: Belief[]; lea
           transform: translateY(0);
         }
         .belief-card:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 16px 40px rgba(30,30,30,0.11);
+          transform: translateY(-6px);
+          border-color: rgba(160,35,25,0.16);
+          box-shadow: 0 2px 6px rgba(30,30,30,0.05), 0 18px 44px rgba(30,30,30,0.12);
           transition-delay: 0ms;
+        }
+
+        /* Leadership cards — refined hover lift */
+        .leader-card {
+          transition: transform 360ms cubic-bezier(0.22,0.61,0.36,1);
+        }
+        .leader-card:hover {
+          transform: translateY(-5px);
         }
       `}</style>
     </>

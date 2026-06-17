@@ -72,7 +72,7 @@ export default function PageEvents() {
       <section className="section section--cream" style={{ paddingTop: '88px' }}>
         <div className="tl-container">
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '64px', alignItems: 'center' }} className="featured-grid">
-            <div style={{ borderRadius: '18px', overflow: 'hidden', aspectRatio: '17/14', boxShadow: '0 18px 40px rgba(30,30,30,0.14)' }}>
+            <div className="featured-img" style={{ borderRadius: '18px', overflow: 'hidden', aspectRatio: '17/14', boxShadow: '0 1px 2px rgba(30,30,30,0.06), 0 12px 28px rgba(30,30,30,0.10), 0 28px 56px rgba(122,26,22,0.10)' }}>
               <div style={{ position: 'relative', width: '100%', height: '100%' }}>
                 <ChurchPhoto photo="outreach" sizes="(max-width: 1024px) 100vw, 50vw" />
               </div>
@@ -121,13 +121,14 @@ export default function PageEvents() {
                 borderBottom: '1px solid rgba(30,30,30,0.08)',
               }} className="cal-row">
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                  <span style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', color: '#A02319' }}>{m}</span>
-                  <span style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '36px', lineHeight: 1 }}>{d}</span>
+                  <span style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', color: '#A02319', letterSpacing: '0.08em' }}>{m}</span>
+                  <span style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '36px', lineHeight: 1, color: '#1E1E1E' }}>{d}</span>
                   <span style={{ fontSize: '10px', fontWeight: 600, textTransform: 'uppercase', color: '#6B6B6B', letterSpacing: '0.1em' }}>{dow}</span>
                 </div>
-                <div style={{
+                <div className="cal-icon" style={{
                   width: '48px', height: '48px', borderRadius: '12px',
                   background: '#F4F1EC', color: '#1E1E1E',
+                  border: '1px solid rgba(30,30,30,0.06)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                 }}><Icon size={20} /></div>
                 <div>
@@ -135,7 +136,7 @@ export default function PageEvents() {
                   <p style={{ fontSize: '13px', color: '#6B6B6B', margin: 0 }}>{when}</p>
                 </div>
                 <div style={{ fontSize: '13px', color: '#6B6B6B' }} className="cal-note">{note}</div>
-                <Link href="/connect" style={{
+                <Link href="/connect" aria-label={`Get involved with ${title}`} className="cal-link" style={{
                   width: '40px', height: '40px', borderRadius: '50%',
                   background: '#F4F1EC', color: '#A02319',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -155,7 +156,7 @@ export default function PageEvents() {
             <p className="eyebrow eyebrow--cream">Every Week</p>
             <h2 className="display" style={{ fontSize: '40px', color: '#fff' }}>Our weekly rhythm.</h2>
           </div>
-          <div style={{ background: 'rgba(244,241,236,0.06)', borderRadius: '18px', padding: '8px 24px' }}>
+          <div style={{ background: 'rgba(244,241,236,0.06)', borderRadius: '18px', padding: '8px 24px', border: '1px solid rgba(244,241,236,0.08)', boxShadow: 'inset 0 1px 0 rgba(244,241,236,0.06)' }}>
             {weeklyRhythm.map(([day, time, title, where]) => (
               <div key={day + time} style={{
                 display: 'grid', gridTemplateColumns: '120px 100px 1fr 1.2fr',
@@ -176,11 +177,61 @@ export default function PageEvents() {
       <style jsx>{`
         .featured-grid { grid-template-columns: 1fr !important; gap: 48px !important; }
         .cal-note { display: none; }
-        .rhythm-row { grid-template-columns: 1fr !important; gap: 4px !important; padding: 14px 0 !important; }
+
+        .cal-row {
+          position: relative;
+          transition: background 0.4s cubic-bezier(0.22,0.61,0.36,1);
+        }
+        .cal-row::before {
+          content: '';
+          position: absolute;
+          left: 0; top: 14px; bottom: 14px;
+          width: 2px;
+          background: #A02319;
+          transform: scaleY(0);
+          transform-origin: center;
+          transition: transform 0.4s cubic-bezier(0.22,0.61,0.36,1);
+        }
+        .cal-row:hover {
+          background: linear-gradient(90deg, rgba(160,35,25,0.035), rgba(160,35,25,0));
+        }
+        .cal-row:hover::before { transform: scaleY(1); }
+        .cal-icon {
+          transition: background 0.4s cubic-bezier(0.22,0.61,0.36,1), color 0.4s cubic-bezier(0.22,0.61,0.36,1), border-color 0.4s cubic-bezier(0.22,0.61,0.36,1);
+        }
+        .cal-row:hover .cal-icon {
+          background: #A02319;
+          color: #F4F1EC;
+          border-color: #A02319;
+        }
+        .cal-link {
+          transition: background 0.35s cubic-bezier(0.22,0.61,0.36,1), color 0.35s cubic-bezier(0.22,0.61,0.36,1), transform 0.35s cubic-bezier(0.22,0.61,0.36,1);
+        }
+        .cal-link:hover {
+          background: #A02319;
+          color: #F4F1EC;
+          transform: translate(2px, -2px);
+        }
+
+        .rhythm-row {
+          grid-template-columns: 1fr !important; gap: 4px !important; padding: 14px 0 !important;
+          transition: background 0.4s cubic-bezier(0.22,0.61,0.36,1);
+          border-radius: 10px;
+          margin: 0 -12px;
+          padding-left: 12px !important;
+          padding-right: 12px !important;
+        }
+        .rhythm-row:hover { background: rgba(244,241,236,0.05); }
+        .rhythm-row:last-child { border-bottom: none !important; }
+
+        .featured-img :global(img) {
+          transition: transform 0.8s cubic-bezier(0.22,0.61,0.36,1);
+        }
+        .featured-img:hover :global(img) { transform: scale(1.04); }
         @media (min-width: 1024px) {
           .featured-grid { grid-template-columns: 1fr 1fr !important; }
           .cal-note { display: block; }
-          .rhythm-row { grid-template-columns: 120px 100px 1fr 1.2fr !important; gap: 24px !important; padding: 18px 0 !important; }
+          .rhythm-row { grid-template-columns: 120px 100px 1fr 1.2fr !important; gap: 24px !important; padding: 18px 12px !important; }
         }
         @media (max-width: 640px) {
           .cal-row { grid-template-columns: 64px 1fr 32px !important; gap: 16px !important; }

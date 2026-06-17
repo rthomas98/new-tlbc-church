@@ -46,6 +46,7 @@ export default function Header({ ministries = [] }: { ministries?: MinistryPage[
       background: 'rgba(244,241,236,0.92)',
       backdropFilter: 'blur(12px) saturate(1.4)',
       borderBottom: '1px solid rgba(30,30,30,0.08)',
+      boxShadow: '0 1px 0 rgba(255,255,255,0.5) inset, 0 8px 24px -16px rgba(30,30,30,0.22)',
     }}>
       <div className="header-bar" style={{
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
@@ -53,10 +54,12 @@ export default function Header({ ministries = [] }: { ministries?: MinistryPage[
       }}>
         {/* Brand */}
         <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '14px', textDecoration: 'none', flexShrink: 0 }}>
-          <span style={{
+          <span className="brand-seal" style={{
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             width: '44px', height: '44px', borderRadius: '50%', background: '#A02319',
             flexShrink: 0,
+            boxShadow: '0 4px 12px -2px rgba(160,35,25,0.45), 0 0 0 1px rgba(160,35,25,0.25), inset 0 1px 0 rgba(255,255,255,0.22)',
+            transition: 'transform 360ms cubic-bezier(0.22,0.61,0.36,1), box-shadow 360ms cubic-bezier(0.22,0.61,0.36,1)',
           }}>
             <Image
               src="/assets/logo-icon-real.svg"
@@ -99,7 +102,7 @@ export default function Header({ ministries = [] }: { ministries?: MinistryPage[
                   style={{
                     fontSize: '14px', fontWeight: 500, position: 'relative',
                     color: active ? '#A02319' : '#1E1E1E',
-                    transition: 'color 180ms',
+                    transition: 'color 220ms cubic-bezier(0.22,0.61,0.36,1)',
                     paddingBottom: '2px',
                     display: 'inline-flex', alignItems: 'center', gap: '4px',
                   }}
@@ -109,9 +112,10 @@ export default function Header({ ministries = [] }: { ministries?: MinistryPage[
                     <ChevronDown
                       size={14}
                       style={{
-                        transition: 'transform 200ms',
+                        transition: 'transform 280ms cubic-bezier(0.22,0.61,0.36,1)',
                         transform: isOpen ? 'rotate(180deg)' : 'rotate(0)',
                         marginTop: '1px',
+                        opacity: 0.7,
                       }}
                     />
                   )}
@@ -127,13 +131,14 @@ export default function Header({ ministries = [] }: { ministries?: MinistryPage[
                   <div
                     onMouseEnter={() => openDropdown(item.id)}
                     onMouseLeave={scheduleClose}
+                    className="nav-dropdown"
                     style={{
                       position: 'absolute', top: 'calc(100% + 14px)', left: '50%',
                       transform: 'translateX(-50%)',
                       background: '#fff',
                       border: '1px solid rgba(30,30,30,0.08)',
                       borderRadius: '16px',
-                      boxShadow: '0 20px 48px rgba(30,30,30,0.18), 0 4px 12px rgba(30,30,30,0.06)',
+                      boxShadow: '0 28px 56px -16px rgba(30,30,30,0.24), 0 12px 24px -12px rgba(30,30,30,0.12), 0 2px 6px rgba(30,30,30,0.05)',
                       padding: '12px',
                       minWidth: '300px',
                       zIndex: 60,
@@ -161,8 +166,8 @@ export default function Header({ ministries = [] }: { ministries?: MinistryPage[
                               }}
                               className="nav-dd-link"
                             >
-                              <span style={{ position: 'relative', width: '44px', height: '44px', borderRadius: '10px', overflow: 'hidden', flexShrink: 0, background: '#7A1A16' }}>
-                                <Image src={m.hero} alt="" fill style={{ objectFit: 'cover' }} sizes="44px" />
+                              <span style={{ position: 'relative', width: '44px', height: '44px', borderRadius: '10px', overflow: 'hidden', flexShrink: 0, background: '#7A1A16', boxShadow: 'inset 0 0 0 1px rgba(30,30,30,0.08)' }}>
+                                <Image src={m.hero} alt="" fill className="nav-dd-thumb" style={{ objectFit: 'cover', transition: 'transform 480ms cubic-bezier(0.22,0.61,0.36,1)' }} sizes="44px" />
                               </span>
                               <span style={{ display: 'flex', flexDirection: 'column', minWidth: 0 }}>
                                 <span style={{
@@ -254,23 +259,30 @@ export default function Header({ ministries = [] }: { ministries?: MinistryPage[
       </div>
 
       <style jsx global>{`
-        .nav-dd-link:hover { background: rgba(30,30,30,0.04) !important; }
-
-        /* Draw-on-hover underline for top-level nav links */
-        .desktop-nav > div > a { position: relative; }
-        .desktop-nav > div > a::after {
-          content: "";
-          position: absolute;
-          left: 0;
-          bottom: -3px;
-          height: 1.5px;
-          width: 100%;
-          background: #A02319;
-          transform: scaleX(0);
-          transform-origin: left center;
-          transition: transform 320ms cubic-bezier(0.22, 0.61, 0.36, 1);
+        a:hover > .brand-seal {
+          transform: translateY(-1px);
+          box-shadow: 0 6px 16px -2px rgba(160,35,25,0.5), 0 0 0 1px rgba(160,35,25,0.3), inset 0 1px 0 rgba(255,255,255,0.28);
         }
-        .desktop-nav > div > a:hover::after { transform: scaleX(1); }
+
+        @keyframes nav-dropdown-in {
+          from { opacity: 0; transform: translateX(-50%) translateY(-6px) scale(0.985); }
+          to   { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+        }
+        .nav-dropdown {
+          animation: nav-dropdown-in 240ms cubic-bezier(0.22, 0.61, 0.36, 1);
+          transform-origin: top center;
+        }
+
+        .nav-dd-link { transition: background 200ms cubic-bezier(0.22,0.61,0.36,1) !important; }
+        .nav-dd-link:hover { background: rgba(30,30,30,0.04) !important; }
+        .nav-dd-link:hover .nav-dd-thumb { transform: scale(1.08); }
+        .nav-dd-link span[aria-hidden="true"] { transition: transform 240ms cubic-bezier(0.22,0.61,0.36,1); }
+        .nav-dd-link:hover span[aria-hidden="true"] { transform: translateX(3px); }
+
+        @media (prefers-reduced-motion: reduce) {
+          .nav-dropdown { animation: none; }
+          .nav-dd-link:hover .nav-dd-thumb { transform: none; }
+        }
 
         .hamburger {
           display: none;

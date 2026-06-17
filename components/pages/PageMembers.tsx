@@ -48,11 +48,12 @@ export default function PageMembers() {
             </div>
 
             {/* ID Card */}
-            <div style={{
+            <div className="member-id-card" style={{
               background: 'linear-gradient(135deg, #A02319 0%, #5C120F 100%)',
               borderRadius: '18px', padding: '28px', minWidth: '280px', maxWidth: '320px',
               transform: 'rotate(2.5deg)',
-              boxShadow: '0 24px 60px rgba(0,0,0,0.40)',
+              boxShadow: '0 2px 4px rgba(0,0,0,0.20), 0 18px 40px rgba(0,0,0,0.32), 0 36px 72px rgba(0,0,0,0.22)',
+              border: '1px solid rgba(244,241,236,0.10)',
               position: 'relative', overflow: 'hidden',
               flexShrink: 0,
             }}>
@@ -60,6 +61,11 @@ export default function PageMembers() {
                 position: 'absolute', top: '-40px', right: '-40px',
                 width: '120px', height: '120px', borderRadius: '50%',
                 background: 'rgba(244,241,236,0.06)',
+              }} />
+              <div style={{
+                position: 'absolute', bottom: '-60px', left: '-50px',
+                width: '150px', height: '150px', borderRadius: '50%',
+                background: 'rgba(0,0,0,0.10)',
               }} />
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '24px' }}>
                 <Image src="/assets/logo-icon-real.svg" alt="" width={32} height={32} />
@@ -92,9 +98,11 @@ export default function PageMembers() {
             {/* Login form */}
             <div style={{
               background: '#fff', borderRadius: '22px', padding: '40px',
-              boxShadow: '0 6px 18px rgba(30,30,30,0.08)',
+              boxShadow: '0 1px 2px rgba(30,30,30,0.04), 0 10px 28px rgba(30,30,30,0.07), 0 24px 56px rgba(122,26,22,0.05)',
+              border: '1px solid rgba(30,30,30,0.05)',
             }}>
-              <h2 className="display" style={{ fontSize: '32px', marginBottom: '28px' }}>Sign in</h2>
+              <h2 className="display" style={{ fontSize: '32px', marginBottom: '8px' }}>Sign in</h2>
+              <div className="divider-3" style={{ marginBottom: '28px' }} />
               {!submitted ? (
                 <form onSubmit={e => { e.preventDefault(); setSubmitted(true); }} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                   <div className="form-field">
@@ -131,26 +139,27 @@ export default function PageMembers() {
 
             {/* Perks */}
             <aside>
-              <div style={{
+              <div className="min-card" style={{
                 position: 'relative',
                 aspectRatio: '16/10',
                 borderRadius: '18px',
                 overflow: 'hidden',
                 marginBottom: '24px',
-                boxShadow: '0 16px 36px rgba(30,30,30,0.12)',
+                boxShadow: '0 2px 6px rgba(30,30,30,0.06), 0 16px 36px rgba(30,30,30,0.12)',
+                border: '1px solid rgba(30,30,30,0.06)',
               }}>
                 <ChurchPhoto photo="members" sizes="(max-width: 1024px) 100vw, 36vw" />
               </div>
               <p className="eyebrow eyebrow--blue" style={{ marginBottom: '20px' }}>Once you&apos;re in</p>
               <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 {perks.map(p => (
-                  <li key={p.text} style={{
+                  <li key={p.text} className="perk-item" style={{
                     display: 'flex', alignItems: 'center', gap: '14px',
                     padding: '14px 18px', background: '#fff', borderRadius: '12px',
                     fontSize: '15px',
                     border: '1px solid rgba(30,30,30,0.08)',
                   }}>
-                    <span style={{ color: '#4FA1C6', flexShrink: 0 }}>{p.icon}</span>
+                    <span className="perk-icon" style={{ color: '#4FA1C6', flexShrink: 0, display: 'inline-flex' }}>{p.icon}</span>
                     {p.text}
                   </li>
                 ))}
@@ -178,6 +187,27 @@ export default function PageMembers() {
       </section>
 
       <style jsx>{`
+        .member-id-card {
+          transition: transform 0.5s cubic-bezier(0.22,0.61,0.36,1), box-shadow 0.5s cubic-bezier(0.22,0.61,0.36,1);
+        }
+        .member-id-card:hover {
+          transform: rotate(1deg) translateY(-6px);
+          box-shadow: 0 4px 8px rgba(0,0,0,0.22), 0 28px 56px rgba(0,0,0,0.36), 0 48px 90px rgba(0,0,0,0.24);
+        }
+        .perk-item {
+          transition: transform 0.35s cubic-bezier(0.22,0.61,0.36,1), box-shadow 0.35s cubic-bezier(0.22,0.61,0.36,1), border-color 0.35s cubic-bezier(0.22,0.61,0.36,1);
+        }
+        .perk-item:hover {
+          transform: translateX(4px);
+          border-color: rgba(79,161,198,0.45);
+          box-shadow: 0 1px 2px rgba(30,30,30,0.04), 0 8px 20px rgba(30,30,30,0.07);
+        }
+        .perk-item .perk-icon {
+          transition: transform 0.35s cubic-bezier(0.22,0.61,0.36,1);
+        }
+        .perk-item:hover .perk-icon {
+          transform: scale(1.12);
+        }
         .member-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
         .members-hero { grid-template-columns: 1fr !important; gap: 40px !important; justify-items: start; }
         .members-hero :global(.member-card-preview) { width: 100%; max-width: 360px; }

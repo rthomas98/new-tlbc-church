@@ -41,11 +41,14 @@ export default function PageGive({ funds, ways }: { funds: GivingFund[]; ways: G
             Zero overhead taken from the offering. Every gift goes where God is moving —
             Sunday-by-Sunday, here at home, and across the world.
           </p>
-          <div style={{ display: 'flex', gap: '40px', flexWrap: 'wrap', marginTop: '40px' }}>
-            {[['85','years of giving'],['3','funds open'],['4','countries served'],['$1.2M','in 2025']].map(([n,l]) => (
-              <div key={l}>
-                <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '28px', color: '#fff', display: 'block' }}>{n}</span>
-                <span style={{ fontSize: '13px', color: 'rgba(244,241,236,0.65)' }}>{l}</span>
+          <div style={{ display: 'flex', gap: '36px', flexWrap: 'wrap', marginTop: '40px', alignItems: 'flex-start' }}>
+            {[['85','years of giving'],['3','funds open'],['4','countries served'],['$1.2M','in 2025']].map(([n,l], i) => (
+              <div key={l} style={{
+                paddingLeft: i === 0 ? 0 : '36px',
+                borderLeft: i === 0 ? 'none' : '1px solid rgba(244,241,236,0.16)',
+              }}>
+                <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '28px', color: '#fff', display: 'block', lineHeight: 1.1 }}>{n}</span>
+                <span style={{ fontSize: '12px', color: 'rgba(244,241,236,0.62)', letterSpacing: '0.04em', textTransform: 'uppercase' }}>{l}</span>
               </div>
             ))}
           </div>
@@ -68,10 +71,13 @@ export default function PageGive({ funds, ways }: { funds: GivingFund[]; ways: G
         <div className="tl-container">
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '24px' }} className="funds-grid">
             {funds.map(f => (
-              <article key={f.id} style={{
+              <article key={f.id} className="fund-card" style={{
                 background: '#fff', borderRadius: '18px', padding: '32px',
                 border: '1px solid rgba(30,30,30,0.08)',
                 display: 'flex', flexDirection: 'column', gap: '16px',
+                position: 'relative',
+                boxShadow: '0 1px 2px rgba(30,30,30,0.04)',
+                transition: 'transform 0.4s cubic-bezier(0.22,0.61,0.36,1), box-shadow 0.4s cubic-bezier(0.22,0.61,0.36,1), border-color 0.4s cubic-bezier(0.22,0.61,0.36,1)',
               }}>
                 {/* Donut */}
                 <div style={{ position: 'relative', width: '80px', height: '80px' }}>
@@ -86,15 +92,21 @@ export default function PageGive({ funds, ways }: { funds: GivingFund[]; ways: G
                     fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '18px',
                   }}>{f.pct}%</span>
                 </div>
-                <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '24px', margin: 0 }}>{f.title}</h3>
+                <div>
+                  <span aria-hidden="true" style={{
+                    display: 'block', width: '28px', height: '3px', borderRadius: '2px',
+                    background: f.color, marginBottom: '14px',
+                  }} />
+                  <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '24px', margin: 0, lineHeight: 1.15 }}>{f.title}</h3>
+                </div>
                 <p style={{ fontSize: '14px', color: '#6B6B6B', lineHeight: 1.6, margin: 0, flex: 1 }}>{f.description}</p>
-                <Link href="/give" className="btn btn--ghost-dark btn--sm" style={{ alignSelf: 'flex-start' }}>
-                  Give to {f.title.split(' ')[0]} <ArrowRight size={13} />
+                <Link href="/give" className="btn btn--ghost-dark btn--sm fund-cta" style={{ alignSelf: 'flex-start' }}>
+                  Give to {f.title.split(' ')[0]} <ArrowRight size={13} className="fund-arrow" />
                 </Link>
               </article>
             ))}
           </div>
-          <p style={{ textAlign: 'center', marginTop: '12px', fontSize: '13px', color: '#6B6B6B' }}>
+          <p className="caption" style={{ textAlign: 'center', marginTop: '28px', color: '#6B6B6B' }}>
             Allocation of every dollar given in 2024 · 100% goes to ministry, 0% to overhead.
           </p>
         </div>
@@ -113,15 +125,19 @@ export default function PageGive({ funds, ways }: { funds: GivingFund[]; ways: G
             </div>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, borderTop: '1px solid rgba(30,30,30,0.10)' }}>
               {ways.map(w => (
-                <li key={w.id} style={{
+                <li key={w.id} className="way-row" style={{
                   display: 'grid', gridTemplateColumns: '56px 1fr', gap: '18px',
-                  alignItems: 'start', padding: '20px 0',
+                  alignItems: 'start', padding: '20px 8px',
+                  margin: '0 -8px',
                   borderBottom: '1px solid rgba(30,30,30,0.08)',
+                  borderRadius: '10px',
+                  transition: 'background 0.4s cubic-bezier(0.22,0.61,0.36,1)',
                 }}>
-                  <div style={{
+                  <div className="way-icon" style={{
                     width: '48px', height: '48px', borderRadius: '12px',
                     background: '#F4F1EC', color: '#A02319',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    transition: 'background 0.4s cubic-bezier(0.22,0.61,0.36,1), color 0.4s cubic-bezier(0.22,0.61,0.36,1)',
                   }}><Icon name={w.icon} size={20} /></div>
                   <div>
                     <h4 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '18px', margin: '0 0 4px' }}>{w.title}</h4>
@@ -157,6 +173,27 @@ export default function PageGive({ funds, ways }: { funds: GivingFund[]; ways: G
       <style jsx>{`
         .funds-grid { grid-template-columns: 1fr !important; }
         .ways-grid  { grid-template-columns: 1fr !important; gap: 40px !important; }
+
+        .fund-card:hover {
+          transform: translateY(-4px);
+          border-color: rgba(30,30,30,0.14);
+          box-shadow: 0 2px 4px rgba(30,30,30,0.04), 0 18px 40px rgba(30,30,30,0.10);
+        }
+        .fund-cta .fund-arrow {
+          transition: transform 0.4s cubic-bezier(0.22,0.61,0.36,1);
+        }
+        .fund-card:hover .fund-arrow {
+          transform: translateX(4px);
+        }
+
+        .way-row:hover {
+          background: rgba(244,241,236,0.6);
+        }
+        .way-row:hover .way-icon {
+          background: #A02319;
+          color: #F4F1EC;
+        }
+
         @media (min-width: 640px) {
           .funds-grid { grid-template-columns: repeat(2,1fr) !important; }
         }

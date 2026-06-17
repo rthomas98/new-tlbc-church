@@ -32,6 +32,7 @@ export default function MinistriesSection({ ministries }: { ministries: Ministry
             <button
               key={f}
               onClick={() => setActive(f)}
+              className="min-chip"
               style={{
                 background: active === f ? '#A02319' : 'transparent',
                 color: active === f ? '#fff' : '#1E1E1E',
@@ -39,11 +40,12 @@ export default function MinistriesSection({ ministries }: { ministries: Ministry
                 borderRadius: '999px', padding: '10px 20px',
                 fontSize: '13px', fontWeight: 600, letterSpacing: '0.05em',
                 textTransform: 'uppercase', cursor: 'pointer',
-                transition: 'all 180ms',
+                boxShadow: active === f ? '0 6px 16px rgba(160,35,25,0.22)' : 'none',
+                transition: 'background 240ms cubic-bezier(0.22,0.61,0.36,1), color 240ms cubic-bezier(0.22,0.61,0.36,1), border-color 240ms cubic-bezier(0.22,0.61,0.36,1), box-shadow 240ms cubic-bezier(0.22,0.61,0.36,1)',
               }}
             >{f}</button>
           ))}
-          <span style={{ marginLeft: 'auto', fontSize: '13px', color: '#6B6B6B' }}>
+          <span className="caption" style={{ marginLeft: 'auto', fontSize: '12px', color: '#6B6B6B', letterSpacing: '0.12em', textTransform: 'uppercase', fontWeight: 600 }}>
             {filtered.length} Ministries
           </span>
         </div>
@@ -56,12 +58,13 @@ export default function MinistriesSection({ ministries }: { ministries: Ministry
             <article key={m.name} style={{
               position: 'relative', aspectRatio: '3/4', borderRadius: '20px',
               overflow: 'hidden', background: '#7A1A16',
+              boxShadow: '0 1px 2px rgba(30,30,30,0.10), 0 8px 22px rgba(30,30,30,0.10)',
               transition: 'transform 280ms cubic-bezier(0.22,0.61,0.36,1), box-shadow 280ms cubic-bezier(0.22,0.61,0.36,1)',
               cursor: 'pointer',
             }}
               className="min-card"
             >
-              <div style={{ position: 'absolute', inset: 0 }}>
+              <div className="min-card-photo" style={{ position: 'absolute', inset: 0, transition: 'transform 600ms cubic-bezier(0.22,0.61,0.36,1)' }}>
                 <ChurchPhoto photo={m.photo} sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw" />
               </div>
               <div style={{
@@ -75,7 +78,8 @@ export default function MinistriesSection({ ministries }: { ministries: Ministry
                     background: m.tagBlue ? '#4FA1C6' : '#fff',
                     color: m.tagBlue ? '#fff' : '#A02319',
                     borderRadius: '999px', padding: '5px 14px',
-                    fontSize: '11px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase',
+                    fontSize: '11px', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase',
+                    boxShadow: '0 2px 8px rgba(20,12,10,0.20)',
                   }}>{m.tag}</span>
                   <div style={{
                     width: '38px', height: '38px', borderRadius: '50%',
@@ -89,11 +93,12 @@ export default function MinistriesSection({ ministries }: { ministries: Ministry
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                   <h3 style={{
                     fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '26px',
-                    textTransform: 'uppercase', margin: 0,
+                    textTransform: 'uppercase', margin: 0, lineHeight: 1.05, letterSpacing: '0.01em',
                   }}>{m.name}</h3>
                   <div style={{
                     display: 'flex', justifyContent: 'space-between', gap: '10px',
-                    fontSize: '11px', paddingTop: '12px',
+                    fontSize: '11px', letterSpacing: '0.06em', paddingTop: '12px',
+                    color: 'rgba(244,241,236,0.82)',
                     borderTop: '1px solid rgba(244,241,236,0.20)',
                   }}>
                     <span>{m.size}</span>
@@ -109,8 +114,10 @@ export default function MinistriesSection({ ministries }: { ministries: Ministry
       </div>
 
       <style jsx>{`
-        .min-card:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(30,30,30,0.22); }
+        .min-card:hover { transform: translateY(-6px); box-shadow: 0 4px 10px rgba(30,30,30,0.12), 0 22px 44px rgba(30,30,30,0.20); }
+        .min-card:hover .min-card-photo { transform: scale(1.06); }
         .min-card:hover .min-card-arrow { background: #A02319; color: #fff; transform: rotate(-45deg); }
+        .min-chip:hover { border-color: rgba(160,35,25,0.45); }
         @media (max-width: 1024px) { .min-grid { grid-template-columns: repeat(2,1fr) !important; } }
         @media (max-width: 640px)  { .min-grid { grid-template-columns: repeat(2,1fr) !important; } }
       `}</style>

@@ -63,6 +63,7 @@ const serveAreas = [
 /* ── FAQ Accordion item ── */
 function FaqItem({ q, a }: { q: string; a: string }) {
   const [open, setOpen] = useState(false);
+  const [hover, setHover] = useState(false);
   return (
     <div style={{
       borderBottom: '1px solid rgba(30,30,30,0.10)',
@@ -70,18 +71,40 @@ function FaqItem({ q, a }: { q: string; a: string }) {
     }}>
       <button
         onClick={() => setOpen(!open)}
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+        aria-expanded={open}
         style={{
           width: '100%', display: 'flex', justifyContent: 'space-between',
           alignItems: 'center', gap: '16px', padding: '22px 0',
           background: 'none', border: 0, cursor: 'pointer', textAlign: 'left',
         }}
       >
-        <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '18px', color: '#1E1E1E' }}>{q}</span>
-        <ChevronDown size={20} color="#A02319" style={{ flexShrink: 0, transition: 'transform 260ms', transform: open ? 'rotate(180deg)' : 'rotate(0deg)' }} />
+        <span style={{
+          fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '18px',
+          color: open || hover ? '#A02319' : '#1E1E1E',
+          transition: 'color 220ms cubic-bezier(0.22,0.61,0.36,1)',
+        }}>{q}</span>
+        <ChevronDown size={20} color="#A02319" style={{
+          flexShrink: 0,
+          transition: 'transform 320ms cubic-bezier(0.22,0.61,0.36,1)',
+          transform: open ? 'rotate(180deg)' : 'rotate(0deg)',
+        }} />
       </button>
-      {open && (
-        <p style={{ fontSize: '15px', lineHeight: 1.65, color: '#3A3A3A', margin: '0 0 22px', maxWidth: '680px' }}>{a}</p>
-      )}
+      <div style={{
+        display: 'grid',
+        gridTemplateRows: open ? '1fr' : '0fr',
+        transition: 'grid-template-rows 360ms cubic-bezier(0.22,0.61,0.36,1)',
+      }}>
+        <div style={{ overflow: 'hidden' }}>
+          <p style={{
+            fontSize: '15px', lineHeight: 1.65, color: '#3A3A3A',
+            margin: '0 0 22px', maxWidth: '680px',
+            opacity: open ? 1 : 0,
+            transition: 'opacity 300ms ease 80ms',
+          }}>{a}</p>
+        </div>
+      </div>
     </div>
   );
 }
@@ -107,11 +130,14 @@ export default function PageMinistries({ ministries }: { ministries: MinistryPag
             From Sunday school to senior fellowship — there&apos;s a place at True Light for you, exactly where you are.
           </p>
           {/* Stats inline */}
-          <div style={{ display: 'flex', gap: '48px', flexWrap: 'wrap' }}>
+          <div style={{
+            display: 'flex', gap: '48px', flexWrap: 'wrap',
+            paddingTop: '28px', borderTop: '1px solid rgba(244,241,236,0.18)',
+          }}>
             {stats.map(s => (
               <div key={s.label}>
-                <span style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '36px', color: '#fff', display: 'block', lineHeight: 1 }}>{s.n}</span>
-                <span style={{ fontSize: '12px', fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(244,241,236,0.60)', marginTop: '4px', display: 'block' }}>{s.label}</span>
+                <span style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '40px', color: '#fff', display: 'block', lineHeight: 1 }}>{s.n}</span>
+                <span style={{ fontSize: '12px', fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(244,241,236,0.60)', marginTop: '8px', display: 'block' }}>{s.label}</span>
               </div>
             ))}
           </div>
@@ -145,13 +171,14 @@ export default function PageMinistries({ ministries }: { ministries: MinistryPag
                     <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(22px,2.4vw,28px)', lineHeight: 1.1, margin: 0, textShadow: '0 1px 4px rgba(0,0,0,0.35)' }}>{c.name}</h2>
                     <p style={{ fontSize: '12px', fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.72)', margin: '6px 0 0' }}>{c.sub}</p>
                   </div>
-                  <span style={{
+                  <span className="min-card-link" style={{
                     fontSize: '14px', fontWeight: 600, color: '#fff',
                     display: 'inline-flex', alignItems: 'center', gap: '6px',
                     borderBottom: '1px solid rgba(255,255,255,0.55)', paddingBottom: '2px',
-                    alignSelf: 'flex-start', transition: 'border-color 200ms',
+                    alignSelf: 'flex-start',
+                    transition: 'border-color 280ms cubic-bezier(0.22,0.61,0.36,1)',
                   }}>
-                    Learn More <ArrowRight size={14} />
+                    Learn More <ArrowRight size={14} className="min-card-arrow" style={{ transition: 'transform 280ms cubic-bezier(0.22,0.61,0.36,1)' }} />
                   </span>
                 </div>
               </Link>
@@ -210,9 +237,10 @@ export default function PageMinistries({ ministries }: { ministries: MinistryPag
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '24px' }} className="spots-grid">
             {spotlights.map((t, i) => (
-              <article key={i} style={{
+              <article key={i} className="spot-card" style={{
                 background: '#fff', borderRadius: '20px', padding: '32px',
                 border: '1px solid rgba(30,30,30,0.08)',
+                boxShadow: '0 1px 2px rgba(30,30,30,0.04), 0 8px 24px rgba(30,30,30,0.05)',
                 display: 'flex', flexDirection: 'column', gap: '20px',
               }}>
                 {/* Quote mark */}
@@ -257,9 +285,11 @@ export default function PageMinistries({ ministries }: { ministries: MinistryPag
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
               {serveAreas.map(area => (
-                <div key={area} style={{
+                <div key={area} className="serve-chip" style={{
                   display: 'flex', alignItems: 'center', gap: '10px',
                   background: 'rgba(244,241,236,0.10)', borderRadius: '12px', padding: '14px 18px',
+                  border: '1px solid rgba(244,241,236,0.10)',
+                  transition: 'background 260ms cubic-bezier(0.22,0.61,0.36,1), border-color 260ms cubic-bezier(0.22,0.61,0.36,1)',
                 }}>
                   <CheckCircle2 size={16} color="#B6D8E6" style={{ flexShrink: 0 }} />
                   <span style={{ fontSize: '14px', color: '#F4F1EC', fontWeight: 500 }}>{area}</span>
@@ -335,6 +365,13 @@ export default function PageMinistries({ ministries }: { ministries: MinistryPag
 
         .min-photo-card { transition: transform 280ms cubic-bezier(0.22,0.61,0.36,1), box-shadow 280ms; }
         .min-photo-card:hover { transform: translateY(-4px); box-shadow: 0 20px 48px rgba(30,30,30,0.22); }
+        .min-photo-card:hover .min-card-link { border-bottom-color: rgba(255,255,255,0.95); }
+        .min-photo-card:hover .min-card-arrow { transform: translateX(4px); }
+
+        .spot-card { transition: transform 320ms cubic-bezier(0.22,0.61,0.36,1), box-shadow 320ms cubic-bezier(0.22,0.61,0.36,1), border-color 320ms; }
+        .spot-card:hover { transform: translateY(-4px); border-color: rgba(160,35,25,0.16); box-shadow: 0 1px 2px rgba(30,30,30,0.05), 0 18px 40px rgba(30,30,30,0.12); }
+
+        .serve-chip:hover { background: rgba(244,241,236,0.16); border-color: rgba(182,216,230,0.30); }
       `}</style>
     </>
   );

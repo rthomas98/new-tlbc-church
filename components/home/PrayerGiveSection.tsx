@@ -62,7 +62,7 @@ export default function PrayerGiveSection() {
             </div>
             <label style={{
               display: 'flex', alignItems: 'flex-start', gap: '10px',
-              fontSize: '14px', color: '#3A3A3A', cursor: 'pointer', marginBottom: '20px',
+              fontSize: '14px', lineHeight: 1.5, color: '#3A3A3A', cursor: 'pointer', marginBottom: '20px',
             }}>
               <input
                 type="checkbox" checked={confidential}
@@ -78,10 +78,17 @@ export default function PrayerGiveSection() {
         ) : (
           <div style={{
             marginTop: '28px', maxWidth: '480px',
-            background: '#fff', borderRadius: '16px', padding: '32px',
-            textAlign: 'center', boxShadow: '0 2px 6px rgba(30,30,30,0.08)',
+            background: '#fff', borderRadius: '18px', padding: '40px 32px',
+            textAlign: 'center', border: '1px solid rgba(160,35,25,0.08)',
+            boxShadow: '0 1px 2px rgba(30,30,30,0.04), 0 18px 40px rgba(30,30,30,0.10)',
           }}>
-            <CheckCircle2 size={40} color="#A02319" style={{ margin: '0 auto 16px' }} />
+            <span style={{
+              display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+              width: '64px', height: '64px', borderRadius: '50%',
+              background: 'rgba(160,35,25,0.07)', margin: '0 auto 18px',
+            }}>
+              <CheckCircle2 size={32} color="#A02319" strokeWidth={1.75} />
+            </span>
             <h3 className="h3" style={{ marginBottom: '12px' }}>Thank you, {name || 'friend'}.</h3>
             <p className="prose" style={{ marginBottom: '20px' }}>
               Your request has been received. Our prayer team will lift it up this week.
@@ -142,11 +149,13 @@ export default function PrayerGiveSection() {
           background: 'rgba(244,241,236,0.18)', borderRadius: '999px', padding: '4px',
         }}>
           {(['one-time', 'weekly', 'monthly'] as const).map(f => (
-            <button key={f} onClick={() => setFreq(f)} style={{
+            <button key={f} onClick={() => setFreq(f)} className={`freq-pill${freq === f ? ' freq-pill--active' : ''}`} style={{
               flex: 1, padding: '10px', borderRadius: '999px', border: 0, cursor: 'pointer',
               background: freq === f ? '#fff' : 'transparent',
               color: freq === f ? '#A02319' : 'rgba(244,241,236,0.78)',
-              fontWeight: 600, fontSize: '14px', transition: 'all 180ms',
+              fontWeight: 600, fontSize: '14px',
+              transition: 'background 220ms cubic-bezier(0.22,0.61,0.36,1), color 220ms cubic-bezier(0.22,0.61,0.36,1)',
+              boxShadow: freq === f ? '0 2px 8px rgba(30,15,12,0.18)' : 'none',
               textTransform: 'capitalize',
             }}>
               {f === 'one-time' ? 'One-Time' : f.charAt(0).toUpperCase() + f.slice(1)}
@@ -156,19 +165,24 @@ export default function PrayerGiveSection() {
 
         {/* Amount buttons */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '12px', marginTop: '20px', maxWidth: '460px' }}>
-          {amounts.map(a => (
-            <button key={a} onClick={() => { setAmount(a); setCustom(''); }} style={{
-              background: amount === a && !custom ? '#fff' : 'rgba(244,241,236,0.10)',
-              color: amount === a && !custom ? '#A02319' : '#fff',
+          {amounts.map(a => {
+            const active = amount === a && !custom;
+            return (
+            <button key={a} onClick={() => { setAmount(a); setCustom(''); }} className={`amount-btn${active ? ' amount-btn--active' : ''}`} style={{
+              background: active ? '#fff' : 'rgba(244,241,236,0.10)',
+              color: active ? '#A02319' : '#fff',
               border: '1px solid',
-              borderColor: amount === a && !custom ? '#fff' : 'rgba(244,241,236,0.30)',
+              borderColor: active ? '#fff' : 'rgba(244,241,236,0.30)',
               borderRadius: '12px', padding: '14px 0',
               fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '22px',
-              cursor: 'pointer', transition: 'all 180ms',
+              cursor: 'pointer',
+              transition: 'background 220ms cubic-bezier(0.22,0.61,0.36,1), color 220ms cubic-bezier(0.22,0.61,0.36,1), border-color 220ms cubic-bezier(0.22,0.61,0.36,1), transform 220ms cubic-bezier(0.22,0.61,0.36,1)',
+              boxShadow: active ? '0 4px 14px rgba(30,15,12,0.20)' : 'none',
             }}>
               ${a}
             </button>
-          ))}
+          );
+          })}
         </div>
 
         {/* Custom amount */}
@@ -182,12 +196,14 @@ export default function PrayerGiveSection() {
             placeholder="Other amount"
             value={custom}
             onChange={e => { setCustom(e.target.value.replace(/[^0-9]/g, '')); setAmount(0); }}
+            className="custom-amount"
             style={{
               width: '100%', padding: '16px 20px 16px 42px',
               background: 'rgba(244,241,236,0.12)',
               border: '1px solid rgba(244,241,236,0.30)',
               borderRadius: '12px', color: '#fff', fontSize: '16px',
               outline: 'none', fontFamily: 'var(--font-body)',
+              transition: 'border-color 220ms cubic-bezier(0.22,0.61,0.36,1), background 220ms cubic-bezier(0.22,0.61,0.36,1)',
             }}
           />
         </div>
@@ -215,6 +231,17 @@ export default function PrayerGiveSection() {
       </div>
 
       <style jsx>{`
+        .freq-pill:not(.freq-pill--active):hover { color: #fff !important; }
+        .amount-btn:not(.amount-btn--active):hover {
+          background: rgba(244,241,236,0.18) !important;
+          border-color: rgba(244,241,236,0.55) !important;
+          transform: translateY(-2px);
+        }
+        .custom-amount::placeholder { color: rgba(244,241,236,0.55); }
+        .custom-amount:focus {
+          border-color: rgba(244,241,236,0.65);
+          background: rgba(244,241,236,0.18);
+        }
         @media (max-width: 1024px) {
           [data-section="prayer-give"] { grid-template-columns: 1fr !important; }
           .split-col { padding: 64px 32px !important; }

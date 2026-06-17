@@ -107,7 +107,7 @@ export default function PageConnect() {
                   </button>
                 </form>
               ) : (
-                <div style={{ background: '#fff', borderRadius: '16px', padding: '40px', textAlign: 'center', boxShadow: '0 2px 6px rgba(30,30,30,0.08)' }}>
+                <div style={{ background: '#fff', borderRadius: '18px', padding: '48px 40px', textAlign: 'center', border: '1px solid rgba(160,35,25,0.1)', boxShadow: '0 1px 2px rgba(30,30,30,0.04), 0 18px 40px -12px rgba(30,30,30,0.16)' }}>
                   <div style={{ fontSize: '40px', marginBottom: '16px' }}>🙏</div>
                   <h3 className="h3" style={{ marginBottom: '12px' }}>We&apos;ll be in touch!</h3>
                   <p className="prose">Thank you for reaching out. A pastor will reply within 48 hours.</p>
@@ -122,7 +122,8 @@ export default function PageConnect() {
                 aspectRatio: '16/11',
                 borderRadius: '18px',
                 overflow: 'hidden',
-                boxShadow: '0 16px 36px rgba(30,30,30,0.12)',
+                border: '1px solid rgba(30,30,30,0.06)',
+                boxShadow: '0 2px 6px rgba(30,30,30,0.06), 0 22px 44px -16px rgba(30,30,30,0.24)',
               }}>
                 <ChurchPhoto photo="visitor" sizes="(max-width: 1024px) 100vw, 36vw" />
               </div>
@@ -135,11 +136,14 @@ export default function PageConnect() {
                 const isExternal = c.href.startsWith('http');
 
                 return (
-                  <div key={c.title} style={{
+                  <div key={c.title} className="connect-card" style={{
                     background: c.blue ? '#4FA1C6' : '#fff',
                     color: c.blue ? '#fff' : '#1E1E1E',
                     borderRadius: '18px', padding: '28px',
-                    border: c.blue ? 'none' : '1px solid rgba(30,30,30,0.08)',
+                    border: c.blue ? 'none' : '1px solid rgba(30,30,30,0.07)',
+                    boxShadow: c.blue
+                      ? '0 2px 6px rgba(79,161,198,0.18), 0 16px 32px -14px rgba(79,161,198,0.5)'
+                      : '0 1px 2px rgba(30,30,30,0.04), 0 12px 28px -16px rgba(30,30,30,0.14)',
                   }}>
                     <div style={{ color: c.blue ? '#fff' : '#A02319', marginBottom: '16px' }}>{c.icon}</div>
                     <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '22px', margin: '0 0 10px' }}>{c.title}</h3>
@@ -177,15 +181,22 @@ export default function PageConnect() {
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '24px' }} className="paths-grid">
             {paths.map(p => (
-              <article key={p.title} style={{
-                padding: '28px', background: '#F4F1EC', borderRadius: '18px',
-                display: 'flex', flexDirection: 'column', gap: '12px',
+              <article key={p.title} className="path-card" style={{
+                padding: '30px 28px', background: '#F4F1EC', borderRadius: '18px',
+                border: '1px solid rgba(30,30,30,0.06)',
+                display: 'flex', flexDirection: 'column', gap: '14px',
               }}>
-                <div style={{ color: '#A02319' }}>{p.icon}</div>
+                <div style={{
+                  display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                  width: '52px', height: '52px', borderRadius: '14px',
+                  background: '#fff', color: '#A02319',
+                  border: '1px solid rgba(160,35,25,0.12)',
+                  boxShadow: '0 2px 8px -2px rgba(160,35,25,0.16)',
+                }}>{p.icon}</div>
                 <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '22px', margin: 0 }}>{p.title}</h3>
                 <p style={{ fontSize: '14px', color: '#6B6B6B', lineHeight: 1.6, margin: 0, flex: 1 }}>{p.desc}</p>
-                <Link href="/connect" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '13px', fontWeight: 600, color: '#A02319' }}>
-                  Learn more <ArrowRight size={13} />
+                <Link href="/connect" className="path-link" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '13px', fontWeight: 600, color: '#A02319' }}>
+                  Learn more <ArrowRight size={13} className="path-link-arrow" />
                 </Link>
               </article>
             ))}
@@ -194,6 +205,26 @@ export default function PageConnect() {
       </section>
 
       <style jsx>{`
+        .connect-card {
+          transition: transform 0.45s cubic-bezier(0.22,0.61,0.36,1), box-shadow 0.45s cubic-bezier(0.22,0.61,0.36,1);
+        }
+        .connect-card:hover {
+          transform: translateY(-3px);
+        }
+        .path-card {
+          transition: transform 0.45s cubic-bezier(0.22,0.61,0.36,1), box-shadow 0.45s cubic-bezier(0.22,0.61,0.36,1), border-color 0.45s cubic-bezier(0.22,0.61,0.36,1);
+        }
+        .path-card:hover {
+          transform: translateY(-3px);
+          border-color: rgba(160,35,25,0.18);
+          box-shadow: 0 2px 6px rgba(30,30,30,0.05), 0 20px 38px -18px rgba(30,30,30,0.22);
+        }
+        .path-link-arrow {
+          transition: transform 0.4s cubic-bezier(0.22,0.61,0.36,1);
+        }
+        .path-card:hover .path-link-arrow {
+          transform: translateX(4px);
+        }
         .connect-hero-grid { grid-template-columns: 1fr !important; }
         .connect-form-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
         .paths-grid { grid-template-columns: repeat(2,1fr) !important; }
