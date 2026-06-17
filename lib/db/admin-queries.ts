@@ -2,13 +2,13 @@ import { asc, eq } from 'drizzle-orm';
 import { db } from './index';
 import {
   events, services, ministries, testimonials,
-  sermons, leaders, beliefs, givingFunds, givingMethods, ministryPages,
+  sermons, leaders, beliefs, givingFunds, givingMethods, ministryPages, announcements,
 } from './schema';
 import type { ResourceKey } from '@/lib/admin/fields';
 
 const TABLES = {
   events, services, ministries, testimonials,
-  sermons, leaders, beliefs, givingFunds, givingMethods, ministryPages,
+  sermons, leaders, beliefs, givingFunds, givingMethods, ministryPages, announcements,
 } as const;
 
 export async function getResourceRows(resource: ResourceKey) {

@@ -7,6 +7,7 @@ export type FieldType =
   | 'number'
   | 'photo'
   | 'richtext'
+  | 'select'
   | 'stringList'
   | 'objectList'
   | 'group';
@@ -19,6 +20,7 @@ export type Field = {
   type: FieldType;
   required?: boolean;
   help?: string;
+  options?: { value: string; label: string }[]; // for 'select'
   itemFields?: SubField[]; // for 'objectList' — fields repeated per item
   subFields?: SubField[]; // for 'group' — fields of a single nested object
 };
@@ -36,7 +38,8 @@ export type ResourceKey =
   | 'beliefs'
   | 'givingFunds'
   | 'givingMethods'
-  | 'ministryPages';
+  | 'ministryPages'
+  | 'announcements';
 
 export type ResourceConfig = {
   label: string; // plural
@@ -46,6 +49,29 @@ export type ResourceConfig = {
 };
 
 export const RESOURCES: Record<ResourceKey, ResourceConfig> = {
+  announcements: {
+    label: 'Announcements',
+    singular: 'Announcement',
+    listColumns: ['message', 'variant', 'published'],
+    fields: [
+      { name: 'message', label: 'Message', type: 'text', required: true, help: 'Shown in the bar across the top of every page' },
+      {
+        name: 'variant',
+        label: 'Style',
+        type: 'select',
+        options: [
+          { value: 'info', label: 'Info (blue)' },
+          { value: 'alert', label: 'Alert (red)' },
+          { value: 'success', label: 'Good news (green)' },
+        ],
+      },
+      { name: 'linkLabel', label: 'Button label', type: 'text', help: 'Optional, e.g. “Register now”' },
+      { name: 'linkUrl', label: 'Button link', type: 'text', help: 'Optional, e.g. /events or https://…' },
+      { name: 'dismissible', label: 'Let visitors dismiss it', type: 'checkbox' },
+      { name: 'published', label: 'Show on the site (on/off)', type: 'checkbox' },
+      { name: 'sort', label: 'Sort order', type: 'number' },
+    ],
+  },
   events: {
     label: 'Events',
     singular: 'Event',

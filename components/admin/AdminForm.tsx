@@ -116,6 +116,20 @@ function FieldInput({ field, value }: { field: Field; value: unknown }) {
     );
   }
 
+  if (field.type === 'select') {
+    return (
+      <div className="field">
+        <label htmlFor={field.name}>{field.label}</label>
+        <select id={field.name} name={field.name} defaultValue={String(value ?? field.options?.[0]?.value ?? '')}>
+          {field.options?.map((o) => (
+            <option key={o.value} value={o.value}>{o.label}</option>
+          ))}
+        </select>
+        {field.help && <div className="help">{field.help}</div>}
+      </div>
+    );
+  }
+
   if (field.type === 'photo') {
     return <PhotoField field={field} value={String(value ?? '')} />;
   }

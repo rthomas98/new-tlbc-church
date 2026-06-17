@@ -124,7 +124,7 @@ export default function Footer() {
                 </svg>
               </a>
               {/* Email */}
-              <a href="mailto:hello@truelightbr.org" aria-label="Email" style={{
+              <a href="mailto:info@truelightbaptist.org" aria-label="Email" style={{
                 width: '38px', height: '38px', borderRadius: '50%',
                 background: 'rgba(244,241,236,0.10)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -152,7 +152,7 @@ export default function Footer() {
             </p>
             <p style={{ fontSize: '14px', color: 'rgba(244,241,236,0.86)', lineHeight: 1.65, margin: 0 }}>
               (225) 555-0149<br/>
-              hello@truelightbr.org
+              info@truelightbaptist.org
             </p>
           </div>
 

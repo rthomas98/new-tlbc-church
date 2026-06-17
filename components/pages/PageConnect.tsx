@@ -1,16 +1,20 @@
 'use client';
 
-import { useState } from 'react';
+import { useActionState } from 'react';
 import Link from 'next/link';
 import { Send, HandHelping, MapPin, Phone, UserPlus, Droplet, Users, Heart, ArrowRight, Radio } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import ChurchPhoto from '@/components/shared/ChurchPhoto';
 import { FACEBOOK_PAGE_URL } from '@/components/shared/churchLinks';
+import { submitContact, type ContactState } from '@/app/(site)/connect/actions';
 
 const MapboxMap = dynamic(() => import('@/components/shared/MapboxMap'), { ssr: false });
 
+const initialState: ContactState = { status: 'idle' };
+
 export default function PageConnect() {
-  const [submitted, setSubmitted] = useState(false);
+  const [state, formAction, pending] = useActionState(submitContact, initialState);
+  const submitted = state.status === 'success';
 
   const paths = [
     { icon: <UserPlus size={24} />, title: 'Membership',  desc: 'A 4-week class on what it means to belong here. Next cohort: Jun 14.' },
@@ -67,34 +71,39 @@ export default function PageConnect() {
                 just a hello, an invitation, and a parking pass for your first Sunday.
               </p>
               {!submitted ? (
-                <form onSubmit={e => { e.preventDefault(); setSubmitted(true); }} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <form action={formAction} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                   <div className="form-field">
-                    <label className="form-label-text">Full name</label>
-                    <input className="form-input" type="text" placeholder="Your name" />
+                    <label className="form-label-text" htmlFor="cf-name">Full name</label>
+                    <input id="cf-name" name="name" className="form-input" type="text" placeholder="Your name" required />
                   </div>
                   <div className="form-field">
-                    <label className="form-label-text">Email</label>
-                    <input className="form-input" type="email" placeholder="you@example.com" />
+                    <label className="form-label-text" htmlFor="cf-email">Email</label>
+                    <input id="cf-email" name="email" className="form-input" type="email" placeholder="you@example.com" required />
                   </div>
                   <div className="form-field">
-                    <label className="form-label-text">Phone (optional)</label>
-                    <input className="form-input" type="tel" placeholder="(225) 555-0100" />
+                    <label className="form-label-text" htmlFor="cf-phone">Phone (optional)</label>
+                    <input id="cf-phone" name="phone" className="form-input" type="tel" placeholder="(225) 555-0100" />
                   </div>
                   <div className="form-field">
-                    <label className="form-label-text">Tell us a bit about you</label>
-                    <textarea className="form-input" rows={4} placeholder="Family, what brought you here, anything you'd like us to pray for…" style={{ resize: 'vertical' }} />
+                    <label className="form-label-text" htmlFor="cf-message">Tell us a bit about you</label>
+                    <textarea id="cf-message" name="message" className="form-input" rows={4} placeholder="Family, what brought you here, anything you'd like us to pray for…" style={{ resize: 'vertical' }} />
                   </div>
                   <fieldset style={{ border: 0, padding: 0, margin: 0 }}>
                     <legend style={{ fontSize: '11px', fontWeight: 600, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#A02319', marginBottom: '12px' }}>I&apos;m interested in…</legend>
                     {['Visiting on Sunday','Joining a small group','Membership','Baptism'].map(opt => (
                       <label key={opt} style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '14px', cursor: 'pointer', marginBottom: '10px' }}>
-                        <input type="checkbox" style={{ accentColor: '#A02319', width: '16px', height: '16px' }} />
+                        <input type="checkbox" name="interests" value={opt} style={{ accentColor: '#A02319', width: '16px', height: '16px' }} />
                         {opt}
                       </label>
                     ))}
                   </fieldset>
-                  <button type="submit" className="btn btn--red btn--lg" style={{ justifyContent: 'center' }}>
-                    Send to a pastor <Send size={18} />
+                  {/* Honeypot — hidden from real users, catches bots */}
+                  <input type="text" name="company" tabIndex={-1} autoComplete="off" aria-hidden="true" style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px', opacity: 0 }} />
+                  {state.status === 'error' && (
+                    <p role="alert" style={{ color: '#A02319', fontSize: '14px', margin: 0 }}>{state.message}</p>
+                  )}
+                  <button type="submit" disabled={pending} className="btn btn--red btn--lg" style={{ justifyContent: 'center', opacity: pending ? 0.7 : 1, cursor: pending ? 'wait' : 'pointer' }}>
+                    {pending ? 'Sending…' : 'Send to a pastor'} <Send size={18} />
                   </button>
                 </form>
               ) : (
