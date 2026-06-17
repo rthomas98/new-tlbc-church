@@ -1,4 +1,4 @@
-import { asc, eq } from 'drizzle-orm';
+import { and, asc, eq, gte, isNull, or } from 'drizzle-orm';
 import { db } from './index';
 import {
   events, services, ministries, testimonials, siteSettings,
@@ -10,11 +10,21 @@ export async function getEvents() {
 }
 
 export async function getPublishedEvents() {
+  // Auto-hide events whose date has passed: keep dated events from today
+  // onward, plus any without a date (standing/recurring items). Dated events
+  // come first in chronological order; undated ones fall back to sort/id.
+  const startOfToday = new Date();
+  startOfToday.setHours(0, 0, 0, 0);
   return db
     .select()
     .from(events)
-    .where(eq(events.published, true))
-    .orderBy(asc(events.sort), asc(events.id));
+    .where(
+      and(
+        eq(events.published, true),
+        or(isNull(events.date), gte(events.date, startOfToday)),
+      ),
+    )
+    .orderBy(asc(events.date), asc(events.sort), asc(events.id));
 }
 
 export async function getServices() {

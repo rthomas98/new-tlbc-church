@@ -69,10 +69,12 @@ export default function EventsSection({ events }: { events: Event[] }) {
                   fontSize: e.featured ? '30px' : '22px', margin: 0, lineHeight: 1.15,
                 }}>{e.title}</h3>
                 <Prose html={e.description} style={{ fontSize: '15px', lineHeight: 1.55, color: '#3A3A3A', flex: 1 }} />
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px 16px', fontSize: '13px', color: '#6B6B6B', marginTop: '12px', paddingTop: '14px', borderTop: '1px solid rgba(30,30,30,0.07)' }}>
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><MapPin size={13} color="#A02319" />{e.location}</span>
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><Clock size={13} color="#A02319" />{e.time}</span>
-                </div>
+                {(e.location || e.time) && (
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px 16px', fontSize: '13px', color: '#6B6B6B', marginTop: '12px', paddingTop: '14px', borderTop: '1px solid rgba(30,30,30,0.07)' }}>
+                    {e.location && <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><MapPin size={13} color="#A02319" />{e.location}</span>}
+                    {e.time && <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><Clock size={13} color="#A02319" />{e.time}</span>}
+                  </div>
+                )}
                 <Link href="/events" className="btn btn--red btn--sm" style={{ alignSelf: 'flex-start', marginTop: '8px' }}>
                   RSVP <ArrowRight size={14} />
                 </Link>

@@ -38,6 +38,10 @@ export const events = pgTable('events', {
   id: serial('id').primaryKey(),
   day: text('day').notNull(),
   month: text('month').notNull(),
+  // Real calendar date — used for chronological ordering and to auto-hide
+  // events from the public site once they pass. Nullable: events without a
+  // date (e.g. standing/recurring items) always remain visible.
+  date: timestamp('date'),
   category: text('category').notNull().default(''),
   title: text('title').notNull(),
   description: text('description').notNull().default(''),

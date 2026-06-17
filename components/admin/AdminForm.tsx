@@ -116,6 +116,19 @@ function FieldInput({ field, value }: { field: Field; value: unknown }) {
     );
   }
 
+  if (field.type === 'date') {
+    // A DB timestamp arrives as a Date or ISO string; an <input type="date">
+    // needs a plain YYYY-MM-DD value.
+    const iso = value ? new Date(value as string | number | Date).toISOString().slice(0, 10) : '';
+    return (
+      <div className="field">
+        <label htmlFor={field.name}>{field.label}</label>
+        <input id={field.name} name={field.name} type="date" defaultValue={iso} />
+        {field.help && <div className="help">{field.help}</div>}
+      </div>
+    );
+  }
+
   if (field.type === 'select') {
     return (
       <div className="field">

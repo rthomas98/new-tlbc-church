@@ -1,19 +1,14 @@
 'use client';
 import Link from 'next/link';
-import { Calendar, Utensils, ClipboardList, Egg, Music, Star, ArrowUpRight, CalendarPlus, Hand, type LucideIcon } from 'lucide-react';
+import {
+  Calendar, Utensils, Music, Star, ArrowUpRight, CalendarPlus, Hand,
+  BookOpen, Users, Tent, GraduationCap, HeartHandshake, Gift, type LucideIcon,
+} from 'lucide-react';
 import ChurchPhoto from '@/components/shared/ChurchPhoto';
+import Prose from '@/components/shared/Prose';
+import type { Event } from '@/lib/db/schema';
 
-type UpcomingEvent = [month: string, day: string, dow: string, title: string, when: string, note: string, Icon: LucideIcon];
-
-const upcomingEvents: UpcomingEvent[] = [
-  ['May', '17', 'Sun', 'Spring Revival · Night One',       '7 p.m. · Sanctuary',       'Guest preaching and prayer', Music],
-  ['May', '24', 'Sun', 'Community Food Drive',             '9 a.m. · Fellowship Hall', 'Serve neighbors in North Baton Rouge', Utensils],
-  ['Jun', '07', 'Sun', 'Youth Summer Kickoff',             '6:30 p.m. · Youth Wing',   'Grades 6-12 · Bring a friend', Star],
-  ['Jun', '14', 'Sun', 'Membership Class',                 '9 a.m. · Room 204',        'Required for new members', ClipboardList],
-  ['Jun', '20', 'Sat', "Men's Fellowship Breakfast",       '7 a.m. · Fellowship Hall', '$5 · All men welcome', Egg],
-  ['Jun', '28', 'Sun', "Children's Ministry Family Picnic", '12 p.m. · Church Lawn',    'Families and volunteers welcome', Star],
-];
-
+// Static weekly schedule — the recurring rhythm of the church (not dated events).
 const weeklyRhythm = [
   ['Sunday',    '10:00 a.m.', 'Worship Service',   'Sanctuary · Childcare provided'],
   ['Sunday',    '9:00 a.m.',  'Sunday School',      'All ages · 9 classes'],
@@ -23,9 +18,44 @@ const weeklyRhythm = [
   ['Friday',    '11:00 a.m.', 'Senior Saints Lunch','Fellowship Hall'],
 ];
 
-const dates = ['May 17 · Spring Revival','May 24 · Community Food Drive','Jun 07 · Youth Summer Kickoff','Jun 14 · Membership Class','Jun 20 · Men\'s Breakfast','Jun 28 · Family Picnic'];
+// Map an event category to a fitting icon (falls back to a calendar).
+const CATEGORY_ICONS: Record<string, LucideIcon> = {
+  youth: Star,
+  'black history': BookOpen,
+  leadership: Users,
+  summit: Star,
+  fellowship: Users,
+  vbs: BookOpen,
+  camp: Tent,
+  conference: GraduationCap,
+  outreach: HeartHandshake,
+  community: Utensils,
+  revival: Music,
+  giving: Gift,
+};
+function iconFor(category: string): LucideIcon {
+  return CATEGORY_ICONS[category.trim().toLowerCase()] ?? Calendar;
+}
 
-export default function PageEvents() {
+function dowOf(date: Event['date']): string {
+  if (!date) return '';
+  return new Date(date).toLocaleDateString('en-US', { weekday: 'short' });
+}
+
+function fullDate(date: Event['date']): string {
+  if (!date) return '';
+  return new Date(date).toLocaleDateString('en-US', {
+    weekday: 'long', month: 'long', day: 'numeric',
+  });
+}
+
+export default function PageEvents({ events }: { events: Event[] }) {
+  const first = events[0];
+  const heroMonth = (first?.month || 'Upcoming').toUpperCase();
+  const heroYear = first?.date ? new Date(first.date).getFullYear() : new Date().getFullYear();
+  const featured = events.find((e) => e.featured) ?? first;
+  const ticker = events.map((e) => `${e.month} ${e.day} · ${e.title}`);
+
   return (
     <>
       {/* Hero */}
@@ -36,7 +66,7 @@ export default function PageEvents() {
           fontSize: 'clamp(120px, 22vw, 280px)',
           color: '#1E1E1E', opacity: 0.06, lineHeight: 1,
           userSelect: 'none', pointerEvents: 'none',
-        }}>MAY<br/>2026</div>
+        }}>{heroMonth}<br/>{heroYear}</div>
         <div className="tl-container" style={{ position: 'relative', zIndex: 2, paddingTop: '72px', paddingBottom: '72px' }}>
           <p className="crumb" style={{ color: '#6B6B6B' }}><Link href="/" style={{ color: '#6B6B6B' }}>Home</Link><span>›</span>Events</p>
           <p className="eyebrow" style={{ marginBottom: '16px' }}>Events &amp; Calendar</p>
@@ -53,53 +83,59 @@ export default function PageEvents() {
           </p>
         </div>
         {/* Ticker */}
-        <div style={{ background: '#A02319', overflow: 'hidden', padding: '14px 0' }}>
-          <div style={{
-            display: 'flex', gap: '40px', whiteSpace: 'nowrap',
-            animation: 'ticker 40s linear infinite',
-            color: '#fff', fontSize: '14px', fontWeight: 600,
-          }}>
-            {[...dates, ...dates].map((d, i) => (
-              <span key={i} style={{ display: 'inline-flex', alignItems: 'center', gap: '12px' }}>
-                <Calendar size={14} />{d}
-              </span>
-            ))}
+        {ticker.length > 0 && (
+          <div style={{ background: '#A02319', overflow: 'hidden', padding: '14px 0' }}>
+            <div style={{
+              display: 'flex', gap: '40px', whiteSpace: 'nowrap',
+              animation: 'ticker 40s linear infinite',
+              color: '#fff', fontSize: '14px', fontWeight: 600,
+            }}>
+              {[...ticker, ...ticker].map((d, i) => (
+                <span key={i} style={{ display: 'inline-flex', alignItems: 'center', gap: '12px' }}>
+                  <Calendar size={14} />{d}
+                </span>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </section>
 
       {/* Featured */}
-      <section className="section section--cream" style={{ paddingTop: '88px' }}>
-        <div className="tl-container">
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '64px', alignItems: 'center' }} className="featured-grid">
-            <div className="featured-img" style={{ borderRadius: '18px', overflow: 'hidden', aspectRatio: '17/14', boxShadow: '0 1px 2px rgba(30,30,30,0.06), 0 12px 28px rgba(30,30,30,0.10), 0 28px 56px rgba(122,26,22,0.10)' }}>
-              <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-                <ChurchPhoto photo="outreach" sizes="(max-width: 1024px) 100vw, 50vw" />
+      {featured && (
+        <section className="section section--cream" style={{ paddingTop: '88px' }}>
+          <div className="tl-container">
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '64px', alignItems: 'center' }} className="featured-grid">
+              <div className="featured-img" style={{ borderRadius: '18px', overflow: 'hidden', aspectRatio: '17/14', boxShadow: '0 1px 2px rgba(30,30,30,0.06), 0 12px 28px rgba(30,30,30,0.10), 0 28px 56px rgba(122,26,22,0.10)' }}>
+                <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+                  <ChurchPhoto photo={featured.photo || 'youth'} sizes="(max-width: 1024px) 100vw, 50vw" />
+                </div>
               </div>
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-              <p className="eyebrow">Featured this month</p>
-              <h2 className="display" style={{ fontSize: '56px' }}>Community Food Drive</h2>
-              <p className="prose">
-                Partner with our outreach team to serve neighbors in North Baton Rouge.
-                Bring shelf-stable groceries, bottled water, or willing hands.
-              </p>
-              <dl style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '14px' }}>
-                {[['WHEN','Sunday, May 24 · 9:00 a.m.'],['WHERE','Fellowship Hall'],['COST','Free — volunteers welcome']].map(([k,v]) => (
-                  <div key={k} style={{ display: 'flex', gap: '16px' }}>
-                    <dt style={{ fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#6B6B6B', minWidth: '60px', fontSize: '11px', paddingTop: '2px' }}>{k}</dt>
-                    <dd style={{ margin: 0, color: '#1E1E1E' }}>{v}</dd>
-                  </div>
-                ))}
-              </dl>
-              <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-                <Link href="/events" className="btn btn--red">Add to calendar <CalendarPlus size={16} /></Link>
-                <Link href="/connect" className="btn btn--ghost-dark">I want to help <Hand size={16} /></Link>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                <p className="eyebrow">Featured · {featured.category || 'Upcoming'}</p>
+                <h2 className="display" style={{ fontSize: '56px' }}>{featured.title}</h2>
+                {featured.description && (
+                  <Prose html={featured.description} className="prose" />
+                )}
+                <dl style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '14px' }}>
+                  {[
+                    ['WHEN', [fullDate(featured.date), featured.time].filter(Boolean).join(' · ')],
+                    ['WHERE', featured.location],
+                  ].filter(([, v]) => v).map(([k, v]) => (
+                    <div key={k} style={{ display: 'flex', gap: '16px' }}>
+                      <dt style={{ fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#6B6B6B', minWidth: '60px', fontSize: '11px', paddingTop: '2px' }}>{k}</dt>
+                      <dd style={{ margin: 0, color: '#1E1E1E' }}>{v}</dd>
+                    </div>
+                  ))}
+                </dl>
+                <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                  <Link href="/connect" className="btn btn--red">I want to join <CalendarPlus size={16} /></Link>
+                  <Link href="/connect" className="btn btn--ghost-dark">Ask a question <Hand size={16} /></Link>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Calendar */}
       <section className="section section--white">
@@ -107,45 +143,60 @@ export default function PageEvents() {
           <div className="section-head section-head--row" style={{ marginBottom: '40px' }}>
             <div className="section-head__copy">
               <p className="eyebrow eyebrow--blue">Upcoming</p>
-              <h2 className="display" style={{ fontSize: '42px' }}>The next sixty days.</h2>
+              <h2 className="display" style={{ fontSize: '42px' }}>What&apos;s coming up.</h2>
             </div>
-            <Link href="/events" className="btn btn--ghost-dark btn--sm">View full calendar</Link>
+            <Link href="/connect" className="btn btn--ghost-dark btn--sm">Get involved</Link>
           </div>
-          <ul style={{ listStyle: 'none', padding: 0, borderTop: '1px solid rgba(30,30,30,0.10)' }}>
-            {upcomingEvents.map(([m, d, dow, title, when, note, Icon]) => (
-              <li key={String(title)} style={{
-                display: 'grid',
-                gridTemplateColumns: '88px 56px 1.6fr 1fr 40px',
-                gap: '24px', alignItems: 'center',
-                padding: '20px 0',
-                borderBottom: '1px solid rgba(30,30,30,0.08)',
-              }} className="cal-row">
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                  <span style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', color: '#A02319', letterSpacing: '0.08em' }}>{m}</span>
-                  <span style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '36px', lineHeight: 1, color: '#1E1E1E' }}>{d}</span>
-                  <span style={{ fontSize: '10px', fontWeight: 600, textTransform: 'uppercase', color: '#6B6B6B', letterSpacing: '0.1em' }}>{dow}</span>
-                </div>
-                <div className="cal-icon" style={{
-                  width: '48px', height: '48px', borderRadius: '12px',
-                  background: '#F4F1EC', color: '#1E1E1E',
-                  border: '1px solid rgba(30,30,30,0.06)',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                }}><Icon size={20} /></div>
-                <div>
-                  <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '20px', margin: '0 0 4px' }}>{title}</h3>
-                  <p style={{ fontSize: '13px', color: '#6B6B6B', margin: 0 }}>{when}</p>
-                </div>
-                <div style={{ fontSize: '13px', color: '#6B6B6B' }} className="cal-note">{note}</div>
-                <Link href="/connect" aria-label={`Get involved with ${title}`} className="cal-link" style={{
-                  width: '40px', height: '40px', borderRadius: '50%',
-                  background: '#F4F1EC', color: '#A02319',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                }}>
-                  <ArrowUpRight size={16} />
-                </Link>
-              </li>
-            ))}
-          </ul>
+          {events.length === 0 ? (
+            <p className="prose" style={{ color: '#6B6B6B' }}>
+              No upcoming events on the calendar right now — check back soon, or {' '}
+              <Link href="/connect" style={{ color: '#A02319' }}>reach out</Link> to plan a visit.
+            </p>
+          ) : (
+            <ul style={{ listStyle: 'none', padding: 0, borderTop: '1px solid rgba(30,30,30,0.10)' }}>
+              {events.map((e) => {
+                const Icon = iconFor(e.category);
+                const when = [e.time, e.location].filter(Boolean).join(' · ');
+                return (
+                  <li key={e.id} style={{
+                    display: 'grid',
+                    gridTemplateColumns: '88px 56px 1.6fr 1fr 40px',
+                    gap: '24px', alignItems: 'center',
+                    padding: '20px 0',
+                    borderBottom: '1px solid rgba(30,30,30,0.08)',
+                  }} className="cal-row">
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                      <span style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', color: '#A02319', letterSpacing: '0.08em' }}>{e.month}</span>
+                      <span style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '36px', lineHeight: 1, color: '#1E1E1E' }}>{e.day}</span>
+                      <span style={{ fontSize: '10px', fontWeight: 600, textTransform: 'uppercase', color: '#6B6B6B', letterSpacing: '0.1em' }}>{dowOf(e.date)}</span>
+                    </div>
+                    <div className="cal-icon" style={{
+                      width: '48px', height: '48px', borderRadius: '12px',
+                      background: '#F4F1EC', color: '#1E1E1E',
+                      border: '1px solid rgba(30,30,30,0.06)',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    }}><Icon size={20} /></div>
+                    <div>
+                      <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '20px', margin: '0 0 4px' }}>{e.title}</h3>
+                      {when && <p style={{ fontSize: '13px', color: '#6B6B6B', margin: 0 }}>{when}</p>}
+                    </div>
+                    <div style={{ fontSize: '13px', color: '#6B6B6B' }} className="cal-note">
+                      {e.category && (
+                        <span style={{ display: 'inline-block', fontSize: '11px', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#4FA1C6' }}>{e.category}</span>
+                      )}
+                    </div>
+                    <Link href="/connect" aria-label={`Get involved with ${e.title}`} className="cal-link" style={{
+                      width: '40px', height: '40px', borderRadius: '50%',
+                      background: '#F4F1EC', color: '#A02319',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    }}>
+                      <ArrowUpRight size={16} />
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
         </div>
       </section>
 
