@@ -299,17 +299,17 @@ export default function Header({ ministries = [] }: { ministries?: MinistryPage[
           .header-cta { display: none !important; }
           .hamburger { display: inline-flex; }
         }
-        @media (max-width: 640px) {
-          .header-bar { padding: 14px 18px !important; gap: 12px !important; }
+        @media (max-width: 960px) {
           .mobile-drawer {
             display: block;
             overflow: hidden;
             max-height: 0;
+            background: rgba(244,241,236,0.98);
             border-top: 1px solid rgba(30,30,30,0);
             transition: max-height 280ms cubic-bezier(0.22,0.61,0.36,1), border-color 280ms;
           }
           .mobile-drawer.open {
-            max-height: calc(100vh - 78px);
+            max-height: calc(100dvh - 77px);
             overflow-y: auto;
             border-top-color: rgba(30,30,30,0.08);
           }
@@ -335,6 +335,9 @@ export default function Header({ ministries = [] }: { ministries?: MinistryPage[
             padding: 9px 12px; border-radius: 8px;
           }
           .mobile-nav__sublink:active { background: rgba(30,30,30,0.05); }
+        }
+        @media (max-width: 640px) {
+          .header-bar { padding: 14px 18px !important; gap: 12px !important; }
         }
       `}</style>
     </header>
