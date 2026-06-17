@@ -237,7 +237,8 @@ export default function PageEvents({ events }: { events: Event[] }) {
         .cal-row::before {
           content: '';
           position: absolute;
-          left: 0; top: 14px; bottom: 14px;
+          /* sit in the container's left gutter so the accent clears the date text */
+          left: -16px; top: 14px; bottom: 14px;
           width: 2px;
           background: #A02319;
           transform: scaleY(0);
