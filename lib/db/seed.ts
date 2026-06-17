@@ -46,7 +46,7 @@ async function seed() {
   await db.insert(siteSettings).values({
     address: '3836 North Street, Baton Rouge, LA',
     phone: '(225) 555-0149',
-    email: 'hello@truelightbr.org',
+    email: 'info@truelightbaptist.org',
     livestreamUrl: 'https://www.facebook.com/truelightbr/live',
     facebookUrl: 'https://www.facebook.com/truelightbr',
     instagramUrl: '',

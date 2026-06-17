@@ -110,7 +110,7 @@ export default function PageMembers() {
                       <input type="checkbox" style={{ accentColor: '#A02319', width: '16px', height: '16px' }} />
                       Remember me
                     </label>
-                    <a href="mailto:members@truelightbr.org?subject=Member%20portal%20password%20help" style={{ fontSize: '13px', color: '#A02319', fontWeight: 600 }}>Forgot password?</a>
+                    <a href="mailto:info@truelightbaptist.org?subject=Member%20portal%20password%20help" style={{ fontSize: '13px', color: '#A02319', fontWeight: 600 }}>Forgot password?</a>
                   </div>
                   <button type="submit" className="btn btn--red btn--lg" style={{ justifyContent: 'center', marginTop: '8px' }}>
                     Sign in <LogIn size={18} />
@@ -170,7 +170,7 @@ export default function PageMembers() {
             </h3>
             <p className="prose" style={{ maxWidth: '520px' }}>
               Account locked? Email us at{' '}
-              <Link href="mailto:members@truelightbr.org" style={{ color: '#A02319' }}>members@truelightbr.org</Link>
+              <Link href="mailto:info@truelightbaptist.org" style={{ color: '#A02319' }}>info@truelightbaptist.org</Link>
               {' '}or call (225) 555-0140 during office hours.
             </p>
           </div>
