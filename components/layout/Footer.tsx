@@ -203,8 +203,6 @@ export default function Footer() {
             <span>© 2026 True Light Baptist Church</span>
             <span aria-hidden="true">·</span>
             <Link href="/privacy" className="ftr-meta-link" style={{ color: 'rgba(244,241,236,0.65)' }}>Privacy</Link>
-            <span aria-hidden="true">·</span>
-            <Link href="/members" className="ftr-meta-link" style={{ color: 'rgba(244,241,236,0.65)' }}>Member Login</Link>
           </div>
         </div>
       </div>
