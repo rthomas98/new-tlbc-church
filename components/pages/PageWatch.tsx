@@ -1,9 +1,10 @@
 'use client';
 import Link from 'next/link';
-import { Bell, BookOpen, CalendarDays, Clock, MapPin, Play, Radio, Users } from 'lucide-react';
+import { Bell, BookOpen, CalendarDays, Clock, MapPin, Play, Radio } from 'lucide-react';
 import ChurchPhoto from '@/components/shared/ChurchPhoto';
 import Icon from '@/components/shared/Icon';
-import { FACEBOOK_PAGE_URL } from '@/components/shared/churchLinks';
+import { FACEBOOK_PAGE_URL, YOUTUBE_CHANNEL_URL } from '@/components/shared/churchLinks';
+import YouTubeLive from '@/components/shared/YouTubeLive';
 import type { Sermon } from '@/lib/db/schema';
 
 export default function PageWatch({ sermons }: { sermons: Sermon[] }) {
@@ -23,7 +24,7 @@ export default function PageWatch({ sermons }: { sermons: Sermon[] }) {
             fontSize: '11px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#fff',
           }}>
             <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#fff', animation: 'pulseDot 1.6s ease-in-out infinite' }} />
-            LIVE ON FACEBOOK
+            LIVE ON YOUTUBE &amp; FACEBOOK
           </span>
           <h1 style={{
             fontFamily: 'var(--font-display)', fontWeight: 800,
@@ -34,15 +35,15 @@ export default function PageWatch({ sermons }: { sermons: Sermon[] }) {
             <em style={{ fontStyle: 'italic', color: '#B6D8E6' }}>Sundays and Wednesdays.</em>
           </h1>
           <p style={{ fontSize: '17px', maxWidth: '580px', color: 'rgba(244,241,236,0.86)', lineHeight: 1.6, margin: '0 0 40px' }}>
-            True Light Baptist Church streams live on Facebook every Sunday for worship and every
-            Wednesday for Bible Study. We do not currently offer a recorded sermon archive.
+            True Light Baptist Church streams live on YouTube and Facebook every Sunday for worship
+            and every Wednesday for Bible Study — watch right here on the page.
           </p>
           <div style={{ display: 'flex', gap: '32px', flexWrap: 'wrap', fontSize: '14px', color: 'rgba(244,241,236,0.75)' }}>
             <span><strong style={{ color: '#fff', fontFamily: 'var(--font-display)', fontSize: '22px' }}>Sun</strong> worship live</span>
             <span style={{ color: 'rgba(244,241,236,0.30)' }}>—</span>
             <span><strong style={{ color: '#fff', fontFamily: 'var(--font-display)', fontSize: '22px' }}>Wed</strong> Bible Study live</span>
             <span style={{ color: 'rgba(244,241,236,0.30)' }}>—</span>
-            <span><strong style={{ color: '#fff', fontFamily: 'var(--font-display)', fontSize: '22px' }}>FB</strong> Facebook stream</span>
+            <span><strong style={{ color: '#fff', fontFamily: 'var(--font-display)', fontSize: '22px' }}>▶</strong> YouTube &amp; Facebook</span>
           </div>
         </div>
       </section>
@@ -51,40 +52,23 @@ export default function PageWatch({ sermons }: { sermons: Sermon[] }) {
       <section className="section section--cream" style={{ paddingTop: '88px' }}>
         <div className="tl-container">
           <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: '56px', alignItems: 'center' }} className="watch-live-grid">
-            <div style={{ position: 'relative', borderRadius: '22px', aspectRatio: '16/9', overflow: 'hidden', boxShadow: '0 18px 40px rgba(30,30,30,0.14)' }}>
-              <ChurchPhoto photo="worship" sizes="(max-width: 1024px) 100vw, 60vw" />
-              <div style={{
-                position: 'absolute', inset: 0,
-                background: 'linear-gradient(to bottom, rgba(0,0,0,0.10) 0%, rgba(0,0,0,0.55) 100%)',
-                display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: '24px',
-              }}>
-                <span style={{
-                  display: 'inline-flex', alignItems: 'center', gap: '8px',
-                  background: '#A02319', borderRadius: '999px', padding: '6px 14px',
-                  fontSize: '11px', fontWeight: 600, textTransform: 'uppercase', color: '#fff', alignSelf: 'flex-start',
-                }}>
-                  <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#fff', animation: 'pulseDot 1.6s ease-in-out infinite' }} />
-                  Facebook Live
-                </span>
-                <a href={FACEBOOK_PAGE_URL} target="_blank" rel="noopener noreferrer" className="btn btn--play" style={{ alignSelf: 'center' }} aria-label="Open True Light Baptist Church on Facebook">
-                  <Play size={22} fill="currentColor" />
-                </a>
-              </div>
-            </div>
+            <YouTubeLive title="True Light Baptist Church — Live on YouTube" />
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               <p className="eyebrow">Watch Live</p>
-              <h2 className="display" style={{ fontSize: '40px' }}>Join us on Facebook.</h2>
+              <h2 className="display" style={{ fontSize: '40px' }}>Worship with us live.</h2>
               <p className="prose">
-                True Light does not currently maintain recorded sermons on this site. Join Pastor Dennis R. Hebert Sr.
-                and the church family live on Facebook for Sunday worship and Wednesday Bible Study.
+                Join Pastor Dennis R. Hebert Sr. and the church family for Sunday worship and Wednesday
+                Bible Study — streaming live on YouTube above, and on Facebook. When we&apos;re live, the
+                stream plays right here; otherwise it shows our latest broadcast.
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '14px', color: '#6B6B6B' }}>
                 <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><Clock size={15} />Sunday worship · 10:00 a.m. CT</span>
-                <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><BookOpen size={15} />Wednesday Bible Study · live on Facebook</span>
+                <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><BookOpen size={15} />Wednesday Bible Study · live online</span>
                 <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><MapPin size={15} />3836 North Street</span>
               </div>
               <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-                <a href={FACEBOOK_PAGE_URL} target="_blank" rel="noopener noreferrer" className="btn btn--red">Watch on Facebook <Radio size={16} /></a>
+                <a href={YOUTUBE_CHANNEL_URL} target="_blank" rel="noopener noreferrer" className="btn btn--red">Watch on YouTube <Play size={16} fill="currentColor" /></a>
+                <a href={FACEBOOK_PAGE_URL} target="_blank" rel="noopener noreferrer" className="btn btn--ghost-dark">Watch on Facebook <Radio size={16} /></a>
                 <Link href="/events" className="btn btn--ghost-dark">View schedule <Bell size={16} /></Link>
               </div>
             </div>
@@ -100,7 +84,7 @@ export default function PageWatch({ sermons }: { sermons: Sermon[] }) {
               <p className="eyebrow eyebrow--blue">Live Schedule</p>
               <h2 className="display" style={{ fontSize: '42px' }}>Gather with us live.</h2>
             </div>
-            <a href={FACEBOOK_PAGE_URL} target="_blank" rel="noopener noreferrer" className="btn btn--ghost-dark btn--sm">Open Facebook Live</a>
+            <a href={YOUTUBE_CHANNEL_URL} target="_blank" rel="noopener noreferrer" className="btn btn--ghost-dark btn--sm">Open YouTube</a>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: '28px' }} className="live-grid">
             {sermons.map((s) => (
@@ -119,8 +103,8 @@ export default function PageWatch({ sermons }: { sermons: Sermon[] }) {
                   <p style={{ fontSize: '13px', color: '#4FA1C6', fontWeight: 700, margin: 0, textTransform: 'uppercase', letterSpacing: '0.08em' }}>{s.schedule}</p>
                 </div>
                 <p className="prose">{s.description}</p>
-                <a href={s.url || FACEBOOK_PAGE_URL} target="_blank" rel="noopener noreferrer" className="btn btn--ghost-dark btn--sm" style={{ alignSelf: 'flex-start' }}>
-                  Watch on Facebook
+                <a href={s.url || YOUTUBE_CHANNEL_URL} target="_blank" rel="noopener noreferrer" className="btn btn--ghost-dark btn--sm" style={{ alignSelf: 'flex-start' }}>
+                  Watch live
                 </a>
               </article>
             ))}
@@ -133,15 +117,15 @@ export default function PageWatch({ sermons }: { sermons: Sermon[] }) {
         <div className="tl-container">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '40px', flexWrap: 'wrap' }}>
             <div>
-              <p className="eyebrow eyebrow--cream">Current Media Note</p>
-              <h2 className="display" style={{ fontSize: '36px', color: '#fff', marginTop: '8px' }}>Live only right now.</h2>
+              <p className="eyebrow eyebrow--cream">Miss a service?</p>
+              <h2 className="display" style={{ fontSize: '36px', color: '#fff', marginTop: '8px' }}>Catch the replay.</h2>
               <p style={{ color: 'rgba(244,241,236,0.78)', maxWidth: '480px', marginTop: '12px', fontSize: '15px', lineHeight: 1.6 }}>
-                Recorded sermons and podcast feeds are not available at this time. The way to worship
-                with True Light online is through Facebook Live on Sundays and Wednesdays.
+                Past worship services and Bible studies stay on our YouTube channel, so you can catch up
+                anytime. Subscribe to get notified the moment we go live each Sunday and Wednesday.
               </p>
             </div>
             <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-              <a href={FACEBOOK_PAGE_URL} target="_blank" rel="noopener noreferrer" className="btn btn--white"><Users size={16} />Open Facebook</a>
+              <a href={YOUTUBE_CHANNEL_URL} target="_blank" rel="noopener noreferrer" className="btn btn--white"><Play size={16} fill="currentColor" />Subscribe on YouTube</a>
               <Link href="/events" className="btn btn--ghost-light"><CalendarDays size={16} />View events</Link>
             </div>
           </div>
