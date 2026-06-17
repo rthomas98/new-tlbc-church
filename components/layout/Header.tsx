@@ -20,7 +20,6 @@ export default function Header({ ministries = [] }: { ministries?: MinistryPage[
     { id: 'events',     label: 'Events',     href: '/events' },
     { id: 'connect',    label: 'Connect',    href: '/connect' },
     { id: 'give',       label: 'Give',       href: '/give' },
-    { id: 'members',    label: 'Members',    href: '/members' },
   ];
   const [openId, setOpenId] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
