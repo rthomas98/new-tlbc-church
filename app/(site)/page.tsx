@@ -32,7 +32,7 @@ export default async function Home() {
       <ServicesSection services={services} />
       <SermonSection />
       <MinistriesSection ministries={ministries} />
-      <EventsSection events={events} />
+      <EventsSection events={events.slice(0, 3)} />
       <PrayerGiveSection />
       <TestimonialsSection testimonials={testimonials} />
     </>

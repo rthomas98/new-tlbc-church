@@ -41,6 +41,11 @@ function buildValues(resource: ResourceKey, formData: FormData) {
       values[field.name] = raw === 'on' || raw === 'true';
     } else if (field.type === 'number') {
       values[field.name] = raw ? Number(raw) : 0;
+    } else if (field.type === 'date') {
+      // Empty input → null (standing item). Parse YYYY-MM-DD as a local date
+      // at noon so timezone offsets can't roll it to the previous day.
+      const s = typeof raw === 'string' ? raw.trim() : '';
+      values[field.name] = s ? new Date(`${s}T12:00:00`) : null;
     } else if (JSON_FIELD_TYPES.includes(field.type)) {
       // Repeater/group fields arrive as a JSON string from a hidden input.
       try {

@@ -5,6 +5,7 @@ export type FieldType =
   | 'textarea'
   | 'checkbox'
   | 'number'
+  | 'date'
   | 'photo'
   | 'richtext'
   | 'select'
@@ -80,8 +81,9 @@ export const RESOURCES: Record<ResourceKey, ResourceConfig> = {
       { name: 'title', label: 'Title', type: 'text', required: true },
       { name: 'category', label: 'Category', type: 'text', help: 'e.g. Revival, Community, Youth' },
       { name: 'description', label: 'Description', type: 'richtext' },
-      { name: 'month', label: 'Month', type: 'text', help: 'e.g. May, Jun' },
-      { name: 'day', label: 'Day', type: 'text', help: 'e.g. 17' },
+      { name: 'date', label: 'Date', type: 'date', help: 'Drives ordering and auto-hides the event the day after it passes. Leave blank for standing items.' },
+      { name: 'month', label: 'Month badge', type: 'text', help: 'e.g. May, Jun' },
+      { name: 'day', label: 'Day badge', type: 'text', help: 'e.g. 17' },
       { name: 'time', label: 'Time', type: 'text', help: 'e.g. 7:00 p.m.' },
       { name: 'location', label: 'Location', type: 'text' },
       { name: 'photo', label: 'Photo', type: 'photo' },
