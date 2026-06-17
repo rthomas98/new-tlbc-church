@@ -15,6 +15,7 @@ const weeklyRhythm = [
   ['Wednesday', '6:30 p.m.',  'Mid-Week Service',   'Sanctuary · Youth meet upstairs'],
   ['Wednesday', '7:30 p.m.',  'Choir Rehearsal',    'Choir loft'],
   ['Thursday',  '9:30 a.m.',  'Women in the Word',  'Room 204'],
+  ['Friday',    '6:00 a.m.',  'Faithful Fridays',   'Weekly prayer with Pastor P.'],
   ['Friday',    '11:00 a.m.', 'Senior Saints Lunch','Fellowship Hall'],
 ];
 
