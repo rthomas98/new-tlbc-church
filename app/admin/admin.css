@@ -259,6 +259,8 @@
 .login-card h1 { font-family: var(--a-display); font-size: 27px; margin: 0 0 6px; }
 .login-card p { color: var(--a-muted); font-size: 14px; margin: 0 0 26px; }
 .login-error { background: #f3e7e6; color: var(--a-red); padding: 11px 15px; border-radius: 11px; font-size: 13px; font-weight: 600; margin-bottom: 18px; }
+/* Stack email/password on the login card (the shared form-grid is 2-up). */
+.login-card .form-grid { grid-template-columns: 1fr; }
 
 /* ---------- Repeater / group fields ---------- */
 .repeater { display: flex; flex-direction: column; gap: 12px; }
