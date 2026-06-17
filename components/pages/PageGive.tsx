@@ -1,6 +1,4 @@
 'use client';
-import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
 import ChurchPhoto from '@/components/shared/ChurchPhoto';
 import Icon from '@/components/shared/Icon';
 import type { GivingFund, GivingMethod } from '@/lib/db/schema';
@@ -99,10 +97,7 @@ export default function PageGive({ funds, ways }: { funds: GivingFund[]; ways: G
                   }} />
                   <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '24px', margin: 0, lineHeight: 1.15 }}>{f.title}</h3>
                 </div>
-                <p style={{ fontSize: '14px', color: '#6B6B6B', lineHeight: 1.6, margin: 0, flex: 1 }}>{f.description}</p>
-                <Link href="/give" className="btn btn--ghost-dark btn--sm fund-cta" style={{ alignSelf: 'flex-start' }}>
-                  Give to {f.title.split(' ')[0]} <ArrowRight size={13} className="fund-arrow" />
-                </Link>
+                <p style={{ fontSize: '14px', color: '#6B6B6B', lineHeight: 1.6, margin: 0 }}>{f.description}</p>
               </article>
             ))}
           </div>
@@ -118,7 +113,7 @@ export default function PageGive({ funds, ways }: { funds: GivingFund[]; ways: G
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.4fr', gap: '64px', alignItems: 'start' }} className="ways-grid">
             <div>
               <p className="eyebrow eyebrow--blue">Ways to Give</p>
-              <h2 className="display" style={{ fontSize: '42px', marginTop: '14px' }}>Five ways. Same heart.</h2>
+              <h2 className="display" style={{ fontSize: '42px', marginTop: '14px' }}>Ways to give.</h2>
               <p className="prose" style={{ marginTop: '16px' }}>
                 All giving is tax-deductible. You&apos;ll receive an annual statement in January for your records.
               </p>
@@ -178,12 +173,6 @@ export default function PageGive({ funds, ways }: { funds: GivingFund[]; ways: G
           transform: translateY(-4px);
           border-color: rgba(30,30,30,0.14);
           box-shadow: 0 2px 4px rgba(30,30,30,0.04), 0 18px 40px rgba(30,30,30,0.10);
-        }
-        .fund-cta .fund-arrow {
-          transition: transform 0.4s cubic-bezier(0.22,0.61,0.36,1);
-        }
-        .fund-card:hover .fund-arrow {
-          transform: translateX(4px);
         }
 
         .way-row:hover {
