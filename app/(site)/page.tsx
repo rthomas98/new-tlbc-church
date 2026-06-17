@@ -34,7 +34,8 @@ export default async function Home() {
       <MinistriesSection ministries={ministries} />
       <EventsSection events={events.slice(0, 3)} />
       <PrayerGiveSection />
-      <TestimonialsSection testimonials={testimonials} />
+      {/* Hidden until there are real testimonials — add them in the CMS to show this section. */}
+      {testimonials.length > 0 && <TestimonialsSection testimonials={testimonials} />}
     </>
   );
 }
