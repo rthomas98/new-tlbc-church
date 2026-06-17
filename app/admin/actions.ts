@@ -173,6 +173,18 @@ export async function uploadImage(formData: FormData): Promise<{ url: string } |
 
   // Generate the stored name ourselves — never echo the client filename.
   const filename = `${randomUUID()}.${ext}`;
+
+  // In production (Vercel's filesystem is read-only) store in Vercel Blob.
+  // Locally, write to /public/uploads/cms so dev works without a Blob token.
+  if (process.env.BLOB_READ_WRITE_TOKEN) {
+    const { put } = await import('@vercel/blob');
+    const blob = await put(`cms/${filename}`, bytes, {
+      access: 'public',
+      contentType: file.type,
+    });
+    return { url: blob.url };
+  }
+
   const dir = path.join(process.cwd(), 'public', 'uploads', 'cms');
   await mkdir(dir, { recursive: true });
   await writeFile(path.join(dir, filename), bytes);
@@ -199,9 +211,20 @@ function hasImageSignature(buf: Buffer): boolean {
   return false;
 }
 
-// Lists uploaded images in /public/uploads/cms (newest first).
+// Lists uploaded images (newest first) — from Vercel Blob in production,
+// otherwise from the local /public/uploads/cms directory.
 export async function listMedia(): Promise<string[]> {
   await requireAuth();
+
+  if (process.env.BLOB_READ_WRITE_TOKEN) {
+    const { list } = await import('@vercel/blob');
+    const { blobs } = await list({ prefix: 'cms/' });
+    return blobs
+      .filter((b) => /\.(png|jpe?g|webp|gif)$/i.test(b.pathname))
+      .sort((a, b) => (a.uploadedAt < b.uploadedAt ? 1 : -1))
+      .map((b) => b.url);
+  }
+
   const { readdir } = await import('fs/promises');
   const dir = path.join(process.cwd(), 'public', 'uploads', 'cms');
   try {
