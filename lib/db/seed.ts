@@ -111,21 +111,9 @@ async function seed() {
   ]);
 
   // --- Testimonials ---
+  // No testimonials seeded — the homepage section stays hidden until the
+  // church adds real ones in the CMS.
   await db.delete(testimonials);
-  await db.insert(testimonials).values([
-    {
-      quote: "True Light has been our home for 22 years. Pastor Hebert baptized our children — and now they're being baptized by him too. This is family.",
-      name: 'The Hayes Family', role: 'Members since 2003', initials: 'TH', sort: 0,
-    },
-    {
-      quote: "I came in broken and was met with prayer, scripture, and grace. The Lord did the rest. I haven't missed a Sunday since.",
-      name: 'Marcus J.', role: 'Saved at True Light, 2022', initials: 'MJ', sort: 1,
-    },
-    {
-      quote: "The youth ministry gave my son a place to belong, to ask hard questions, and to know Jesus for himself. Worth every Sunday morning.",
-      name: 'Denise W.', role: 'Mom of two · Volunteer', initials: 'DW', sort: 2,
-    },
-  ]);
 
   // --- Sermons / live services ---
   await db.delete(sermons);
