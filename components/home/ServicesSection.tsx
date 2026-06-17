@@ -86,7 +86,16 @@ export default function ServicesSection({ services }: { services: Service[] }) {
       </div>
 
       <style jsx>{`
-        @media (max-width: 1024px) { .svc-grid { grid-template-columns: 1fr 1fr !important; } }
+        @media (max-width: 1024px) and (min-width: 641px) {
+          .svc-grid { grid-template-columns: 1fr 1fr !important; }
+          /* center a lone last card instead of leaving an empty cell */
+          .svc-grid > article:last-child:nth-child(odd) {
+            grid-column: 1 / -1;
+            max-width: calc(50% - 12px);
+            margin-inline: auto;
+            width: 100%;
+          }
+        }
         @media (max-width: 640px)  { .svc-grid { grid-template-columns: 1fr !important; } }
       `}</style>
     </section>

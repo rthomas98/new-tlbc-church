@@ -119,7 +119,7 @@ export default function MinistriesSection({ ministries }: { ministries: Ministry
         .min-card:hover .min-card-arrow { background: #A02319; color: #fff; transform: rotate(-45deg); }
         .min-chip:hover { border-color: rgba(160,35,25,0.45); }
         @media (max-width: 1024px) { .min-grid { grid-template-columns: repeat(2,1fr) !important; } }
-        @media (max-width: 640px)  { .min-grid { grid-template-columns: repeat(2,1fr) !important; } }
+        @media (max-width: 480px)  { .min-grid { grid-template-columns: 1fr !important; } }
       `}</style>
     </section>
   );
