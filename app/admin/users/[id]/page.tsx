@@ -1,4 +1,5 @@
 import { notFound, redirect } from 'next/navigation';
+import Link from 'next/link';
 import { auth } from '@/auth';
 import { getUserById } from '@/lib/db/queries';
 import { updateUser } from '../../actions';
@@ -53,7 +54,7 @@ export default async function EditUserPage({
           </div>
           <div className="form-actions">
             <button type="submit" className="btn-admin btn-admin--primary">Save</button>
-            <a href="/admin/users" className="btn-admin btn-admin--ghost">Cancel</a>
+            <Link href="/admin/users" className="btn-admin btn-admin--ghost">Cancel</Link>
           </div>
         </form>
       </div>

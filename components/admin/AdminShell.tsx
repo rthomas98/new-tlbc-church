@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 
 export default function AdminShell({
@@ -11,13 +10,7 @@ export default function AdminShell({
   sidebar: React.ReactNode;
   children: React.ReactNode;
 }) {
-  const pathname = usePathname();
   const [open, setOpen] = useState(false);
-
-  // Close the drawer whenever the route changes (i.e. a nav link was tapped).
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
 
   // Prevent body scroll while the drawer is open on mobile.
   useEffect(() => {
@@ -41,7 +34,14 @@ export default function AdminShell({
         <span className="admin-topbar__title">True Light · Content Manager</span>
       </header>
 
-      <aside className={`admin-sidebar${open ? ' open' : ''}`}>{sidebar}</aside>
+      <aside
+        className={`admin-sidebar${open ? ' open' : ''}`}
+        onClick={(event) => {
+          if ((event.target as HTMLElement).closest('a')) setOpen(false);
+        }}
+      >
+        {sidebar}
+      </aside>
 
       {open && <div className="admin-overlay" onClick={() => setOpen(false)} />}
 

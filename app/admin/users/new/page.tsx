@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation';
+import Link from 'next/link';
 import { auth } from '@/auth';
 import { createUser } from '../../actions';
 
@@ -52,7 +53,7 @@ export default async function NewUserPage({
           </div>
           <div className="form-actions">
             <button type="submit" className="btn-admin btn-admin--primary">Create account</button>
-            <a href="/admin/users" className="btn-admin btn-admin--ghost">Cancel</a>
+            <Link href="/admin/users" className="btn-admin btn-admin--ghost">Cancel</Link>
           </div>
         </form>
       </div>

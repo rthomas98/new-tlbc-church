@@ -19,12 +19,14 @@ export default function AnnouncementBar({ announcements }: { announcements: Anno
 
   // Read dismissals after mount so server and client markup match.
   useEffect(() => {
-    try {
-      setDismissed(JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'));
-    } catch {
-      setDismissed([]);
-    }
-    setReady(true);
+    queueMicrotask(() => {
+      try {
+        setDismissed(JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'));
+      } catch {
+        setDismissed([]);
+      }
+      setReady(true);
+    });
   }, []);
 
   function dismiss(key: string) {

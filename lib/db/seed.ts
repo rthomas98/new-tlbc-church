@@ -23,6 +23,7 @@ async function seed() {
     sermons, leaders, beliefs, givingFunds, givingMethods, ministryPages, announcements,
   } = await import('./schema');
   const { MINISTRIES } = await import('../ministries');
+  const { FACEBOOK_PAGE_URL, YOUTUBE_CHANNEL_URL } = await import('../../components/shared/churchLinks');
 
   console.log('🌱 Seeding database...');
 
@@ -47,10 +48,10 @@ async function seed() {
     address: '3836 North Street, Baton Rouge, LA',
     phone: '(225) 555-0149',
     email: 'info@truelightbaptist.org',
-    livestreamUrl: 'https://www.facebook.com/truelightbr/live',
-    facebookUrl: 'https://www.facebook.com/truelightbr',
+    livestreamUrl: `${FACEBOOK_PAGE_URL}/live`,
+    facebookUrl: FACEBOOK_PAGE_URL,
     instagramUrl: '',
-    youtubeUrl: '',
+    youtubeUrl: YOUTUBE_CHANNEL_URL,
     marqueeText: 'Sunday Worship 10:00 a.m. · Bible Study 9:00 a.m. · Wednesday Prayer 6:30 p.m.',
   });
 

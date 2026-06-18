@@ -17,7 +17,11 @@ export default function MediaLibrary() {
   }
 
   useEffect(() => {
-    refresh();
+    let cancelled = false;
+    listMedia().then((media) => {
+      if (!cancelled) setItems(media);
+    });
+    return () => { cancelled = true; };
   }, []);
 
   async function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {

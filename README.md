@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# True Light Baptist Church
 
-## Getting Started
+Next.js 16 site and CMS for True Light Baptist Church in Baton Rouge.
 
-First, run the development server:
+## Local Development
+
+Install dependencies:
+
+```bash
+npm install
+npx playwright install chromium
+```
+
+Copy the environment template and fill in local values:
+
+```bash
+cp .env.example .env.local
+```
+
+Start the dev server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3941](http://localhost:3941).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Database
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The CMS uses Postgres through Drizzle ORM.
 
-## Learn More
+```bash
+npm run db:migrate
+npm run db:seed
+```
 
-To learn more about Next.js, take a look at the following resources:
+For shared or production databases, set `SEED_ADMIN_EMAIL` and `SEED_ADMIN_PASSWORD` before seeding and rotate the seeded password after first login.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Admin
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Admin routes live under `/admin` and require Auth.js credentials login. Public routes live under `app/(site)`.
 
-## Deploy on Vercel
+Content managed in the CMS includes services, ministries, ministry pages, events, testimonials, sermons/watch links, leaders, beliefs, giving content, announcements, and site settings.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Production Notes
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Required services/env values:
+
+- `DATABASE_URL` for Postgres/Neon
+- `AUTH_SECRET` for Auth.js
+- `RESEND_API_KEY`, `CONTACT_TO_EMAIL`, and `CONTACT_FROM_EMAIL` for contact/prayer email
+- `BLOB_READ_WRITE_TOKEN` for production media uploads on Vercel
+- `NEXT_PUBLIC_MAPBOX_TOKEN` for the public map
+
+Useful validation commands:
+
+```bash
+npm run lint
+npm test
+npm run verify
+```
+
+`npm test` builds the production app and runs the Playwright smoke suite against
+`next start` on port 3942. `npm run verify` is the full local release gate:
+lint, production build, E2E smoke tests, and a moderate-or-higher dependency
+audit.
